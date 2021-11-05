@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mphb_app/wp-api.dart';
 import 'package:mphb_app/screens/booking.dart';
 
+//TODO: StatefulWidget
 class MyHomePage extends StatelessWidget {
 
 	@override
@@ -12,6 +13,12 @@ class MyHomePage extends StatelessWidget {
 			backgroundColor: Color(0xff353353),
 			title: Text('Bookings'),
 			actions: <Widget>[
+				IconButton(
+					icon: const Icon(Icons.sync),
+					tooltip: 'Refresh',
+					onPressed: () {
+					},
+				),
 				IconButton(
 					icon: const Icon(Icons.settings),
 					tooltip: 'Settings',
@@ -54,6 +61,10 @@ class MyHomePage extends StatelessWidget {
 
 											return MyListItem(booking);
 										},
+
+										// To make listView scrollable
+										// even if there is only a single item.
+										physics: const AlwaysScrollableScrollPhysics(),
 									);
 								}
 
