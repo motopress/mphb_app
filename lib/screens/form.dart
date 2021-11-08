@@ -63,15 +63,29 @@ class MyCustomFormState extends State<MyCustomForm> {
 									),
 									SizedBox(height: 50),
 
-									IconButton(
-										icon: const Icon(Icons.qr_code_scanner),
-										tooltip: 'Settings',
-										onPressed: () {
-											Navigator.push(
-											context,
-												MaterialPageRoute(builder: (context) => Scanner()),
-											);
-										},
+									Container(
+										decoration: BoxDecoration(
+											border: Border.all(color: Colors.black, width: 2),
+											color: Colors.white,
+											shape: BoxShape.circle,
+										),
+										child: IconButton(
+											icon: const Icon(Icons.qr_code_scanner),
+											tooltip: 'Scan QRCode',
+											onPressed: () {
+												
+												
+												/*
+												 * Web issue
+												 * https://github.com/juliuscanute/qr_code_scanner/issues/441
+												 */												
+												
+												Navigator.push(
+												context,
+													MaterialPageRoute(builder: (context) => Scanner()),
+												);
+											},
+										),
 									),
 
 									SizedBox(height: 50),

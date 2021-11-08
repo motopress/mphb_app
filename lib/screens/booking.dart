@@ -10,13 +10,15 @@ class MyListItem extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
 
-	return Card(
-		shape: RoundedRectangleBorder(
-			borderRadius: BorderRadius.all(
-				Radius.circular(4)
-			)
+	return Container(
+		decoration: ShapeDecoration(
+			shape: RoundedRectangleBorder(
+				borderRadius: BorderRadius.all(
+					Radius.circular(4)
+				)
+			),
+			color: Colors.blueGrey.shade50,
 		),
-		color: Colors.blueGrey.shade50,
 		margin: EdgeInsets.all(5),
 		child: InkWell(
 			onTap: () {
@@ -35,28 +37,13 @@ class MyListItem extends StatelessWidget {
 			child: Padding(
 				padding: EdgeInsets.all(10),
 				child: Row(
-					mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+					mainAxisAlignment: MainAxisAlignment.spaceBetween,
 					children: [
 						Column(
 							children: [
 								Text(
 									booking['id'].toString(),
-									style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-								),
-							]
-						),
-						Column(
-							children: [
-								if ( booking['status'] == 'confirmed' ) Icon(Icons.done)
-								else if ( booking['status'] == 'abandoned' ) Icon(Icons.remove)
-								else if ( booking['status'] == 'cancelled' ) Icon(Icons.block)
-							]
-						),
-						Column(
-							children: [
-								Text(
-									booking['status'],
-									style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+									style: TextStyle(fontSize: 12),
 								),
 							]
 						),
@@ -68,7 +55,7 @@ class MyListItem extends StatelessWidget {
 											padding: EdgeInsets.all(4),
 											child: Icon(
 												Icons.flight_land,
-												size: 16
+												size: 12
 											)
 										),
 										Text(
@@ -87,7 +74,7 @@ class MyListItem extends StatelessWidget {
 											padding: EdgeInsets.all(4),
 											child: Icon(
 												Icons.flight_takeoff,
-												size: 16
+												size: 12
 											)
 										),
 										Text(
@@ -98,7 +85,36 @@ class MyListItem extends StatelessWidget {
 								),
 							]
 						),
-						
+						Column(
+							children: [
+								Row(
+									children: [
+										Text(
+											booking['total_price'].toString() + ' ' + booking['currency'],
+										),
+									]
+								),
+							]
+						),
+						Column(
+							children: [
+								Container(
+									padding: EdgeInsets.all(6.0),
+									decoration: ShapeDecoration(
+										shape: RoundedRectangleBorder(
+											borderRadius: BorderRadius.all(
+												Radius.circular(4)
+											)
+										),
+										color: Colors.green,
+									),
+									child: Text(
+										booking['status'],
+										style: TextStyle(color: Colors.white,),
+									),
+								),
+							]
+						),
 					]
 				),
 			),
