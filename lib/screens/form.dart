@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mphb_app/models/form_model.dart';
+import 'package:mphb_app/screens/scanner.dart';
 
 // Create a Form widget.
 class MyCustomForm extends StatefulWidget {
@@ -60,6 +61,19 @@ class MyCustomFormState extends State<MyCustomForm> {
 										'Setup',
 										style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
 									),
+									SizedBox(height: 50),
+
+									IconButton(
+										icon: const Icon(Icons.qr_code_scanner),
+										tooltip: 'Settings',
+										onPressed: () {
+											Navigator.push(
+											context,
+												MaterialPageRoute(builder: (context) => Scanner()),
+											);
+										},
+									),
+
 									SizedBox(height: 50),
 									Form(
 										key: _formKey,
