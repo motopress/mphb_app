@@ -3,52 +3,38 @@ import 'package:mphb_app/wp-api.dart';
 import 'package:mphb_app/screens/booking.dart';
 
 //TODO: StatefulWidget
-class MyHomePage extends StatelessWidget {
+class BookingsPage extends StatefulWidget {
+
+	const BookingsPage({Key? key}) : super(key: key);
+
+	@override
+	_BookingsPageState createState() => _BookingsPageState();
+
+}
+
+class _BookingsPageState extends State<BookingsPage> {
+
+	late Future<List> bookings;
+
+	@override
+	void initState() {
+		super.initState();
+
+		bookings = fetchWpPosts();
+	}
 
 	@override
 	Widget build(BuildContext context) {
+
 		return Scaffold(
 
-		appBar: AppBar(
-			backgroundColor: Color(0xff353353),
-			title: Text('Bookings'),
-			actions: <Widget>[
-				IconButton(
-					icon: const Icon(Icons.sync),
-					tooltip: 'Refresh',
-					onPressed: () {
-					},
-				),
-				IconButton(
-					icon: const Icon(Icons.settings),
-					tooltip: 'Settings',
-					onPressed: () {
-						Navigator.push(context, MaterialPageRoute<void>(
-							builder: (BuildContext context) {
-								return Scaffold(
-									appBar: AppBar(
-										title: const Text('Settings'),
-									),
-									body: const Center(
-										child: Text(
-											'Settings page',
-											style: TextStyle(fontSize: 24),
-										),
-									),
-								);
-							},
-						));
-					},
-				),
-			],
-		),
-
-		body: Column(
+			body: Column(
 				children: [
 				Expanded(
 					child: Container(
+						margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
 						child: FutureBuilder(
-							future: fetchWpPosts(),
+							future: bookings,
 							builder: (context, AsyncSnapshot snapshot) {
 								if (snapshot.hasData) {
 

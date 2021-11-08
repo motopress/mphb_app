@@ -43,92 +43,119 @@ class MyCustomFormState extends State<MyCustomForm> {
 	Widget build(BuildContext context) {
 		// Build a Form widget using the _formKey created above.
 		return new Scaffold(
-			body: Column(
-				children: <Widget>[
-					Text(
-						'Setup',
-						style: Theme.of(context).textTheme.headline1,
-					),
-					Form(
-						key: _formKey,
-						child: Column(
-							crossAxisAlignment: CrossAxisAlignment.start,
-							children: [
-								TextFormField(
-									initialValue: "uglywebsites.org",
-									decoration: const InputDecoration(
-										hintText: 'Domain',
+			body:
+				Center(
+					child: Container(
+					color: Colors.white,
+					child: Padding(
+						padding: const EdgeInsets.all(36.0),
+						child:
+							Column(
+
+								crossAxisAlignment: CrossAxisAlignment.center,
+								mainAxisAlignment: MainAxisAlignment.center,
+
+								children: <Widget>[
+									Text(
+										'Setup',
+										style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
 									),
-									// The validator receives the text that the user has entered.
-									validator: (value) {
-										if (value == null || value.isEmpty) {
-											return 'Please enter some text';
-										}
-										return null;
-									},
-									onSaved: (value) {
-										model.domain = value ?? '';
-									},
-								),
-								TextFormField(
-									initialValue: "ck_09c4163541fb26930cf9531ba1601f711f5c1ab9",
-									decoration: const InputDecoration(
-										hintText: 'consumer_key',
+									SizedBox(height: 50),
+									Form(
+										key: _formKey,
+										child: Column(
+											children: [
+												TextFormField(
+													initialValue: "uglywebsites.org",
+													decoration: const InputDecoration(
+														hintText: 'Domain',
+														labelText: 'Domain',
+														border: OutlineInputBorder(),
+													),
+													// The validator receives the text that the user has entered.
+													validator: (value) {
+														if (value == null || value.isEmpty) {
+															return 'Please enter some text';
+														}
+														return null;
+													},
+													onSaved: (value) {
+														model.domain = value ?? '';
+													},
+												),
+												SizedBox(height: 30),
+												TextFormField(
+													initialValue: "ck_09c4163541fb26930cf9531ba1601f711f5c1ab9",
+													decoration: const InputDecoration(
+														hintText: 'consumer_key',
+														labelText: 'consumer_key',
+														border: OutlineInputBorder(),
+													),
+													// The validator receives the text that the user has entered.
+													validator: (value) {
+														if (value == null || value.isEmpty) {
+															return 'Please enter some text';
+														}
+														return null;
+													},
+													onSaved: (value) {
+														model.consumer_key = value ?? '';
+													},
+												),
+												SizedBox(height: 30),
+												TextFormField(
+													initialValue: "cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8",
+													decoration: const InputDecoration(
+														hintText: 'consumer_secret',
+														labelText: 'consumer_secret',
+														border: OutlineInputBorder(),
+													),
+													obscureText: true,
+													// The validator receives the text that the user has entered.
+													validator: (value) {
+														if (value == null || value.isEmpty) {
+															return 'Please enter some text';
+														}
+														return null;
+													},
+													onSaved: (value) {
+														model.consumer_secret = value ?? '';
+													},
+												),
+												Padding(
+													padding: const EdgeInsets.symmetric(vertical: 30.0),
+													child: ElevatedButton(
+														style: ElevatedButton.styleFrom(
+															minimumSize: Size(double.infinity, 50), // double.infinity is the width and 30 is the height
+														),
+														onPressed: () {
+															// Validate returns true if the form is valid, or false otherwise.
+															if (_formKey.currentState!.validate()) {
+																
+																_formKey.currentState!.save();
+																//print(model.domain);
+																
+																// set value
+																sharedPreferences.setString('domain', model.domain);
+																sharedPreferences.setString('consumer_key', model.consumer_key);
+																sharedPreferences.setString('consumer_secret', model.consumer_secret);
+																
+																Navigator.pushReplacementNamed(context, '/bookings');
+															}
+														},
+														child: const Text(
+															'Submit',
+														),
+													),
+												),
+											],
+										),
 									),
-									// The validator receives the text that the user has entered.
-									validator: (value) {
-										if (value == null || value.isEmpty) {
-											return 'Please enter some text';
-										}
-										return null;
-									},
-									onSaved: (value) {
-										model.consumer_key = value ?? '';
-									},
-								),
-								TextFormField(
-									initialValue: "cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8",
-									decoration: const InputDecoration(
-										hintText: 'consumer_secret',
-									),
-									obscureText: true,
-									// The validator receives the text that the user has entered.
-									validator: (value) {
-										if (value == null || value.isEmpty) {
-											return 'Please enter some text';
-										}
-										return null;
-									},
-									onSaved: (value) {
-										model.consumer_secret = value ?? '';
-									},
-								),
-								Padding(
-									padding: const EdgeInsets.symmetric(vertical: 16.0),
-									child: ElevatedButton(
-										onPressed: () {
-											// Validate returns true if the form is valid, or false otherwise.
-											if (_formKey.currentState!.validate()) {
-												
-												_formKey.currentState!.save();
-												//print(model.domain);
-												
-												// set value
-												sharedPreferences.setString('domain', model.domain);
-												sharedPreferences.setString('consumer_key', model.consumer_key);
-												sharedPreferences.setString('consumer_secret', model.consumer_secret);
-												
-												Navigator.pushReplacementNamed(context, '/bookings');
-											}
-										},
-										child: const Text('Submit'),
-									),
-								),
-							],
-						),
-					),
-				]
-			),
+								]
+							),
+						)
+					)
+				)
 		);
 	}
 }
