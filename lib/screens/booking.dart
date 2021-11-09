@@ -29,7 +29,7 @@ class MyListItem extends StatelessWidget {
 						// Pass the arguments as part of the RouteSettings. The
 						// DetailScreen reads the arguments from these settings.
 						settings: RouteSettings(
-							arguments: booking,
+							arguments: booking['id'],
 						),
 					),
 				);
@@ -106,7 +106,7 @@ class MyListItem extends StatelessWidget {
 												Radius.circular(4)
 											)
 										),
-										color: Colors.green,
+										color: booking['status'] == 'confirmed' ? Colors.green : Colors.orange,
 									),
 									child: Text(
 										booking['status'],

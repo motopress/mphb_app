@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mphb_app/wp-api.dart';
 import 'package:mphb_app/screens/booking.dart';
+import 'package:mphb_app/controller/bookings_controller.dart';
 
-//TODO: StatefulWidget
 class BookingsPage extends StatefulWidget {
 
 	const BookingsPage({Key? key}) : super(key: key);
@@ -20,13 +19,55 @@ class _BookingsPageState extends State<BookingsPage> {
 	void initState() {
 		super.initState();
 
-		bookings = fetchWpPosts();
+		bookings = BookingsController.wpGetBookings();
+	}
+
+	void refreshList() {
+		// reload
+		setState(() {
+			bookings = BookingsController.wpGetBookings();
+		});
 	}
 
 	@override
 	Widget build(BuildContext context) {
 
 		return Scaffold(
+
+			appBar: AppBar(
+				title: Text('Bookings'),
+				actions: <Widget>[
+					IconButton(
+						icon: const Icon(Icons.sync),
+						tooltip: 'Refresh',
+						onPressed: () {
+							refreshList();
+						},
+					),
+					IconButton(
+						icon: const Icon(Icons.settings),
+						tooltip: 'Settings',
+						onPressed: () {
+							Navigator.push(context, MaterialPageRoute<void>(
+								builder: (BuildContext context) {
+									return Scaffold(
+										appBar: AppBar(
+											title: const Text('Settings'),
+										),
+										body: const Center(
+											child: Text(
+												'Settings page',
+												style: TextStyle(fontSize: 24),
+											),
+										),
+									);
+								},
+							));
+						},
+					),
+				],
+			),
+
 
 			body: Column(
 				children: [
@@ -36,7 +77,13 @@ class _BookingsPageState extends State<BookingsPage> {
 						child: FutureBuilder(
 							future: bookings,
 							builder: (context, AsyncSnapshot snapshot) {
-								if (snapshot.hasData) {
+								if (snapshot.connectionState == ConnectionState.waiting) {
+									return new Center(
+										child: new CircularProgressIndicator(),
+									);
+								} else if (snapshot.hasError) {
+									return new Text('Error: ${snapshot.error}');
+								} else {
 
 									return ListView.builder(
 
@@ -53,12 +100,6 @@ class _BookingsPageState extends State<BookingsPage> {
 										physics: const AlwaysScrollableScrollPhysics(),
 									);
 								}
-
-								return Column(
-									children: [
-										CircularProgressIndicator()
-									]
-								);
 							},
 						)
 					),

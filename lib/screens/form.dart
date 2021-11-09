@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mphb_app/models/form_model.dart';
 import 'package:mphb_app/screens/scanner.dart';
+import 'package:mphb_app/local_storage.dart';
 
 // Create a Form widget.
 class MyCustomForm extends StatefulWidget {
@@ -164,9 +165,9 @@ class MyCustomFormState extends State<MyCustomForm> {
 																//print(model.domain);
 																
 																// set value
-																sharedPreferences.setString('domain', model.domain);
-																sharedPreferences.setString('consumer_key', model.consumer_key);
-																sharedPreferences.setString('consumer_secret', model.consumer_secret);
+																LocalStorage().domain = model.domain;
+																LocalStorage().consumer_key = model.consumer_key;
+																LocalStorage().consumer_secret = model.consumer_secret;
 																
 																Navigator.pushReplacementNamed(context, '/bookings');
 															}

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/screens/form.dart';
 import 'package:mphb_app/screens/home.dart';
+import 'package:mphb_app/local_storage.dart';
 
 void main() {
+	LocalStorage();
 	runApp(MyApp());
 }
 
