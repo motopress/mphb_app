@@ -6,6 +6,17 @@ import 'dart:async';
 import 'package:mphb_app/local_storage.dart';
 import 'package:mphb_app/models/booking.dart';
 
+
+/*
+ * A function that converts a response body into a List<Booking>.
+ * compute can only take a top-level function, but not instance or static methods.
+ */
+List<Booking> parseBookings(String responseBody) {
+	final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+
+	return parsed.map<Booking>((json) => Booking.fromJson(json)).toList();
+}
+
 class BookingsController {
 
 	final Map<String, String> params;
@@ -50,13 +61,6 @@ class BookingsController {
 			throw Exception('Request failed with status: ${response.statusCode}.');
 		}
 
-	}
-
-	// A function that converts a response body into a List<Booking>.
-	List<Booking> parseBookings(String responseBody) {
-		final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
-		return parsed.map<Booking>((json) => Booking.fromJson(json)).toList();
 	}
 
 }
