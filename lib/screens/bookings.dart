@@ -14,19 +14,25 @@ class BookingsPage extends StatefulWidget {
 
 class _BookingsPageState extends State<BookingsPage> {
 
-	late Future<List<Booking>> bookings;
+	late final BookingsController _bookingsController;
+
+	final Map<String, String> _params = {};
+
+	late Future<List<Booking>> _bookings;
 
 	@override
 	void initState() {
 		super.initState();
 
-		bookings = BookingsController.wpGetBookings();
+		_bookingsController = new BookingsController( params : _params );
+
+		_bookings = _bookingsController.wpGetBookings();
 	}
 
 	void refreshList() {
 		// reload
 		setState(() {
-			bookings = BookingsController.wpGetBookings();
+			_bookings = _bookingsController.wpGetBookings();
 		});
 	}
 
@@ -76,7 +82,7 @@ class _BookingsPageState extends State<BookingsPage> {
 					child: Container(
 						margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
 						child: FutureBuilder(
-							future: bookings,
+							future: _bookings,
 							builder: (context, AsyncSnapshot snapshot) {
 								if (snapshot.connectionState == ConnectionState.waiting) {
 									return new Center(
