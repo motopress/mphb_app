@@ -62,7 +62,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 										'Setup',
 										style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
 									),
-									SizedBox(height: 50),
+									SizedBox(height: 25.0),
 
 									Container(
 										decoration: BoxDecoration(
@@ -74,13 +74,12 @@ class MyCustomFormState extends State<MyCustomForm> {
 											icon: const Icon(Icons.qr_code_scanner),
 											tooltip: 'Scan QRCode',
 											onPressed: () {
-												
-												
+
 												/*
 												 * Web issue
 												 * https://github.com/juliuscanute/qr_code_scanner/issues/441
 												 */												
-												
+
 												Navigator.push(
 												context,
 													MaterialPageRoute(builder: (context) => Scanner()),
@@ -89,7 +88,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 										),
 									),
 
-									SizedBox(height: 50),
+									SizedBox(height: 25.0),
 									Form(
 										key: _formKey,
 										child: Column(

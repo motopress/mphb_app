@@ -12,7 +12,9 @@ class LocalStorage {
 
 	LocalStorage._privateConstructor() {
 		SharedPreferences.getInstance().then((prefs) {
-			_prefs = prefs;
+			if ( prefs != null) {
+				_prefs = prefs;
+			}
 		});
 	}
 
