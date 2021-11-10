@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/screens/booking.dart';
 import 'package:mphb_app/controller/bookings_controller.dart';
+import 'package:mphb_app/models/booking.dart';
 
 class BookingsPage extends StatefulWidget {
 
@@ -13,7 +14,7 @@ class BookingsPage extends StatefulWidget {
 
 class _BookingsPageState extends State<BookingsPage> {
 
-	late Future<List> bookings;
+	late Future<List<Booking>> bookings;
 
 	@override
 	void initState() {
@@ -90,7 +91,7 @@ class _BookingsPageState extends State<BookingsPage> {
 										itemCount: snapshot.data!.length,
 										itemBuilder: (BuildContext context, int index) {
 
-											Map booking = snapshot.data[index];
+											Booking booking = snapshot.data[index];
 
 											return MyListItem(booking);
 										},

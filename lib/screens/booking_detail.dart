@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/controller/booking_controller.dart';
+import 'package:mphb_app/models/booking.dart';
+import 'package:mphb_app/screens/booking_detail_customer.dart';
+import 'package:mphb_app/screens/booking_detail_accommodation.dart';
 
 class BookingDetailScreen extends StatefulWidget {
 
@@ -12,7 +15,7 @@ class BookingDetailScreen extends StatefulWidget {
 
 class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
-	late Future<Map> _booking;
+	late Future<Booking> _booking;
 
 	int _id = 0;
 
@@ -63,12 +66,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 						return new Text('Error: ${snapshot.error}');
 					} else {
 
-						Map booking = snapshot.data;
+						Booking booking = snapshot.data;
 						
-						Map _embedded = booking['_embedded'];
-						List accommodation = _embedded['accommodation'];
-						List accommodation_type = _embedded['accommodation_type'];
-
 						return SingleChildScrollView(
 							child: Container(
 								padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
@@ -81,17 +80,17 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 												mainAxisAlignment: MainAxisAlignment.spaceBetween,
 												children: [
 													Text(
-														'Booking #' + booking['id'].toString(),
+														'Booking #' + booking.id.toString(),
 														style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 													),
 													Container(
 														decoration: BoxDecoration(
 															borderRadius: BorderRadius.all(Radius.circular(4)),
-															color: booking['status'] == 'confirmed' ? Colors.green : Colors.orange,
+															color: booking.status == 'confirmed' ? Colors.green : Colors.orange,
 														),
 														padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20.0, right: 20.0),
 														child: Text(
-															booking['status'],
+															booking.status,
 															style: TextStyle(
 																color: Colors.white,
 																fontSize: 16,
@@ -128,7 +127,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 																			)
 																		),
 																		Text(
-																			booking['check_in_date'],
+																			booking.check_in_date,
 																			style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
 																		),
 																	]
@@ -150,7 +149,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 																			)
 																		),
 																		Text(
-																			booking['check_out_date'],
+																			booking.check_out_date,
 																			style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
 																		),
 																	]
@@ -162,82 +161,16 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 											),
 										),
 										// customer
-										Container(
-											margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-											decoration: ShapeDecoration(
-												shape: RoundedRectangleBorder(
-													borderRadius: BorderRadius.all(
-														Radius.circular(4)
-													)
-												),
-												color: Colors.blueGrey.shade50,
-											),
-											child: Padding(
-												padding: EdgeInsets.all(20.0),
-												child: Row(
-													crossAxisAlignment: CrossAxisAlignment.start,
-													children: [
-														Column(
-															children: [
-																Padding(
-																	padding: EdgeInsets.only(right: 20.0),
-																	child: Icon(
-																		Icons.person,
-																		size: 24
-																	)
-																),
-															]
-														),
-														Column(
-															crossAxisAlignment: CrossAxisAlignment.start,
-															children: [
-																Text(booking['customer']['first_name'] + ' ' + booking['customer']['last_name'],),
-																SizedBox(height: 10),
-																Text(booking['customer']['email'],),
-																SizedBox(height: 10),
-																Text(booking['customer']['phone'],),
-															]
-														),
-													]
-												)
-											),
-										),
+										BookingDetailCustomer( customer: booking.customer ),
 										// reserved_accommodations
 										Container(
 											margin: const EdgeInsets.only(top: 0, bottom: 20.0),
 											child: Column(
 												crossAxisAlignment: CrossAxisAlignment.start,
 												children: [
-													Text('reserved_accommodations'),
-													for (var i = 0; i < booking['reserved_accommodations'].length; i++)
-														Container(
-															padding: EdgeInsets.all(20.0),
-															margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-															decoration: ShapeDecoration(
-																shape: RoundedRectangleBorder(
-																	borderRadius: BorderRadius.all(
-																		Radius.circular(4)
-																	)
-																),
-																color: Colors.blueGrey.shade50,
-															),
-															child: Row(
-																children: [
-																	Column(
-																		crossAxisAlignment: CrossAxisAlignment.start,
-																		children: [
-																			Text( 'accommodation: ' + booking['reserved_accommodations'][i]['accommodation'].toString()),
-																			Text( 'accommodation_type: ' + booking['reserved_accommodations'][i]['accommodation_type'].toString()),
-																			Text( 'rate: ' + booking['reserved_accommodations'][i]['rate'].toString()),
-																			Text( 'adults: ' + booking['reserved_accommodations'][i]['adults'].toString()),
-																			Text( 'children: ' + booking['reserved_accommodations'][i]['children'].toString()),
-																			Text( 'Acc title: ' + getAccommodationById( accommodation, booking['reserved_accommodations'][i]['accommodation'])['title']),
-																			Text( 'Acc Type title: ' + getAccommodationTypeById( accommodation_type, booking['reserved_accommodations'][i]['accommodation_type'])['title']),
-																		],
-																	),
-																]
-															),
-														),
+													Text('Reservation'),
+													for ( var reserved_accommodation in booking.reserved_accommodations )
+														BookingDetailAccommodation( reserved_accommodation: reserved_accommodation ),
 												],
 											),
 										),
@@ -257,7 +190,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 												mainAxisAlignment: MainAxisAlignment.center,
 												children: [
 													Text(
-														booking['total_price'].toString() + ' ' + booking['currency'],
+														booking.total_price.toString() + ' ' + booking.currency,
 														style: TextStyle(
 															fontWeight: FontWeight.w800,
 															fontSize: 16,

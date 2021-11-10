@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/screens/booking_detail.dart';
+import 'package:mphb_app/models/booking.dart';
 
 class MyListItem extends StatelessWidget {
 
-	final Map booking;
+	final Booking booking;
 
 	const MyListItem(this.booking, {Key? key}) : super(key: key);
 
@@ -29,7 +30,7 @@ class MyListItem extends StatelessWidget {
 						// Pass the arguments as part of the RouteSettings. The
 						// DetailScreen reads the arguments from these settings.
 						settings: RouteSettings(
-							arguments: booking['id'],
+							arguments: booking.id,
 						),
 					),
 				);
@@ -42,7 +43,7 @@ class MyListItem extends StatelessWidget {
 						Column(
 							children: [
 								Text(
-									booking['id'].toString(),
+									booking.id.toString(),
 									style: TextStyle(fontSize: 12),
 								),
 							]
@@ -59,7 +60,7 @@ class MyListItem extends StatelessWidget {
 											)
 										),
 										Text(
-											booking['check_in_date'],
+											booking.check_in_date,
 											style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
 										),
 									]
@@ -78,7 +79,7 @@ class MyListItem extends StatelessWidget {
 											)
 										),
 										Text(
-											booking['check_out_date'],
+											booking.check_out_date,
 											style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
 										),
 									]
@@ -90,7 +91,7 @@ class MyListItem extends StatelessWidget {
 								Row(
 									children: [
 										Text(
-											booking['total_price'].toString() + ' ' + booking['currency'],
+											booking.total_price.toString() + ' ' + booking.currency,
 										),
 									]
 								),
@@ -106,10 +107,10 @@ class MyListItem extends StatelessWidget {
 												Radius.circular(4)
 											)
 										),
-										color: booking['status'] == 'confirmed' ? Colors.green : Colors.orange,
+										color: booking.status == 'confirmed' ? Colors.green : Colors.orange,
 									),
 									child: Text(
-										booking['status'],
+										booking.status,
 										style: TextStyle(color: Colors.white,),
 									),
 								),

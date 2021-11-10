@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
 import 'package:mphb_app/local_storage.dart';
+import 'package:mphb_app/models/booking.dart';
 
 class BookingController {
 
@@ -10,7 +11,7 @@ class BookingController {
 
 	static String queryEndpoint = '/booking-api/wp-json/mphb/v1/bookings';
 
-	static Future<Map> wpGetBooking( int bookingID ) async {
+	static Future<Booking> wpGetBooking( int bookingID ) async {
 
 		//https://booking.loc/wp-json/mphb/v1/bookings/6827?_embed=accommodation,accommodation_type&consumer_key=ck_1d9a5f63a7d95d69db24ea6d2a1a883cace7a127&consumer_secret=cs_993ee46f420b9472bc4b98aed6b2b1ca5e92b717
 
@@ -30,7 +31,8 @@ class BookingController {
 
 		if ( response.statusCode == HttpStatus.OK ) {
 
-			return json.decode(response.body);
+			//return json.decode(response.body);
+			return Booking.fromJson(jsonDecode(response.body));
 
 		} else {
 
