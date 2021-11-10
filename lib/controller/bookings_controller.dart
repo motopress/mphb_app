@@ -16,7 +16,7 @@ class BookingsController {
 
 	final String _queryEndpoint = '/booking-api/wp-json/mphb/v1/bookings';
 
-	Future<List<Booking>> wpGetBookings() async {
+	Future<List<Booking>> wpGetBookings( int offset, int limit ) async {
 
 		//https://booking.loc/wp-json/mphb/v1/bookings?consumer_key=ck_1d9a5f63a7d95d69db24ea6d2a1a883cace7a127&consumer_secret=cs_993ee46f420b9472bc4b98aed6b2b1ca5e92b717
 		//https://uglywebsites.org/booking-api/wp-json/mphb/v1/bookings?consumer_key=ck_09c4163541fb26930cf9531ba1601f711f5c1ab9&consumer_secret=cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8
@@ -26,7 +26,9 @@ class BookingsController {
 		final queryParameters = <String, String> {
 			'consumer_key': LocalStorage().consumer_key,
 			'consumer_secret': LocalStorage().consumer_secret,
-			'per_page': '5',
+			'per_page': limit.toString(),
+			'offset': offset.toString()
+			
 		};
 
 		final uri = Uri.https(queryDomain, _queryEndpoint, queryParameters);
@@ -35,13 +37,10 @@ class BookingsController {
 
 		if ( response.statusCode == HttpStatus.OK ) {
 
-			//print(response.headers.runtimeType);
-
-			var xWPTotal = response.headers['x-wp-total'];
+			/*var xWPTotal = response.headers['x-wp-total'];
 			var xWPTotalPages = response.headers['x-wp-totalpages'];
-
-			//print(xWPTotal);
-			//print(xWPTotalPages);
+			print(xWPTotal);
+			print(xWPTotalPages);*/
 
 			//return jsonDecode( response.body );
 			return compute( parseBookings, response.body );

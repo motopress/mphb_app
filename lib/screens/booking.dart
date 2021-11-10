@@ -6,7 +6,10 @@ class MyListItem extends StatelessWidget {
 
 	final Booking booking;
 
-	const MyListItem(this.booking, {Key? key}) : super(key: key);
+	const MyListItem({
+		required this.booking,
+		Key? key
+	}) : super(key: key);
 
 	@override
 	Widget build(BuildContext context) {
