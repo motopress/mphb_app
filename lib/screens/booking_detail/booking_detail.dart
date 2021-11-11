@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mphb_app/controller/booking_controller.dart';
 import 'package:mphb_app/models/booking.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_dates.dart';
@@ -80,9 +81,20 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 											child: Row(
 												mainAxisAlignment: MainAxisAlignment.spaceBetween,
 												children: [
-													Text(
-														'Booking #' + booking.id.toString(),
-														style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+													Column(
+														children: [
+															Text(
+																'Booking #' + booking.id.toString(),
+																style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+															),
+															Padding (
+																padding: EdgeInsets.only(top: 5.0),
+																child: Text(
+																	DateFormat('yyyy-MM-dd HH:mm').format( DateTime.parse(booking.date_created) ),
+																	style: TextStyle(fontSize: 12),
+																),
+															),
+														],
 													),
 													Container(
 														decoration: BoxDecoration(
