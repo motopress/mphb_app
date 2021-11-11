@@ -12,15 +12,21 @@ class BookingDetailAccommodation extends StatelessWidget {
 
 		return Container(
 
-			padding: EdgeInsets.all(10.0),
+			padding: EdgeInsets.all(20.0),
 			margin: const EdgeInsets.only(top: 10.0),
-			decoration: ShapeDecoration(
-				shape: RoundedRectangleBorder(
-					borderRadius: BorderRadius.all(
-						Radius.circular(4)
-					)
+			decoration: BoxDecoration(
+				color: Colors.white,
+				borderRadius: BorderRadius.all(
+					Radius.circular(6)
 				),
-				color: Colors.blueGrey.shade50,
+				boxShadow: [
+					BoxShadow(
+						color: Colors.grey.withOpacity(0.1),
+						spreadRadius: 0,
+						blurRadius: 2,
+						offset: Offset(0, 4), // changes position of shadow
+					),
+				],
 			),
 			child: Column(
 				crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,9 +41,12 @@ class BookingDetailAccommodation extends StatelessWidget {
 											reserved_accommodation.accommodationObject.title,
 											style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 										),
-										Text(
-											reserved_accommodation.accommodationTypeObject.title,
-											style: TextStyle(fontSize: 12),
+										Padding(
+											padding: EdgeInsets.only(top: 5.0),
+											child: Text(
+												reserved_accommodation.accommodationTypeObject.title,
+												style: TextStyle(fontSize: 12),
+											),
 										),
 									]
 								)

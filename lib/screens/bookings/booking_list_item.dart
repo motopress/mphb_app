@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mphb_app/screens/booking_detail.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail.dart';
 import 'package:mphb_app/models/booking.dart';
 
-class MyListItem extends StatelessWidget {
+class BookingListItem extends StatelessWidget {
 
 	final Booking booking;
 
-	const MyListItem({
+	const BookingListItem({
 		required this.booking,
 		Key? key
 	}) : super(key: key);
@@ -15,15 +15,21 @@ class MyListItem extends StatelessWidget {
 	Widget build(BuildContext context) {
 
 	return Container(
-		decoration: ShapeDecoration(
-			shape: RoundedRectangleBorder(
-				borderRadius: BorderRadius.all(
-					Radius.circular(4)
-				)
+		decoration: BoxDecoration(
+			color: Colors.white,
+			borderRadius: BorderRadius.all(
+				Radius.circular(6)
 			),
-			color: Colors.blueGrey.shade50,
+			boxShadow: [
+				BoxShadow(
+					color: Colors.grey.withOpacity(0.1),
+					spreadRadius: 0,
+					blurRadius: 2,
+					offset: Offset(0, 2), // changes position of shadow
+				),
+			],
 		),
-		margin: EdgeInsets.all(5),
+		margin: EdgeInsets.only(bottom: 10.0),
 		child: InkWell(
 			onTap: () {
 				Navigator.push(
@@ -39,7 +45,7 @@ class MyListItem extends StatelessWidget {
 				);
 			},
 			child: Padding(
-				padding: EdgeInsets.all(10),
+				padding: EdgeInsets.all(15),
 				child: Row(
 					mainAxisAlignment: MainAxisAlignment.spaceBetween,
 					children: [

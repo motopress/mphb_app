@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mphb_app/screens/booking.dart';
+import 'package:mphb_app/screens/bookings/booking_list_item.dart';
 import 'package:mphb_app/controller/bookings_controller.dart';
 import 'package:mphb_app/models/booking.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -89,28 +89,22 @@ class _BookingListViewState extends State<BookingsPage> {
 				],
 			),
 
-			body: Column(
-				children: [
-					Expanded(
-						child: Container(
-							margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-							child: RefreshIndicator(
-								onRefresh: () => Future.sync(
-									() => _pagingController.refresh(),
-								),
-								child: PagedListView<int, Booking>(
-									pagingController: _pagingController,
-									builderDelegate: PagedChildBuilderDelegate<Booking>(
-										itemBuilder: (context, item, index) => MyListItem(
-											booking: item,
-										),
-									),
-								),
+			body: Container(
+				padding: EdgeInsets.all(20.0),
+				child: RefreshIndicator(
+					onRefresh: () => Future.sync(
+						() => _pagingController.refresh(),
+					),
+					child: PagedListView<int, Booking>(
+						pagingController: _pagingController,
+						builderDelegate: PagedChildBuilderDelegate<Booking>(
+							itemBuilder: (context, item, index) => BookingListItem(
+								booking: item,
 							),
 						),
 					),
-				]
-			),
+				),
+			)
 		);
 	}
 

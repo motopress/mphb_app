@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/controller/booking_controller.dart';
 import 'package:mphb_app/models/booking.dart';
-import 'package:mphb_app/screens/booking_detail_customer.dart';
-import 'package:mphb_app/screens/booking_detail_accommodation.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail_dates.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail_customer.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail_accommodation.dart';
 
 class BookingDetailScreen extends StatefulWidget {
 
@@ -73,7 +74,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 								padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
 								child: Column(
 									children: [
-										// booking status
+										// booking id + status
 										Container(
 											margin: const EdgeInsets.only(bottom: 20.0),
 											child: Row(
@@ -100,68 +101,13 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 												]
 											),
 										),
+
 										// check_in_date / check_out_date
-										Container(
-											decoration: ShapeDecoration(
-												shape: RoundedRectangleBorder(
-													borderRadius: BorderRadius.all(
-														Radius.circular(4)
-													)
-												),
-												color: Colors.green[100],
-											),
-											child: Row(
-												mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-												children: [
-													Column(
-														children: [
-															Padding(
-																padding: EdgeInsets.only(left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
-																child: Row(
-																	children: [
-																		Padding(
-																			padding: EdgeInsets.all(10),
-																			child: Icon(
-																				Icons.flight_land,
-																				size: 12
-																			)
-																		),
-																		Text(
-																			booking.check_in_date,
-																			style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue[900]),
-																		),
-																	]
-																),
-															),
-														]
-													),
-													Column(
-														children: [
-															Padding(
-																padding: EdgeInsets.only(left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
-																child: Row(
-																	children: [
-																		Padding(
-																			padding: EdgeInsets.all(10),
-																			child: Icon(
-																				Icons.flight_takeoff,
-																				size: 12
-																			)
-																		),
-																		Text(
-																			booking.check_out_date,
-																			style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue[900]),
-																		),
-																	]
-																),
-															),
-														]
-													),
-												]
-											),
-										),
+										BookingDetailDates( booking: booking ),
+
 										// customer
 										BookingDetailCustomer( customer: booking.customer ),
+
 										// reserved_accommodations
 										Container(
 											margin: const EdgeInsets.only(top: 0, bottom: 20.0),
@@ -174,6 +120,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 												],
 											),
 										),
+
 										//total_price
 										Container(
 											margin: const EdgeInsets.only(top: 0, bottom: 20.0),
@@ -184,7 +131,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														Radius.circular(4)
 													)
 												),
-												color: Colors.amber,
+												color: Colors.white,
 											),
 											child: Row(
 												mainAxisAlignment: MainAxisAlignment.center,
