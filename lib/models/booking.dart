@@ -1,6 +1,7 @@
 import 'package:mphb_app/models/customer.dart';
 import 'package:mphb_app/models/reserved_accommodations.dart';
 import 'package:mphb_app/models/reserved_accommodation.dart';
+import 'package:mphb_app/models/payment.dart';
 
 class Booking {
 
@@ -20,9 +21,9 @@ class Booking {
 
 	final String coupon_code;
 	final String currency;
-	final int total_price;
+	final double total_price;
 
-	final List payments;
+	final List<Payment> payments;
 
 	final bool imported;
 	final String ical_description;
@@ -75,7 +76,7 @@ class Booking {
 			coupon_code: json['coupon_code'],
 			currency: json['currency'],
 			total_price: json['total_price'],
-			payments: json['payments'],
+			payments: json['payments'].cast<Map<String, dynamic>>().map<Payment>((json) => Payment.fromJson(json)).toList(),
 			imported: json['imported'],
 			ical_description: json['ical_description'],
 			ical_prodid: json['ical_prodid'],
@@ -83,6 +84,23 @@ class Booking {
 			note: json['note'],
 			internal_notes: json['internal_notes'],
 		);
+	}
+
+	double getPaid() {
+		
+		double paid = 0;
+		
+		for( Payment payment in payments ) {
+			if (payment.status == 'completed') {
+				paid += payment.amount;
+			}
+		}
+
+		return paid;
+	}
+
+	double getToPay() {
+		return total_price - getPaid();
 	}
 
 }

@@ -13,7 +13,7 @@ class BookingController {
 
 	static Future<Booking> wpGetBooking( int bookingID ) async {
 
-		//https://booking.loc/wp-json/mphb/v1/bookings/6827?_embed=accommodation,accommodation_type&consumer_key=ck_1d9a5f63a7d95d69db24ea6d2a1a883cace7a127&consumer_secret=cs_993ee46f420b9472bc4b98aed6b2b1ca5e92b717
+		//https://booking.loc/wp-json/mphb/v1/bookings/6827?&consumer_key=ck_1d9a5f63a7d95d69db24ea6d2a1a883cace7a127&consumer_secret=cs_993ee46f420b9472bc4b98aed6b2b1ca5e92b717
 
 		final queryDomain = LocalStorage().domain;
 

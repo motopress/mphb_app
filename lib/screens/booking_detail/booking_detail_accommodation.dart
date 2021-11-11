@@ -52,6 +52,7 @@ class BookingDetailAccommodation extends StatelessWidget {
 								)
 							),
 							Container(
+								padding: EdgeInsets.only(left: 10.0),
 								child: Column(
 									mainAxisSize: MainAxisSize.min,
 									children: [

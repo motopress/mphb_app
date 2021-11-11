@@ -46,7 +46,6 @@ class BookingDetailCustomer extends StatelessWidget {
 								child: Text(
 									customer.first_name + ' ' + customer.last_name,
 									style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-									//overflow: TextOverflow.ellipsis,
 								),
 							),
 

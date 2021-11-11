@@ -10,10 +10,21 @@ class BookingsPage extends StatefulWidget {
 }
 
 class _BookingListViewState extends State<BookingsPage> {
-  static const _pageSize = 10;
 
-  final PagingController<int, Booking> _pagingController =
-      PagingController(firstPageKey: 0);
+	final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+	void _openEndDrawer() {
+		_scaffoldKey.currentState!.openEndDrawer();
+	}
+
+	void _closeEndDrawer() {
+		Navigator.of(context).pop();
+	}
+
+	static const _pageSize = 10;
+
+	final PagingController<int, Booking> _pagingController =
+		PagingController(firstPageKey: 0);
 
 	late final BookingsController _bookingsController;
 
@@ -55,6 +66,7 @@ class _BookingListViewState extends State<BookingsPage> {
 
 		return Scaffold(
 
+			key: _scaffoldKey,
 			appBar: AppBar(
 				title: Text('Bookings'),
 				actions: <Widget>[
@@ -63,6 +75,22 @@ class _BookingListViewState extends State<BookingsPage> {
 						tooltip: 'Refresh',
 						onPressed: () {
 							_pagingController.refresh();
+						},
+					),
+					IconButton(
+						icon: const Icon(Icons.filter_list),
+						tooltip: 'Filter',
+						onPressed: _openEndDrawer,
+					),
+					PopupMenuButton<String>(
+						onSelected: (index){},
+						itemBuilder: (BuildContext context) {
+							return {'Logout', 'Settings'}.map((String choice) {
+								return PopupMenuItem<String>(
+									value: choice,
+									child: Text(choice),
+								);
+							}).toList();
 						},
 					),
 					IconButton(
@@ -104,7 +132,25 @@ class _BookingListViewState extends State<BookingsPage> {
 						),
 					),
 				),
-			)
+			),
+
+			endDrawer: Drawer(
+				child: Center(
+					child: Column(
+						mainAxisAlignment: MainAxisAlignment.center,
+						children: <Widget>[
+							const Text('This is the Drawer'),
+							ElevatedButton(
+								onPressed: _closeEndDrawer,
+								child: const Text('Close Drawer'),
+							),
+						],
+					),
+				),
+			),
+			// Disable opening the end drawer with a swipe gesture.
+			endDrawerEnableOpenDragGesture: false,
+
 		);
 	}
 

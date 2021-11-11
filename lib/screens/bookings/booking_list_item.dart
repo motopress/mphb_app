@@ -114,7 +114,7 @@ class BookingListItem extends StatelessWidget {
 												),
 											),
 											Padding(
-												padding: EdgeInsets.only(right: 4.0, left: 10.0),
+												padding: EdgeInsets.only(right: 4.0, left: 6.0),
 												child: Icon(
 													Icons.event_available,
 													size: 12,
@@ -122,13 +122,13 @@ class BookingListItem extends StatelessWidget {
 												)
 											),
 											Text(
-												DateFormat('yyyy-MM-dd HH:mm').format( DateTime.parse(booking.date_created) ),
+												DateFormat('yyyy-MM-dd').format( DateTime.parse(booking.date_created) ),
 												style: TextStyle(
 													fontSize: 12,
 												),
 											),
 											Padding(
-												padding: EdgeInsets.only(right: 0.0, left: 10.0),
+												padding: EdgeInsets.only(right: 0.0, left: 6.0),
 												child: Icon(
 													Icons.attach_money,
 													size: 12,
