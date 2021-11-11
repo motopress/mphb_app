@@ -89,7 +89,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 															borderRadius: BorderRadius.all(Radius.circular(4)),
 															color: booking.status == 'confirmed' ? Colors.green : Colors.orange,
 														),
-														padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10.0, right: 10.0),
+														padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10.0, right: 10.0),
 														child: Text(
 															booking.status,
 															style: TextStyle(

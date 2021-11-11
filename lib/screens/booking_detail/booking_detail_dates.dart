@@ -24,11 +24,13 @@ class BookingDetailDates extends StatelessWidget {
 					Column(
 						children: [
 							Container(
-								decoration: ShapeDecoration(
-									shape: RoundedRectangleBorder(
-										borderRadius: BorderRadius.all(
-											Radius.circular(6)
-										)
+								decoration: BoxDecoration(
+									border: Border.all(
+										width: 2.0,
+										color: Colors.indigo.shade100
+									),
+									borderRadius: BorderRadius.all(
+										Radius.circular(6.0)
 									),
 									color: Colors.white,
 								),
@@ -40,7 +42,8 @@ class BookingDetailDates extends StatelessWidget {
 											padding: EdgeInsets.all(10),
 											child: Icon(
 												Icons.flight_land,
-												size: 12
+												size: 12,
+												color: Colors.indigo.shade100
 											)
 										),
 										Text(
@@ -55,11 +58,13 @@ class BookingDetailDates extends StatelessWidget {
 					Column(
 						children: [
 							Container(
-								decoration: ShapeDecoration(
-									shape: RoundedRectangleBorder(
-										borderRadius: BorderRadius.all(
-											Radius.circular(6)
-										)
+								decoration: BoxDecoration(
+									border: Border.all(
+										width: 2.0,
+										color: Colors.indigo.shade100
+									),
+									borderRadius: BorderRadius.all(
+										Radius.circular(6.0)
 									),
 									color: Colors.white,
 								),
@@ -71,7 +76,8 @@ class BookingDetailDates extends StatelessWidget {
 											padding: EdgeInsets.all(10),
 											child: Icon(
 												Icons.flight_takeoff,
-												size: 12
+												size: 12,
+												color: Colors.indigo.shade100
 											)
 										),
 										Text(
