@@ -21,7 +21,7 @@ class Booking {
 
 	final String coupon_code;
 	final String currency;
-	final double total_price;
+	final num total_price;
 
 	final List<Payment> payments;
 
@@ -86,9 +86,9 @@ class Booking {
 		);
 	}
 
-	double getPaid() {
+	num getPaid() {
 		
-		double paid = 0;
+		num paid = 0;
 		
 		for( Payment payment in payments ) {
 			if (payment.status == 'completed') {
@@ -99,7 +99,7 @@ class Booking {
 		return paid;
 	}
 
-	double getToPay() {
+	num getToPay() {
 		return total_price - getPaid();
 	}
 

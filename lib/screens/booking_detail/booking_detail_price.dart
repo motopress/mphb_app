@@ -65,7 +65,6 @@ class BookingDetailPrice extends StatelessWidget {
 							]
 						)
 					),
-					VerticalDivider(),
 					Expanded(
 						child: Column(
 							children: [

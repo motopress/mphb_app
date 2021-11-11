@@ -2,7 +2,7 @@ class Payment {
 
     final int id;
     final String status;
-    final double amount;
+    final num amount;
     final String currency;
 
 	Payment({
@@ -16,7 +16,7 @@ class Payment {
 		return Payment(
 			id: json['id'] as int,
 			status: json['status'] as String,
-			amount: json['amount'] as double,
+			amount: json['amount'] as num,
 			currency: json['currency'] as String,
 		);
 	}

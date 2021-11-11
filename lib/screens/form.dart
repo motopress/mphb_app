@@ -90,7 +90,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 											icon: Icon(Icons.qr_code_scanner),
 											label: Text("Scan QRCode"),
 											style: OutlinedButton.styleFrom(
-												padding: EdgeInsets.all(20),
+												padding: EdgeInsets.all(10),
 											),
 										),
 
@@ -161,7 +161,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 													ElevatedButton(
 														style: ElevatedButton.styleFrom(
 															minimumSize: Size(double.infinity, 50), // double.infinity is the width and 50 is the height
-															padding: EdgeInsets.all(20),
+															padding: EdgeInsets.all(10),
 														),
 														onPressed: () {
 															// Validate returns true if the form is valid, or false otherwise.
