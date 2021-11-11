@@ -91,17 +91,6 @@ class MyListItem extends StatelessWidget {
 						),
 						Column(
 							children: [
-								Row(
-									children: [
-										Text(
-											booking.total_price.toString() + ' ' + booking.currency,
-										),
-									]
-								),
-							]
-						),
-						Column(
-							children: [
 								Container(
 									padding: EdgeInsets.all(6.0),
 									decoration: ShapeDecoration(

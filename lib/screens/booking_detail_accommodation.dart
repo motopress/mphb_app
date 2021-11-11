@@ -12,8 +12,8 @@ class BookingDetailAccommodation extends StatelessWidget {
 
 		return Container(
 
-			padding: EdgeInsets.all(20.0),
-			margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+			padding: EdgeInsets.all(10.0),
+			margin: const EdgeInsets.only(top: 10.0),
 			decoration: ShapeDecoration(
 				shape: RoundedRectangleBorder(
 					borderRadius: BorderRadius.all(
@@ -43,7 +43,6 @@ class BookingDetailAccommodation extends StatelessWidget {
 								)
 							),
 							Container(
-								padding: EdgeInsets.all(5.0),
 								child: Column(
 									mainAxisSize: MainAxisSize.min,
 									children: [
@@ -53,27 +52,28 @@ class BookingDetailAccommodation extends StatelessWidget {
 										),
 										Text(
 											'adults',
-											style: TextStyle(fontSize: 12),
+											style: TextStyle(fontSize: 11),
 										),
 									]
 								),
 							),
-							Container(
-								padding: EdgeInsets.all(5.0),
-								child: Column(
-									mainAxisSize: MainAxisSize.min,
-									children: [
-										Text(
-											reserved_accommodation.children.toString(),
-											style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-										),
-										Text(
-											'children',
-											style: TextStyle(fontSize: 12),
-										),
-									]
+							if ( reserved_accommodation.children > 0 )
+								Container(
+									padding: EdgeInsets.only(left: 10.0),
+									child: Column(
+										mainAxisSize: MainAxisSize.min,
+										children: [
+											Text(
+												reserved_accommodation.children.toString(),
+												style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+											),
+											Text(
+												'children',
+												style: TextStyle(fontSize: 11),
+											),
+										]
+									),
 								),
-							),
 						]
 					),
 				],

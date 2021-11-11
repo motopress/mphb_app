@@ -88,7 +88,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 															borderRadius: BorderRadius.all(Radius.circular(4)),
 															color: booking.status == 'confirmed' ? Colors.green : Colors.orange,
 														),
-														padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20.0, right: 20.0),
+														padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10.0, right: 10.0),
 														child: Text(
 															booking.status,
 															style: TextStyle(
@@ -108,7 +108,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														Radius.circular(4)
 													)
 												),
-												color: Colors.orange[50],
+												color: Colors.green[100],
 											),
 											child: Row(
 												mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -116,19 +116,19 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 													Column(
 														children: [
 															Padding(
-																padding: EdgeInsets.only(left: 5.0, right: 10.0, top: 20.0, bottom: 20.0),
+																padding: EdgeInsets.only(left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
 																child: Row(
 																	children: [
 																		Padding(
 																			padding: EdgeInsets.all(10),
 																			child: Icon(
 																				Icons.flight_land,
-																				size: 16
+																				size: 12
 																			)
 																		),
 																		Text(
 																			booking.check_in_date,
-																			style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+																			style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue[900]),
 																		),
 																	]
 																),
@@ -138,19 +138,19 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 													Column(
 														children: [
 															Padding(
-																padding: EdgeInsets.only(left: 5.0, right: 10.0, top: 20.0, bottom: 20.0),
+																padding: EdgeInsets.only(left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
 																child: Row(
 																	children: [
 																		Padding(
 																			padding: EdgeInsets.all(10),
 																			child: Icon(
 																				Icons.flight_takeoff,
-																				size: 16
+																				size: 12
 																			)
 																		),
 																		Text(
 																			booking.check_out_date,
-																			style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+																			style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue[900]),
 																		),
 																	]
 																),
@@ -184,7 +184,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														Radius.circular(4)
 													)
 												),
-												color: Colors.orange[50],
+												color: Colors.amber,
 											),
 											child: Row(
 												mainAxisAlignment: MainAxisAlignment.center,

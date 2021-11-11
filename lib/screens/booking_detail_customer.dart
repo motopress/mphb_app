@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:mphb_app/models/customer.dart';
 
 class BookingDetailCustomer extends StatelessWidget {
@@ -21,9 +22,8 @@ class BookingDetailCustomer extends StatelessWidget {
 				color: Colors.blueGrey.shade50,
 			),
 			child: Padding(
-				padding: EdgeInsets.all(20.0),
+				padding: EdgeInsets.all(10.0),
 				child: Row(
-					crossAxisAlignment: CrossAxisAlignment.start,
 					children: [
 						Column(
 							crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,20 +41,33 @@ class BookingDetailCustomer extends StatelessWidget {
 											customer.first_name + ' ' + customer.last_name,
 											style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 										),
-										TextButton(
-											style: ButtonStyle(
-												foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+										if ( !customer.phone.isEmpty )
+											TextButton(
+												style: ButtonStyle(
+													foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+												),
+												onPressed: () {
+													launch(('tel://${customer.phone}'));
+												},
+												child: Text('Call'),
 											),
-											onPressed: () { },
-											child: Text('Call'),
-										),
-										TextButton(
-											style: ButtonStyle(
-												foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+										if ( !customer.email.isEmpty )
+											TextButton(
+												style: ButtonStyle(
+													foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+												),
+												onPressed: () {
+
+													final Uri _emailLaunchUri = Uri(
+														scheme: 'mailto',
+														path: customer.email,
+													);
+
+													launch(_emailLaunchUri.toString());
+
+												},
+												child: Text('Email'),
 											),
-											onPressed: () { },
-											child: Text('Email'),
-										),
 									]
 								),
 								Row(
@@ -62,10 +75,16 @@ class BookingDetailCustomer extends StatelessWidget {
 										Column(
 											crossAxisAlignment: CrossAxisAlignment.start,
 											children: [
-												SizedBox(height: 10),
-												Text(customer.email,),
-												SizedBox(height: 10),
-												Text(customer.phone,),
+												if ( !customer.email.isEmpty )
+													Padding(
+														padding: EdgeInsets.only(top: 5.0),
+														child: Text(customer.email,),
+													),
+												if ( !customer.phone.isEmpty )
+													Padding(
+														padding: EdgeInsets.only(top: 5.0),
+														child: Text(customer.phone,),
+													),
 											]
 										),
 										Column(
