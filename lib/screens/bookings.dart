@@ -90,12 +90,12 @@ class _BookingListViewState extends State<BookingsPage> {
 			),
 
 			body: Container(
-				padding: EdgeInsets.all(20.0),
 				child: RefreshIndicator(
 					onRefresh: () => Future.sync(
 						() => _pagingController.refresh(),
 					),
 					child: PagedListView<int, Booking>(
+						padding: EdgeInsets.all(20.0),
 						pagingController: _pagingController,
 						builderDelegate: PagedChildBuilderDelegate<Booking>(
 							itemBuilder: (context, item, index) => BookingListItem(
