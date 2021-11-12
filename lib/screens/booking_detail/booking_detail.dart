@@ -7,6 +7,7 @@ import 'package:mphb_app/screens/booking_detail/booking_detail_customer.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_accommodation.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_price.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_payment.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail_ical.dart';
 
 class BookingDetailScreen extends StatefulWidget {
 
@@ -148,7 +149,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 											BookingDetailDates( booking: booking ),
 
 											// customer
-											BookingDetailCustomer( customer: booking.customer ),
+											if ( booking.imported == false )
+												BookingDetailCustomer( customer: booking.customer ),
+											
+											if ( booking.imported == true )
+												BookingDetailIcal( booking: booking ),
 
 											// reserved_accommodations
 											Container(
@@ -164,7 +169,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 											),
 
 											//total_price
-											BookingDetailPrice( booking: booking ),
+											if ( booking.imported == false )
+												BookingDetailPrice( booking: booking ),
 
 											// payments
 											if ( booking.payments.length > 0 )

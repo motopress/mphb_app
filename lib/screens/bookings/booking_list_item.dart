@@ -100,7 +100,7 @@ class BookingListItem extends StatelessWidget {
 									child: Row(
 										children: [
 											Padding(
-												padding: EdgeInsets.only(right: 2.0),
+												padding: EdgeInsets.only(right: 1.0),
 												child: Icon(
 													Icons.tag,
 													size: 12,
@@ -114,7 +114,7 @@ class BookingListItem extends StatelessWidget {
 												),
 											),
 											Padding(
-												padding: EdgeInsets.only(right: 4.0, left: 6.0),
+												padding: EdgeInsets.only(right: 3.0, left: 8.0),
 												child: Icon(
 													Icons.event_available,
 													size: 12,
@@ -127,20 +127,45 @@ class BookingListItem extends StatelessWidget {
 													fontSize: 12,
 												),
 											),
-											Padding(
-												padding: EdgeInsets.only(right: 0.0, left: 6.0),
-												child: Icon(
-													Icons.attach_money,
-													size: 12,
-													color: Colors.indigo.shade100
-												)
-											),
-											Text(
-												booking.total_price.toString(),
-												style: TextStyle(
-													fontSize: 12,
+											if ( booking.imported == true )
+												Row(
+													children: [
+														Padding(
+															padding: EdgeInsets.only(right: 2.0, left: 8.0),
+															child: Icon(
+																Icons.import_export,
+																size: 12,
+																color: Colors.indigo.shade100
+															)
+														),
+														Text(
+															'Imported',
+															style: TextStyle(
+																fontSize: 12,
+															),
+														),
+													]
 												),
-											),
+
+											if ( booking.imported == false )
+												Row(
+													children: [
+														Padding(
+															padding: EdgeInsets.only(right: 0.0, left: 8.0),
+															child: Icon(
+																Icons.attach_money,
+																size: 12,
+																color: Colors.indigo.shade100
+															)
+														),
+														Text(
+															booking.total_price.toString(),
+															style: TextStyle(
+																fontSize: 12,
+															),
+														),
+													]
+												),
 										]
 									),
 								),
