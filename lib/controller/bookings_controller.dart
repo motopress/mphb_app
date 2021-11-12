@@ -11,7 +11,8 @@ import 'package:mphb_app/models/booking.dart';
  * A function that converts a response body into a List<Booking>.
  * compute can only take a top-level function, but not instance or static methods.
  */
-List<Booking> parseBookings(String responseBody) {
+List<Booking>parseBookings(String responseBody) {
+
 	final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
 	return parsed.map<Booking>((json) => Booking.fromJson(json)).toList();
@@ -34,9 +35,11 @@ class BookingsController {
 
 		final queryDomain = LocalStorage().domain;
 
+		String username = LocalStorage().consumer_key;
+		String password = LocalStorage().consumer_secret;
+		String basicAuth = 'Basic ' + base64Encode(utf8.encode('$username:$password'));
+
 		final queryParameters = <String, String> {
-			'consumer_key': LocalStorage().consumer_key,
-			'consumer_secret': LocalStorage().consumer_secret,
 			'per_page': limit.toString(),
 			'offset': offset.toString()
 			
@@ -44,7 +47,13 @@ class BookingsController {
 
 		final uri = Uri.https(queryDomain, _queryEndpoint, queryParameters);
 
-		final response = await http.get( uri );
+		print(uri.toString());
+		final response = await http.get(
+			uri,
+			headers: {
+				'authorization': basicAuth
+			},
+		);
 
 		if ( response.statusCode == HttpStatus.OK ) {
 

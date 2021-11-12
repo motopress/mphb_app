@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail.dart';
 import 'package:mphb_app/models/booking.dart';
 
-class BookingListItem extends StatelessWidget {
+class BookingListItem extends StatefulWidget {
 
 	final Booking booking;
 
@@ -11,6 +11,19 @@ class BookingListItem extends StatelessWidget {
 		required this.booking,
 		Key? key
 	}) : super(key: key);
+
+	@override
+	_BookingListItemState createState() => _BookingListItemState( booking: this.booking );
+
+}
+
+class _BookingListItemState extends State<BookingListItem> {
+
+	_BookingListItemState({
+		required this.booking
+	});
+
+	late Booking booking;
 
 	@override
 	Widget build(BuildContext context) {
@@ -36,12 +49,7 @@ class BookingListItem extends StatelessWidget {
 				Navigator.push(
 					context,
 					MaterialPageRoute(
-						builder: (context) => const BookingDetailScreen(),
-						// Pass the arguments as part of the RouteSettings. The
-						// DetailScreen reads the arguments from these settings.
-						settings: RouteSettings(
-							arguments: booking.id,
-						),
+						builder: (context) => BookingDetailScreen( booking: booking ),
 					),
 				);
 			},

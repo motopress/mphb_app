@@ -11,36 +11,41 @@ import 'package:mphb_app/screens/booking_detail/booking_detail_ical.dart';
 
 class BookingDetailScreen extends StatefulWidget {
 
-	const BookingDetailScreen({Key? key}) : super(key: key);
+	const BookingDetailScreen({Key? key, required this.booking}) : super(key: key);
+
+	final Booking booking;
 
 	@override
-	_BookingDetailScreenState createState() => _BookingDetailScreenState();
+	_BookingDetailScreenState createState() => _BookingDetailScreenState( bookingID: this.booking.id );
 
 }
 
 class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
-	late Future<Booking> _booking;
+	_BookingDetailScreenState({
+		required this.bookingID
+	});
 
-	int _id = 0;
+	late final BookingController _bookingController;
+
+	late Future<Booking> _booking;
+	
+	final int bookingID;
 
 	@override
 	void initState() {
 		super.initState();
+		
+		_bookingController = new BookingController();
+		_booking = _bookingController.wpGetBooking( bookingID );
 	}
 
 	@override
 	Widget build(BuildContext context) {
 
-		_id = ModalRoute.of(context)!.settings.arguments as int;
-
-		setState(() {});
-
-		_booking = BookingController.wpGetBooking( _id );
-
 		return Scaffold(
 			appBar: AppBar(
-				title: Text( 'Booking #$_id' ),
+				title: Text( 'Booking #$bookingID' ),
 				actions: <Widget>[
 					IconButton(
 						icon: const Icon(Icons.sync),
@@ -140,6 +145,16 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 																	fontSize: 16,
 																),
 															),
+														),
+														ElevatedButton(
+															onPressed: () {
+																var status = (booking.status == 'confirmed') ? 'cancelled' : 'confirmed';
+																print('wpUpdateBookingStatus: ' + status);
+																setState(() {
+																	_booking = _bookingController.wpUpdateBookingStatus( booking, status );
+																});
+															},
+															child: Text('Set ' + (booking.status == 'confirmed' ? 'cancelled' : 'confirmed')),
 														),
 													]
 												),

@@ -6,7 +6,7 @@ import 'package:mphb_app/models/payment.dart';
 class Booking {
 
 	final int id;
-	final String status;
+	String status;
 	final String date_created;
 	final String date_created_utc;
 	final String key;

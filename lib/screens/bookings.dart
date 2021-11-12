@@ -32,14 +32,13 @@ class _BookingListViewState extends State<BookingsPage> {
 
 	@override
 	void initState() {
+		super.initState();
 
 		_bookingsController = new BookingsController( params : _params );
 
 		_pagingController.addPageRequestListener((pageKey) {
 			_fetchPage(pageKey);
 		});
-
-		super.initState();
 	}
 
 	Future<void> _fetchPage(int pageKey) async {
