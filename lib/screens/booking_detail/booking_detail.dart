@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mphb_app/controller/booking_controller.dart';
 import 'package:mphb_app/models/booking.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail_actions.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail_status.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_dates.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_customer.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_accommodation.dart';
@@ -28,85 +29,81 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
 	late final BookingController _bookingController;
 
-	late Future<Booking> _booking;
-	
+	late Future<Booking> _bookingFuture;
+
 	final int bookingID;
 
 	@override
 	void initState() {
-		super.initState();
-		
+
 		_bookingController = new BookingController();
-		_booking = _bookingController.wpGetBooking( bookingID );
+		_bookingFuture = _bookingController.wpGetBooking( bookingID );
+
+		super.initState();
 	}
 
 	@override
 	Widget build(BuildContext context) {
 
-		return WillPopScope(
-			child: Scaffold(
-				appBar: AppBar(
-					title: Text( 'Booking #$bookingID' ),
-					actions: <Widget>[
-						IconButton(
-							icon: const Icon(Icons.sync),
-							tooltip: 'Refresh',
-							onPressed: () {
-								setState(() {
-									_booking = _bookingController.wpGetBooking( bookingID );
-								});
-							},
-						),
-						IconButton(
-							icon: const Icon(Icons.more_vert),
-							tooltip: 'Refresh',
-							onPressed: () {
-								showModalBottomSheet(
-									context: context,
-									builder: (context) {
-										return Wrap(
-											children: [
-												ListTile(
-													leading: Icon(Icons.share),
-													title: Text('Share'),
-												),
-												ListTile(
-													leading: Icon(Icons.link),
-													title: Text('Get link'),
-												),
-												ListTile(
-													leading: Icon(Icons.edit),
-													title: Text('Edit name'),
-												),
-												ListTile(
-													leading: Icon(Icons.delete),
-													title: Text('Delete collection'),
-												),
-											],
-										);
-									},
-								);
-							},
-						),
-					],
-				),
-				body: FutureBuilder(
-					future: _booking,
-					builder: (context, AsyncSnapshot snapshot) {
-						if (snapshot.connectionState == ConnectionState.waiting) {
-							return new Center(
-								child: new CircularProgressIndicator(),
-							);
-						} else if (snapshot.hasError) {
-							return new Text('Error: ${snapshot.error}');
-						} else {
+		return FutureBuilder(
+			future: _bookingFuture,
+			builder: (context, AsyncSnapshot snapshot) {
+				if (snapshot.connectionState == ConnectionState.waiting) {
+					return new Center(
+						child: new CircularProgressIndicator(),
+					);
+				} else if (snapshot.hasError) {
+					return new Text('Error: ${snapshot.error}');
+				} else {
 
-							Booking booking = snapshot.data;
+					Booking booking = snapshot.data;
 
-							return RefreshIndicator(
+					return WillPopScope(
+						child: Scaffold(
+							appBar: AppBar(
+								title: Text( 'Booking #$bookingID' ),
+								actions: <Widget>[
+									IconButton(
+										icon: const Icon(Icons.sync),
+										tooltip: 'Refresh',
+										onPressed: () {
+											setState(() {
+												_bookingFuture = _bookingController.wpGetBooking( bookingID );
+											});
+										},
+									),
+									IconButton(
+										icon: const Icon(Icons.more_vert),
+										tooltip: 'Refresh',
+										onPressed: () {
+											showModalBottomSheet(
+												context: context,
+												builder: (context) {
+													return BookingDetailActions( booking: booking );
+												},
+											).then((action) {
+												print('Action: $action');
+												if ( action != null ) {
+													switch ( action ) {
+														case 'delete':
+															print('Delete booking!');
+															break;
+														default:
+															print('Update Booking Status: ' + action);
+															setState(() {
+																_bookingFuture = _bookingController.wpUpdateBookingStatus( booking, action );
+															});
+													}
+												}
+											});
+										},
+									),
+								],
+							),
+							body: RefreshIndicator(
 								onRefresh: () => Future.sync(
 									() => setState(() {
-										_booking = _bookingController.wpGetBooking( bookingID );
+										_bookingFuture = _bookingController.wpGetBooking( bookingID );
 									}),
 								),
 								child: SingleChildScrollView(
@@ -116,54 +113,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 										child: Column(
 											children: [
 												// booking id + status
-												Container(
-													margin: const EdgeInsets.only(bottom: 20.0),
-													child: Row(
-														mainAxisAlignment: MainAxisAlignment.spaceBetween,
-														children: [
-															Column(
-																crossAxisAlignment: CrossAxisAlignment.start,
-																children: [
-																	Text(
-																		'Booking #' + booking.id.toString(),
-																		style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-																	),
-																	Padding (
-																		padding: EdgeInsets.only(top: 5.0),
-																		child: Text(
-																			DateFormat('yyyy-MM-dd HH:mm').format( DateTime.parse(booking.date_created) ),
-																			style: TextStyle(fontSize: 12),
-																		),
-																	),
-																],
-															),
-															Container(
-																decoration: BoxDecoration(
-																	borderRadius: BorderRadius.all(Radius.circular(4)),
-																	color: booking.status == 'confirmed' ? Colors.green : Colors.orange,
-																),
-																padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10.0, right: 10.0),
-																child: Text(
-																	booking.status,
-																	style: TextStyle(
-																		color: Colors.white,
-																		fontSize: 16,
-																	),
-																),
-															),
-															ElevatedButton(
-																onPressed: () {
-																	var status = (booking.status == 'confirmed') ? 'cancelled' : 'confirmed';
-																	print('wpUpdateBookingStatus: ' + status);
-																	setState(() {
-																		_booking = _bookingController.wpUpdateBookingStatus( booking, status );
-																	});
-																},
-																child: Text('Set ' + (booking.status == 'confirmed' ? 'cancelled' : 'confirmed')),
-															),
-														]
-													),
-												),
+												BookingDetailStatus( booking: booking ),
 
 												// check_in_date / check_out_date
 												BookingDetailDates( booking: booking ),
@@ -209,14 +159,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 										),
 									),
 								),
-							);
+							),
+						),
+						onWillPop: () async {
+							Navigator.pop(context, booking);
+							return false;
 						}
-					}
-				),
-			),
-			onWillPop: () async {
-				Navigator.pop(context, _booking);
-				return false;
+					);
+				}
 			}
 		);
 	}

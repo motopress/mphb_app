@@ -37,18 +37,20 @@ class _BookingListItemState extends State<BookingListItem> {
 			context,
 			MaterialPageRoute(builder: (context) => BookingDetailScreen( booking: booking )),
 		);
-		print(newBooking);
-		
-		List<Booking> itemList = ((widget.pagingController.itemList ?? []) as List).cast<Booking>();
-		
-		itemList.removeAt(widget.index);
-		itemList.insert(widget.index, newBooking);
+		//print(newBooking);
 
-		widget.pagingController.itemList = itemList;
-		widget.pagingController.notifyListeners();
+		/*final newList = widget.pagingController.itemList!.toList();
+		newList.removeAt(widget.index);
+		newList.insert(widget.index, newBooking);
 		//debugger();
+		widget.pagingController.itemList = newList;
+		widget.pagingController.notifyListeners();
+		*/
 
-		/*itemList[itemList!.indexWhere((element) => element.id == newBooking.id)] = newBooking;*/
+		if ( widget.booking.status != newBooking.status ) {
+			widget.booking.status = newBooking.status;
+			widget.pagingController.notifyListeners();
+		}
 	}
 
 	@override
