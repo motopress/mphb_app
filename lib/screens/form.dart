@@ -101,7 +101,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 											child: Column(
 												children: [
 													TextFormField(
-														initialValue: "uglywebsites.org",
+														initialValue: "https://uglywebsites.org/booking-api/wp-json/mphb/v1",
 														decoration: const InputDecoration(
 															hintText: 'Domain',
 															labelText: 'Domain',

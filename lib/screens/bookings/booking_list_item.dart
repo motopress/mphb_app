@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail.dart';
 import 'package:mphb_app/models/booking.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'dart:developer';
 
 class BookingListItem extends StatefulWidget {
 
 	final Booking booking;
+	final PagingController pagingController;
+	final int index;
 
 	const BookingListItem({
+		required this.pagingController,
+		required this.index,
 		required this.booking,
 		Key? key
 	}) : super(key: key);
@@ -25,182 +31,197 @@ class _BookingListItemState extends State<BookingListItem> {
 
 	late Booking booking;
 
+	void _showBookingDetails(BuildContext context) async {
+
+		final Booking newBooking = await Navigator.push(
+			context,
+			MaterialPageRoute(builder: (context) => BookingDetailScreen( booking: booking )),
+		);
+		print(newBooking);
+		
+		List<Booking> itemList = ((widget.pagingController.itemList ?? []) as List).cast<Booking>();
+		
+		itemList.removeAt(widget.index);
+		itemList.insert(widget.index, newBooking);
+
+		widget.pagingController.itemList = itemList;
+		widget.pagingController.notifyListeners();
+		//debugger();
+
+		/*itemList[itemList!.indexWhere((element) => element.id == newBooking.id)] = newBooking;*/
+	}
+
 	@override
 	Widget build(BuildContext context) {
 
-	return Container(
-		decoration: BoxDecoration(
-			color: Colors.white,
-			borderRadius: BorderRadius.all(
-				Radius.circular(6)
-			),
-			boxShadow: [
-				BoxShadow(
-					color: Colors.grey.withOpacity(0.1),
-					spreadRadius: 0,
-					blurRadius: 2,
-					offset: Offset(0, 2), // changes position of shadow
+		return Container(
+			decoration: BoxDecoration(
+				color: Colors.white,
+				borderRadius: BorderRadius.all(
+					Radius.circular(6)
 				),
-			],
-		),
-		margin: EdgeInsets.only(bottom: 10.0),
-		child: InkWell(
-			onTap: () {
-				Navigator.push(
-					context,
-					MaterialPageRoute(
-						builder: (context) => BookingDetailScreen( booking: booking ),
+				boxShadow: [
+					BoxShadow(
+						color: Colors.grey.withOpacity(0.1),
+						spreadRadius: 0,
+						blurRadius: 2,
+						offset: Offset(0, 2), // changes position of shadow
 					),
-				);
-			},
-			child: Padding(
-				padding: EdgeInsets.all(15),
-				child: Row(
-					mainAxisAlignment: MainAxisAlignment.spaceBetween,
-					children: [
-						Column(
-							crossAxisAlignment: CrossAxisAlignment.start,
-							children: [
-								Row(
-									children: [
-										Padding(
-											padding: EdgeInsets.only(right: 10.0),
-											child: Row(
-												children: [
-													Padding(
-														padding: EdgeInsets.only(right: 10.0),
-														child: Icon(
-															Icons.flight_land,
-															size: 12,
-															color: Colors.indigo.shade100
-														)
-													),
-													Text(
-														booking.check_in_date,
-														style: TextStyle(fontWeight: FontWeight.bold),
-													),
-												]
-											),
-										),
-										Padding(
-											padding: EdgeInsets.only(right: 10.0),
-											child: Row(
-												children: [
-													Padding(
-														padding: EdgeInsets.only(right: 10.0),
-														child: Icon(
-															Icons.flight_takeoff,
-															size: 12,
-															color: Colors.indigo.shade100
-														)
-													),
-													Text(
-														booking.check_out_date,
-														style: TextStyle(fontWeight: FontWeight.bold),
-													),
-												]
-											),
-										),
-									]
-								),
-								Container(
-									padding: EdgeInsets.only(top: 15.0),
-									child: Row(
+				],
+			),
+			margin: EdgeInsets.only(bottom: 10.0),
+			child: InkWell(
+				onTap: () {
+					_showBookingDetails(context);
+				},
+				child: Padding(
+					padding: EdgeInsets.all(15),
+					child: Row(
+						mainAxisAlignment: MainAxisAlignment.spaceBetween,
+						children: [
+							Column(
+								crossAxisAlignment: CrossAxisAlignment.start,
+								children: [
+									Row(
 										children: [
 											Padding(
-												padding: EdgeInsets.only(right: 1.0),
-												child: Icon(
-													Icons.tag,
-													size: 12,
-													color: Colors.indigo.shade100
-												)
-											),
-											Text(
-												booking.id.toString(),
-												style: TextStyle(
-													fontSize: 12,
+												padding: EdgeInsets.only(right: 10.0),
+												child: Row(
+													children: [
+														Padding(
+															padding: EdgeInsets.only(right: 10.0),
+															child: Icon(
+																Icons.flight_land,
+																size: 12,
+																color: Colors.indigo.shade100
+															)
+														),
+														Text(
+															booking.check_in_date,
+															style: TextStyle(fontWeight: FontWeight.bold),
+														),
+													]
 												),
 											),
 											Padding(
-												padding: EdgeInsets.only(right: 3.0, left: 8.0),
-												child: Icon(
-													Icons.event_available,
-													size: 12,
-													color: Colors.indigo.shade100
-												)
-											),
-											Text(
-												DateFormat('yyyy-MM-dd').format( DateTime.parse(booking.date_created) ),
-												style: TextStyle(
-													fontSize: 12,
-												),
-											),
-											if ( booking.imported == true )
-												Row(
+												padding: EdgeInsets.only(right: 10.0),
+												child: Row(
 													children: [
 														Padding(
-															padding: EdgeInsets.only(right: 2.0, left: 8.0),
+															padding: EdgeInsets.only(right: 10.0),
 															child: Icon(
-																Icons.import_export,
+																Icons.flight_takeoff,
 																size: 12,
 																color: Colors.indigo.shade100
 															)
 														),
 														Text(
-															'Imported',
-															style: TextStyle(
-																fontSize: 12,
-															),
+															booking.check_out_date,
+															style: TextStyle(fontWeight: FontWeight.bold),
 														),
 													]
 												),
-
-											if ( booking.imported == false )
-												Row(
-													children: [
-														Padding(
-															padding: EdgeInsets.only(right: 0.0, left: 8.0),
-															child: Icon(
-																Icons.attach_money,
-																size: 12,
-																color: Colors.indigo.shade100
-															)
-														),
-														Text(
-															booking.total_price.toString(),
-															style: TextStyle(
-																fontSize: 12,
-															),
-														),
-													]
-												),
+											),
 										]
 									),
-								),
-							]
-						),
-						Flexible(
-							child: Container(
-								padding: EdgeInsets.all(6.0),
-								decoration: ShapeDecoration(
-									shape: RoundedRectangleBorder(
-										borderRadius: BorderRadius.all(
-											Radius.circular(4)
-										)
+									Container(
+										padding: EdgeInsets.only(top: 15.0),
+										child: Row(
+											children: [
+												Padding(
+													padding: EdgeInsets.only(right: 1.0),
+													child: Icon(
+														Icons.tag,
+														size: 12,
+														color: Colors.indigo.shade100
+													)
+												),
+												Text(
+													booking.id.toString(),
+													style: TextStyle(
+														fontSize: 12,
+													),
+												),
+												Padding(
+													padding: EdgeInsets.only(right: 3.0, left: 8.0),
+													child: Icon(
+														Icons.event_available,
+														size: 12,
+														color: Colors.indigo.shade100
+													)
+												),
+												Text(
+													DateFormat('yyyy-MM-dd').format( DateTime.parse(booking.date_created) ),
+													style: TextStyle(
+														fontSize: 12,
+													),
+												),
+												if ( booking.imported == true )
+													Row(
+														children: [
+															Padding(
+																padding: EdgeInsets.only(right: 2.0, left: 8.0),
+																child: Icon(
+																	Icons.import_export,
+																	size: 12,
+																	color: Colors.indigo.shade100
+																)
+															),
+															Text(
+																'Imported',
+																style: TextStyle(
+																	fontSize: 12,
+																),
+															),
+														]
+													),
+
+												if ( booking.imported == false )
+													Row(
+														children: [
+															Padding(
+																padding: EdgeInsets.only(right: 0.0, left: 8.0),
+																child: Icon(
+																	Icons.attach_money,
+																	size: 12,
+																	color: Colors.indigo.shade100
+																)
+															),
+															Text(
+																booking.total_price.toString(),
+																style: TextStyle(
+																	fontSize: 12,
+																),
+															),
+														]
+													),
+											]
+										),
 									),
-									color: booking.status == 'confirmed' ? Colors.green : Colors.orange,
-								),
-								child: Text(
-									booking.status,
-									style: TextStyle(color: Colors.white,),
-									overflow: TextOverflow.ellipsis,
+								]
+							),
+							Flexible(
+								child: Container(
+									padding: EdgeInsets.all(6.0),
+									decoration: ShapeDecoration(
+										shape: RoundedRectangleBorder(
+											borderRadius: BorderRadius.all(
+												Radius.circular(4)
+											)
+										),
+										color: booking.status == 'confirmed' ? Colors.green : Colors.orange,
+									),
+									child: Text(
+										booking.status,
+										style: TextStyle(color: Colors.white,),
+										overflow: TextOverflow.ellipsis,
+									),
 								),
 							),
-						),
-					]
+						]
+					),
 				),
 			),
-		),
-	);
+		);
   }
 }

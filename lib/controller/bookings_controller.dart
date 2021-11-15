@@ -3,67 +3,48 @@ import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
-import 'package:mphb_app/local_storage.dart';
+import 'package:mphb_app/controller/basic_controller.dart';
 import 'package:mphb_app/models/booking.dart';
-
 
 /*
  * A function that converts a response body into a List<Booking>.
  * compute can only take a top-level function, but not instance or static methods.
  */
-List<Booking>parseBookings(String responseBody) {
+List<Booking>BookingsController_parseBookings(String responseBody) {
 
 	final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
 	return parsed.map<Booking>((json) => Booking.fromJson(json)).toList();
 }
 
-class BookingsController {
+class BookingsController extends BasicController{
 
-	final Map<String, String> params;
+	final String _queryEndpoint = '/bookings';
 
-	BookingsController({
-		required this.params,
-	});
-
-	final String _queryEndpoint = '/booking-api/wp-json/mphb/v1/bookings';
-
+	/*
+	 * https://booking.loc/wp-json/mphb/v1/bookings?consumer_key=ck_1d9a5f63a7d95d69db24ea6d2a1a883cace7a127&consumer_secret=cs_993ee46f420b9472bc4b98aed6b2b1ca5e92b717
+	 * https://uglywebsites.org/booking-api/wp-json/mphb/v1/bookings?consumer_key=ck_09c4163541fb26930cf9531ba1601f711f5c1ab9&consumer_secret=cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8
+	 */
 	Future<List<Booking>> wpGetBookings( int offset, int limit ) async {
 
-		//https://booking.loc/wp-json/mphb/v1/bookings?consumer_key=ck_1d9a5f63a7d95d69db24ea6d2a1a883cace7a127&consumer_secret=cs_993ee46f420b9472bc4b98aed6b2b1ca5e92b717
-		//https://uglywebsites.org/booking-api/wp-json/mphb/v1/bookings?consumer_key=ck_09c4163541fb26930cf9531ba1601f711f5c1ab9&consumer_secret=cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8
-
-		final queryDomain = LocalStorage().domain;
-
-		String username = LocalStorage().consumer_key;
-		String password = LocalStorage().consumer_secret;
-		String basicAuth = 'Basic ' + base64Encode(utf8.encode('$username:$password'));
+		final headers = super.getHeaders();
 
 		final queryParameters = <String, String> {
 			'per_page': limit.toString(),
 			'offset': offset.toString()
-			
 		};
 
-		final uri = Uri.https(queryDomain, _queryEndpoint, queryParameters);
+		final uri = super.getUriHttps( _queryEndpoint, queryParameters);
 
 		print(uri.toString());
 		final response = await http.get(
 			uri,
-			headers: {
-				'authorization': basicAuth
-			},
+			headers: headers
 		);
 
 		if ( response.statusCode == HttpStatus.OK ) {
 
-			/*var xWPTotal = response.headers['x-wp-total'];
-			var xWPTotalPages = response.headers['x-wp-totalpages'];
-			print(xWPTotal);
-			print(xWPTotalPages);*/
-
-			//return jsonDecode( response.body );
-			return compute( parseBookings, response.body );
+			return compute( BookingsController_parseBookings, response.body );
 
 		} else {
 

@@ -28,13 +28,11 @@ class _BookingListViewState extends State<BookingsPage> {
 
 	late final BookingsController _bookingsController;
 
-	final Map<String, String> _params = {};
-
 	@override
 	void initState() {
 		super.initState();
 
-		_bookingsController = new BookingsController( params : _params );
+		_bookingsController = new BookingsController();
 
 		_pagingController.addPageRequestListener((pageKey) {
 			_fetchPage(pageKey);
@@ -126,8 +124,13 @@ class _BookingListViewState extends State<BookingsPage> {
 						pagingController: _pagingController,
 						builderDelegate: PagedChildBuilderDelegate<Booking>(
 							itemBuilder: (context, item, index) => BookingListItem(
+								pagingController: _pagingController,
+								index: index,
 								booking: item,
 							),
+							noItemsFoundIndicatorBuilder: (context) => Center(child: Text('Nothing Found',),),
+							firstPageErrorIndicatorBuilder: (context) => Text('Error'),
+							newPageErrorIndicatorBuilder: (context) => Text('Error'),
 						),
 					),
 				),
