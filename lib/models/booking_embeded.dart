@@ -1,3 +1,4 @@
+import 'package:mphb_app/models/rate.dart';
 import 'package:mphb_app/models/payment.dart';
 import 'package:mphb_app/models/service.dart';
 import 'package:mphb_app/models/accommodation.dart';
@@ -9,12 +10,14 @@ class BookingEmbeded {
 	final List<Accommodation>? accommodations;
 	final List<Accommodation_Type>? accommodation_types;
 	final List<Service>? services;
+	final List<Rate>? rates;
 
 	BookingEmbeded({
 		required this.payments,
 		required this.accommodations,
 		required this.accommodation_types,
 		required this.services,
+		required this.rates,
 	});
 
 	factory BookingEmbeded.fromJson(Map<String, dynamic> json) {
@@ -33,6 +36,9 @@ class BookingEmbeded {
 
 			services: json.containsKey( 'services' ) ?
 				json['services'].cast<Map<String, dynamic>>().map<Service>((json) => Service.fromJson(json)).toList() : null,
+
+			rates: json.containsKey( 'rate' ) ?
+				json['rate'].cast<Map<String, dynamic>>().map<Rate>((json) => Rate.fromJson(json)).toList() : null,
 		);
 	}
 

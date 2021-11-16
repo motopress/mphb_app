@@ -85,12 +85,12 @@ class BookingDetailCustomer extends StatelessWidget {
 								children: [
 									if ( !customer.email.isEmpty )
 										Padding(
-											padding: EdgeInsets.only(top: 5.0),
+											padding: EdgeInsets.only(top: 10.0),
 											child: Text(customer.email,),
 										),
 									if ( !customer.phone.isEmpty )
 										Padding(
-											padding: EdgeInsets.only(top: 5.0),
+											padding: EdgeInsets.only(top: 10.0),
 											child: Text(customer.phone,),
 										),
 								]

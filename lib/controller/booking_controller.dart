@@ -17,7 +17,7 @@ class BookingController extends BasicController{
 		final headers = super.getHeaders();
 
 		final queryParameters = <String, String> {
-			'_embed' : 'accommodation,accommodation_type,services'
+			'_embed' : 'accommodation,accommodation_type,services,rate'
 		};
 
 		var queryEndpoint = '$_queryEndpoint/${bookingID.toString()}';

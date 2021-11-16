@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mphb_app/screens/booking_detail/booking_detail_service.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail_services.dart';
 import 'package:mphb_app/models/accommodation.dart';
 import 'package:mphb_app/models/accommodation_type.dart';
 import 'package:mphb_app/models/reserved_accommodation.dart';
@@ -67,37 +67,6 @@ class BookingDetailAccommodation extends StatelessWidget {
 													style: TextStyle(fontSize: 12),
 												),
 											),
-										// services
-										if ( reserved_accommodation.services.length > 0 )
-											Container(
-												margin: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-												child: Column(
-													crossAxisAlignment: CrossAxisAlignment.start,
-													children: [
-														Padding(
-															padding: EdgeInsets.only(bottom: 5.0),
-															child: Text('Services'),
-														),
-														Table(
-															border: TableBorder(
-																horizontalInside: BorderSide(
-																	width: 1,
-																	color: Colors.grey.shade100,
-																	style: BorderStyle.solid)
-															),
-															columnWidths: const <int, TableColumnWidth>{
-																0: FlexColumnWidth(),
-																1: IntrinsicColumnWidth(),
-																2: IntrinsicColumnWidth(),
-															},
-															defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-															children: reserved_accommodation.services.map(
-																(item) => BookingDetailService.buildTableRow(item, booking)
-															).toList(),
-														),
-													],
-												),
-											),
 									]
 								)
 							),
@@ -136,6 +105,55 @@ class BookingDetailAccommodation extends StatelessWidget {
 								),
 						]
 					),
+
+					//rate
+					if ( reserved_accommodation.rate > 0 )
+						Padding (
+							padding: EdgeInsets.only(top: 10.0),
+							child: ListTileTheme(
+								dense: true,
+								contentPadding: EdgeInsets.zero,
+								minVerticalPadding: 0,
+								child: ExpansionTile(
+									tilePadding: EdgeInsets.zero,
+									childrenPadding: EdgeInsets.zero,
+									title: Text(
+										'Rate: ' + (booking.getRateByID( reserved_accommodation.rate )?.title ?? '-'),
+										style: DefaultTextStyle.of(context).style
+									),
+									children: List.generate(1,(index){
+										return Text(
+											booking.getRateByID( reserved_accommodation.rate )?.description ?? ''
+										);
+									}),
+								),
+							),
+						),
+
+					// services
+					if ( reserved_accommodation.services.length > 0 )
+						Padding (
+							padding: EdgeInsets.only(top: 10.0),
+							child: ListTileTheme(
+								dense: true,
+								contentPadding: EdgeInsets.zero,
+								minVerticalPadding: 0,
+								child: ExpansionTile(
+									tilePadding: EdgeInsets.zero,
+									childrenPadding: EdgeInsets.zero,
+									title: Text(
+										'Services (' + reserved_accommodation.services.length.toString() + ')',
+										style: DefaultTextStyle.of(context).style
+									),
+									children: List.generate(1,(index){
+										return BookingDetailServices(
+											reserved_accommodation: reserved_accommodation,
+											booking: booking,
+										);
+									}),
+								),
+							),
+						),
 				],
 			),
 		);

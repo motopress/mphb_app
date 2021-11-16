@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:mphb_app/models/rate.dart';
 import 'package:mphb_app/models/service.dart';
 import 'package:mphb_app/models/customer.dart';
 import 'package:mphb_app/models/reserved_accommodation.dart';
@@ -122,6 +123,11 @@ class Booking {
 	Service? getServiceByID( int id ) {
 
 		return embedded?.services?.firstWhereOrNull((element) => element.id == id);
+	}
+
+	Rate? getRateByID( int id ) {
+
+		return embedded?.rates?.firstWhereOrNull((element) => element.id == id);
 	}
 
 }
