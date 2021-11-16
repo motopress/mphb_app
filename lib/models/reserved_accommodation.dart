@@ -1,5 +1,4 @@
-import 'package:mphb_app/models/accommodation.dart';
-import 'package:mphb_app/models/accommodation_type.dart';
+import 'package:mphb_app/models/reserved_service.dart';
 
 class Reserved_Accommodation {
 
@@ -8,14 +7,11 @@ class Reserved_Accommodation {
 	final int rate;
 	final int adults;
 	final int children;
-	final List services;
+	final List<Reserved_Service> services;
 	final List accommodation_price_per_days;
 	final List fees;
 	final Map taxes;
 	final int discount;
-
-	late Accommodation accommodationObject;
-	late Accommodation_Type accommodationTypeObject;
 
 	Reserved_Accommodation({
 		required this.accommodation,
@@ -38,7 +34,7 @@ class Reserved_Accommodation {
 			rate: json['rate'],
 			adults: json['adults'],
 			children: json['children'],
-			services: json['services'],
+			services: json['services'].cast<Map<String, dynamic>>().map<Reserved_Service>((json) => Reserved_Service.fromJson(json)).toList(),
 			accommodation_price_per_days: json['accommodation_price_per_days'],
 			fees: json['fees'],
 			taxes: json['taxes'],

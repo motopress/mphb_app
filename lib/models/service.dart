@@ -17,13 +17,13 @@ class Service {
 	});
 
 	factory Service.fromJson(Map<String, dynamic> json) {
-		return Payment(
-			id: json['id'] as int,
-			title: json['title'] as String,
-			description: json['description'] as String,
-			price: json['price'] as num,
-			periodicity: json['periodicity'] as Map,
-			repeatability: json['repeatability'] as String,
+		return Service(
+			id: json['id'],
+			title: json['title'],
+			description: json['description'],
+			price: json['price'],
+			periodicity: json['periodicity'],
+			repeatability: json['repeatability'],
 		);
 	}
 

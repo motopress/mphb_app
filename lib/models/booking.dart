@@ -1,7 +1,11 @@
+import 'package:collection/collection.dart';
+import 'package:mphb_app/models/service.dart';
 import 'package:mphb_app/models/customer.dart';
-import 'package:mphb_app/models/reserved_accommodations.dart';
 import 'package:mphb_app/models/reserved_accommodation.dart';
 import 'package:mphb_app/models/payment.dart';
+import 'package:mphb_app/models/accommodation.dart';
+import 'package:mphb_app/models/accommodation_type.dart';
+import 'package:mphb_app/models/booking_embeded.dart';
 
 class Booking {
 
@@ -33,6 +37,8 @@ class Booking {
 
 	final List internal_notes;
 
+	final BookingEmbeded? embedded;
+
 	Booking({
 		required this.id,
 		required this.status,
@@ -55,11 +61,10 @@ class Booking {
 		required this.ical_summary,
 		required this.note,
 		required this.internal_notes,
+		required this.embedded,
 	});
 
 	factory Booking.fromJson(Map<String, dynamic> json) {
-
-		var reserved_accommodations = Reserved_Accommodations.fromJson( json );
 
 		return Booking(
 			id: json['id'],
@@ -72,7 +77,7 @@ class Booking {
 			check_in_time: json['check_in_time'],
 			check_out_time: json['check_out_time'],
 			customer: Customer.fromJson( json['customer'] ),
-			reserved_accommodations: reserved_accommodations,
+			reserved_accommodations: json['reserved_accommodations'].cast<Map<String, dynamic>>().map<Reserved_Accommodation>((json) => Reserved_Accommodation.fromJson(json)).toList(),
 			coupon_code: json['coupon_code'],
 			currency: json['currency'],
 			total_price: json['total_price'],
@@ -83,6 +88,7 @@ class Booking {
 			ical_summary: json['ical_summary'],
 			note: json['note'],
 			internal_notes: json['internal_notes'],
+			embedded: json.containsKey( '_embedded' ) ? BookingEmbeded.fromJson( json['_embedded'] ) : null,
 		);
 	}
 
@@ -101,6 +107,21 @@ class Booking {
 
 	num getToPay() {
 		return total_price - getPaid();
+	}
+
+	Accommodation? getAccommodationByID( int id ) {
+
+		return embedded?.accommodations?.firstWhereOrNull((element) => element.id == id);
+	}
+
+	Accommodation_Type? getAccommodationTypeByID( int id ) {
+
+		return embedded?.accommodation_types?.firstWhereOrNull((element) => element.id == id);
+	}
+	
+	Service? getServiceByID( int id ) {
+
+		return embedded?.services?.firstWhereOrNull((element) => element.id == id);
 	}
 
 }

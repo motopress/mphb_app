@@ -134,7 +134,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														children: [
 															Text('Reservation'),
 															for ( var reserved_accommodation in booking.reserved_accommodations )
-																BookingDetailAccommodation( reserved_accommodation: reserved_accommodation ),
+																BookingDetailAccommodation(
+																	reserved_accommodation: reserved_accommodation,
+																	booking: booking
+																),
 														],
 													),
 												),
