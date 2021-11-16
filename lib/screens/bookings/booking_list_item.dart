@@ -39,6 +39,10 @@ class _BookingListItemState extends State<BookingListItem> {
 		);
 		//print(newBooking);
 
+		/*
+		 * https://github.com/EdsonBueno/infinite_scroll_pagination/issues/17
+		 */
+
 		/*final newList = widget.pagingController.itemList!.toList();
 		newList.removeAt(widget.index);
 		newList.insert(widget.index, newBooking);

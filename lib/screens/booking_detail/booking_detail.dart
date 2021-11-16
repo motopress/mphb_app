@@ -9,6 +9,7 @@ import 'package:mphb_app/screens/booking_detail/booking_detail_accommodation.dar
 import 'package:mphb_app/screens/booking_detail/booking_detail_price.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_payment.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_ical.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail_note.dart';
 
 class BookingDetailScreen extends StatefulWidget {
 
@@ -152,6 +153,18 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 																Text('Payments'),
 																for ( var payment in booking.payments )
 																	BookingDetailPayment( payment: payment ),
+															],
+														),
+													),
+												//note
+												if ( ! booking.note.isEmpty )
+													Container(
+														margin: const EdgeInsets.only(top: 0, bottom: 20.0),
+														child: Column(
+															crossAxisAlignment: CrossAxisAlignment.start,
+															children: [
+																Text('Note'),
+																BookingDetailNote( booking: booking ),
 															],
 														),
 													),

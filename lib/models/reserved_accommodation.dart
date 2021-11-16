@@ -9,7 +9,7 @@ class Reserved_Accommodation {
 	final int adults;
 	final int children;
 	final List services;
-	//final List accommodation_price_per_days;
+	final List accommodation_price_per_days;
 	final List fees;
 	final Map taxes;
 	final int discount;
@@ -24,7 +24,7 @@ class Reserved_Accommodation {
 		required this.adults,
 		required this.children,
 		required this.services,
-		//required this.accommodation_price_per_days,
+		required this.accommodation_price_per_days,
 		required this.fees,
 		required this.taxes,
 		required this.discount,
@@ -39,7 +39,7 @@ class Reserved_Accommodation {
 			adults: json['adults'],
 			children: json['children'],
 			services: json['services'],
-			//accommodation_price_per_days: json['accommodation_price_per_days'],
+			accommodation_price_per_days: json['accommodation_price_per_days'],
 			fees: json['fees'],
 			taxes: json['taxes'],
 			discount: json['discount'],

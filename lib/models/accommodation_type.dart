@@ -7,7 +7,7 @@ class Accommodation_Type {
 
 	final int adults;
 	final int children;
-	//final int total_capacity;
+	final int total_capacity;
 	final String bed_type;
 	final int size;
 	final String view;
@@ -26,7 +26,7 @@ class Accommodation_Type {
 		required this.excerpt,
 		required this.adults,
 		required this.children,
-		//required this.total_capacity,
+		required this.total_capacity,
 		required this.bed_type,
 		required this.size,
 		required this.view,
@@ -47,7 +47,7 @@ class Accommodation_Type {
 			excerpt: json['excerpt'],
 			adults: json['adults'],
 			children: json['children'],
-			//total_capacity: int.tryParse( json['total_capacity'] ) ?? json['total_capacity'],
+			total_capacity: json['total_capacity'],
 			bed_type: json['bed_type'],
 			size: json['size'],
 			view: json['view'],
