@@ -46,34 +46,32 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 	@override
 	Widget build(BuildContext context) {
 
-		return FutureBuilder(
-			future: _bookingFuture,
-			builder: (context, AsyncSnapshot snapshot) {
-				if (snapshot.connectionState == ConnectionState.waiting) {
-					return new Center(
-						child: new CircularProgressIndicator(),
-					);
-				} else if (snapshot.hasError) {
-					return new Text('Error: ${snapshot.error}');
-				} else {
+		return WillPopScope(
+			child: Scaffold(
+				appBar: AppBar(
+					title: Text( 'Booking #$bookingID' ),
+					actions: <Widget>[
+						IconButton(
+							icon: const Icon(Icons.sync),
+							tooltip: 'Refresh',
+							onPressed: () {
+								setState(() {
+									_bookingFuture = _bookingController.wpGetBooking( bookingID );
+								});
+							},
+						),
+						FutureBuilder(
+							future: _bookingFuture,
+							builder: (context, AsyncSnapshot snapshot) {
+								if (snapshot.connectionState == ConnectionState.waiting) {
+									return new CircularProgressIndicator();
+								} else if (snapshot.hasError) {
+									return new Container();
+								} else {
 
-					Booking booking = snapshot.data;
+									Booking booking = snapshot.data;
 
-					return WillPopScope(
-						child: Scaffold(
-							appBar: AppBar(
-								title: Text( 'Booking #$bookingID' ),
-								actions: <Widget>[
-									IconButton(
-										icon: const Icon(Icons.sync),
-										tooltip: 'Refresh',
-										onPressed: () {
-											setState(() {
-												_bookingFuture = _bookingController.wpGetBooking( bookingID );
-											});
-										},
-									),
-									IconButton(
+									return IconButton(
 										icon: const Icon(Icons.more_vert),
 										tooltip: 'Refresh',
 										onPressed: () {
@@ -98,10 +96,26 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 												}
 											});
 										},
-									),
-								],
-							),
-							body: RefreshIndicator(
+									);
+								}
+							}
+						),
+					],
+				),
+				body: FutureBuilder(
+					future: _bookingFuture,
+					builder: (context, AsyncSnapshot snapshot) {
+						if (snapshot.connectionState == ConnectionState.waiting) {
+							return new Center(
+								child: new CircularProgressIndicator(),
+							);
+						} else if (snapshot.hasError) {
+							return new Text('Error: ${snapshot.error}');
+						} else {
+
+							Booking booking = snapshot.data;
+
+							return RefreshIndicator(
 								onRefresh: () => Future.sync(
 									() => setState(() {
 										_bookingFuture = _bookingController.wpGetBooking( bookingID );
@@ -175,14 +189,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 										),
 									),
 								),
-							),
-						),
-						onWillPop: () async {
-							Navigator.pop(context, booking);
-							return false;
+							);
 						}
-					);
-				}
+					}
+				),
+			),
+			onWillPop: () async {
+				Navigator.pop(context, _bookingFuture);
+				return false;
 			}
 		);
 	}

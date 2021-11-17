@@ -122,8 +122,11 @@ class BookingDetailAccommodation extends StatelessWidget {
 										style: DefaultTextStyle.of(context).style
 									),
 									children: List.generate(1,(index){
-										return Text(
-											booking.getRateByID( reserved_accommodation.rate )?.description ?? ''
+										return Padding (
+											padding: EdgeInsets.only(bottom: 10.0),
+											child: Text(
+												booking.getRateByID( reserved_accommodation.rate )?.description ?? ''
+											),
 										);
 									}),
 								),
@@ -133,7 +136,7 @@ class BookingDetailAccommodation extends StatelessWidget {
 					// services
 					if ( reserved_accommodation.services.length > 0 )
 						Padding (
-							padding: EdgeInsets.only(top: 10.0),
+							padding: EdgeInsets.only(top: 0.0),
 							child: ListTileTheme(
 								dense: true,
 								contentPadding: EdgeInsets.zero,
