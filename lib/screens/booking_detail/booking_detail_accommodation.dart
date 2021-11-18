@@ -59,7 +59,7 @@ class BookingDetailAccommodation extends StatelessWidget {
 												style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 											),
 										],
-										if ( booking.getAccommodationTypeByID( reserved_accommodation.accommodation_type ) != null )
+										if ( booking.getAccommodationTypeByID( reserved_accommodation.accommodation_type ) != null ) ...[
 											Padding(
 												padding: EdgeInsets.only(top: 5.0),
 												child: Text(
@@ -67,6 +67,12 @@ class BookingDetailAccommodation extends StatelessWidget {
 													style: TextStyle(fontSize: 12),
 												),
 											),
+										] else ...[
+											Text(
+												reserved_accommodation.accommodation_type.toString(),
+												style: TextStyle(fontSize: 12),
+											),
+										],
 									]
 								)
 							),
@@ -118,7 +124,7 @@ class BookingDetailAccommodation extends StatelessWidget {
 									tilePadding: EdgeInsets.zero,
 									childrenPadding: EdgeInsets.zero,
 									title: Text(
-										'Rate: ' + (booking.getRateByID( reserved_accommodation.rate )?.title ?? '-'),
+										'Rate: ' + (booking.getRateByID( reserved_accommodation.rate )?.title ?? reserved_accommodation.rate.toString() ),
 										style: DefaultTextStyle.of(context).style
 									),
 									children: List.generate(1,(index){

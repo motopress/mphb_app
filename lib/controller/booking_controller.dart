@@ -24,11 +24,13 @@ class BookingController extends BasicController{
 
 		final uri = super.getUriHttps( queryEndpoint, queryParameters);
 
-		print(uri.toString());
+		print( Uri.decodeFull(uri.toString()) );
 		final response = await http.get(
 			uri,
 			headers: headers,
 		);
+
+		//await Future.delayed(const Duration(milliseconds: 5000));
 
 		if ( response.statusCode == HttpStatus.OK ) {
 
@@ -51,7 +53,7 @@ class BookingController extends BasicController{
 
 		final uri = super.getUriHttps( queryEndpoint );
 
-		print(uri.toString());
+		print( Uri.decodeFull(uri.toString()) );
 		final response = await http.post(
 			uri,
 			headers: headers,

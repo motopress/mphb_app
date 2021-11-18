@@ -166,10 +166,9 @@ class MyCustomFormState extends State<MyCustomForm> {
 														onPressed: () {
 															// Validate returns true if the form is valid, or false otherwise.
 															if (_formKey.currentState!.validate()) {
-																
+
 																_formKey.currentState!.save();
-																//print(model.domain);
-																
+
 																// set value
 																LocalStorage().domain = model.domain;
 																LocalStorage().consumer_key = model.consumer_key;

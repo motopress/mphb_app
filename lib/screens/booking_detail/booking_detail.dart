@@ -64,7 +64,19 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 							future: _bookingFuture,
 							builder: (context, AsyncSnapshot snapshot) {
 								if (snapshot.connectionState == ConnectionState.waiting) {
-									return new CircularProgressIndicator();
+									return new Center(
+										child: Padding(
+											padding: const EdgeInsets.all(10),
+											child: SizedBox(
+												child: CircularProgressIndicator.adaptive(
+													valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+													strokeWidth: 2.0,
+												),
+												height: 20.0,
+												width: 20.0,
+											),
+										),
+									);
 								} else if (snapshot.hasError) {
 									return new Container();
 								} else {
@@ -73,7 +85,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
 									return IconButton(
 										icon: const Icon(Icons.more_vert),
-										tooltip: 'Refresh',
+										tooltip: 'Actions',
 										onPressed: () {
 											showModalBottomSheet(
 												context: context,
@@ -81,14 +93,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 													return BookingDetailActions( booking: booking );
 												},
 											).then((action) {
-												print('Action: $action');
+
+												//print('Action: $action');
 												if ( action != null ) {
 													switch ( action ) {
 														case 'delete':
 															print('Delete booking!');
 															break;
 														default:
-															print('Update Booking Status: ' + action);
 															setState(() {
 																_bookingFuture = _bookingController.wpUpdateBookingStatus( booking, action );
 															});
@@ -104,12 +116,13 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 				),
 				body: FutureBuilder(
 					future: _bookingFuture,
+					initialData: widget.booking,
 					builder: (context, AsyncSnapshot snapshot) {
-						if (snapshot.connectionState == ConnectionState.waiting) {
+						/*if (snapshot.connectionState == ConnectionState.waiting) {
 							return new Center(
 								child: new CircularProgressIndicator(),
 							);
-						} else if (snapshot.hasError) {
+						} else*/ if (snapshot.hasError) {
 							return new Text('Error: ${snapshot.error}');
 						} else {
 

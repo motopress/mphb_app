@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail.dart';
 import 'package:mphb_app/models/booking.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'dart:developer';
+import 'package:mphb_app/models/enum/booking_status.dart';
 
 class BookingListItem extends StatefulWidget {
 
@@ -215,7 +215,7 @@ class _BookingListItemState extends State<BookingListItem> {
 												Radius.circular(4)
 											)
 										),
-										color: booking.status == 'confirmed' ? Colors.green : Colors.orange,
+										color: booking.status == BookingStatusEnum.CONFIRMED ? Colors.green : Colors.orange,
 									),
 									child: Text(
 										booking.status,

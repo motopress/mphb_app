@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mphb_app/models/booking.dart';
+import 'package:mphb_app/models/enum/booking_status.dart';
 
 class BookingDetailStatus extends StatelessWidget {
 
@@ -35,7 +36,7 @@ class BookingDetailStatus extends StatelessWidget {
 					Container(
 						decoration: BoxDecoration(
 							borderRadius: BorderRadius.all(Radius.circular(4)),
-							color: booking.status == 'confirmed' ? Colors.green : Colors.orange,
+							color: booking.status == BookingStatusEnum.CONFIRMED ? Colors.green : Colors.orange,
 						),
 						padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10.0, right: 10.0),
 						child: Text(
@@ -46,16 +47,6 @@ class BookingDetailStatus extends StatelessWidget {
 							),
 						),
 					),
-					/*ElevatedButton(
-						onPressed: () {
-							var status = (booking.status == 'confirmed') ? 'cancelled' : 'confirmed';
-							print('wpUpdateBookingStatus: ' + status);
-							setState(() {
-								_booking = _bookingController.wpUpdateBookingStatus( booking, status );
-							});
-						},
-						child: Text('Set ' + (booking.status == 'confirmed' ? 'cancelled' : 'confirmed')),
-					),*/
 				]
 			),
 		);

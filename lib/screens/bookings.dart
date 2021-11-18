@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/screens/bookings/booking_list_item.dart';
+import 'package:mphb_app/screens/bookings/bookings_filter.dart';
 import 'package:mphb_app/controller/bookings_controller.dart';
 import 'package:mphb_app/models/booking.dart';
+import 'package:mphb_app/models/bookings_filters.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class BookingsPage extends StatefulWidget {
@@ -11,16 +13,6 @@ class BookingsPage extends StatefulWidget {
 
 class _BookingListViewState extends State<BookingsPage> {
 
-	final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-	void _openEndDrawer() {
-		_scaffoldKey.currentState!.openEndDrawer();
-	}
-
-	void _closeEndDrawer() {
-		Navigator.of(context).pop();
-	}
-
 	static const _pageSize = 10;
 
 	final PagingController<int, Booking> _pagingController =
@@ -28,11 +20,15 @@ class _BookingListViewState extends State<BookingsPage> {
 
 	late final BookingsController _bookingsController;
 
+	late Bookings_Filters _bookings_filters;
+
 	@override
 	void initState() {
 		super.initState();
 
 		_bookingsController = new BookingsController();
+
+		_bookings_filters = new Bookings_Filters();
 
 		_pagingController.addPageRequestListener((pageKey) {
 			_fetchPage(pageKey);
@@ -42,7 +38,7 @@ class _BookingListViewState extends State<BookingsPage> {
 	Future<void> _fetchPage(int pageKey) async {
 		try {
 
-			final newItems = await _bookingsController.wpGetBookings(pageKey, _pageSize);
+			final newItems = await _bookingsController.wpGetBookings(pageKey, _pageSize, _bookings_filters);
 			final isLastPage = newItems.length < _pageSize;
 
 			if (isLastPage) {
@@ -63,7 +59,6 @@ class _BookingListViewState extends State<BookingsPage> {
 
 		return Scaffold(
 
-			key: _scaffoldKey,
 			appBar: AppBar(
 				title: Text('Bookings'),
 				actions: <Widget>[
@@ -74,10 +69,49 @@ class _BookingListViewState extends State<BookingsPage> {
 							_pagingController.refresh();
 						},
 					),
-					IconButton(
-						icon: const Icon(Icons.filter_list),
-						tooltip: 'Filter',
-						onPressed: _openEndDrawer,
+					Stack(
+						alignment: Alignment.center,
+						children: <Widget>[
+							IconButton(
+								icon: const Icon(Icons.filter_list),
+								tooltip: 'Filter',
+								onPressed: () async {
+									await Navigator.push(context, MaterialPageRoute (
+										builder: (BuildContext context) {
+											return BookingsFilter( bookings_filters: _bookings_filters );
+										},
+									)).then((bookings_filters) {
+
+										if ( bookings_filters != null ) {
+											setState(() {
+												_bookings_filters = bookings_filters;
+											});
+											_pagingController.refresh();
+										}
+									});
+								},
+							),
+							if ( ! _bookings_filters.isEmpty() )
+								IgnorePointer(
+									child: Center(
+										child: Container(
+											height: 24.0,
+											width: 24.0,
+											child: Align(
+												alignment: Alignment.topRight,
+												child: Container(
+													width: 10,
+													height: 10,
+													decoration: BoxDecoration(
+														shape: BoxShape.circle,
+														color: Colors.yellow,
+													),
+												),
+											),
+										),
+									),
+								),
+						],
 					),
 					PopupMenuButton<String>(
 						onSelected: (index){},
@@ -135,24 +169,6 @@ class _BookingListViewState extends State<BookingsPage> {
 					),
 				),
 			),
-
-			endDrawer: Drawer(
-				child: Center(
-					child: Column(
-						mainAxisAlignment: MainAxisAlignment.center,
-						children: <Widget>[
-							const Text('This is the Drawer'),
-							ElevatedButton(
-								onPressed: _closeEndDrawer,
-								child: const Text('Close Drawer'),
-							),
-						],
-					),
-				),
-			),
-			// Disable opening the end drawer with a swipe gesture.
-			endDrawerEnableOpenDragGesture: false,
-
 		);
 	}
 

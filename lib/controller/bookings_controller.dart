@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:mphb_app/controller/basic_controller.dart';
 import 'package:mphb_app/models/booking.dart';
+import 'package:mphb_app/models/bookings_filters.dart';
 
 /*
  * A function that converts a response body into a List<Booking>.
@@ -25,7 +26,7 @@ class BookingsController extends BasicController{
 	 * https://booking.loc/wp-json/mphb/v1/bookings?consumer_key=ck_1d9a5f63a7d95d69db24ea6d2a1a883cace7a127&consumer_secret=cs_993ee46f420b9472bc4b98aed6b2b1ca5e92b717
 	 * https://uglywebsites.org/booking-api/wp-json/mphb/v1/bookings?consumer_key=ck_09c4163541fb26930cf9531ba1601f711f5c1ab9&consumer_secret=cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8
 	 */
-	Future<List<Booking>> wpGetBookings( int offset, int limit ) async {
+	Future<List<Booking>> wpGetBookings( int offset, int limit, Bookings_Filters filters ) async {
 
 		final headers = super.getHeaders();
 
@@ -34,9 +35,13 @@ class BookingsController extends BasicController{
 			'offset': offset.toString()
 		};
 
-		final uri = super.getUriHttps( _queryEndpoint, queryParameters);
+		final uri = super.getUriHttps( _queryEndpoint, {
+			   ...queryParameters,
+			   ...filters.toMap(),
+			}
+		);
 
-		print(uri.toString());
+		print( Uri.decodeFull(uri.toString()) );
 		final response = await http.get(
 			uri,
 			headers: headers
