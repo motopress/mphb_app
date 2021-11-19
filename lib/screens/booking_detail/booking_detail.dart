@@ -66,7 +66,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 								if (snapshot.connectionState == ConnectionState.waiting) {
 									return new Center(
 										child: Padding(
-											padding: const EdgeInsets.all(10),
+											padding: const EdgeInsets.all(14),
 											child: SizedBox(
 												child: CircularProgressIndicator(
 													color: Colors.black,
