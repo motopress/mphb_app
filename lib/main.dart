@@ -19,11 +19,17 @@ class MyApp extends StatelessWidget {
 
 	Widget build(BuildContext context) {
 		return MaterialApp(
+			debugShowCheckedModeBanner: false,
 			title: 'Flutter Demo',
 			theme: ThemeData(
 				primarySwatch: Colors.indigo,
 				scaffoldBackgroundColor: const Color(0xFFF3F4F6),
 				visualDensity: VisualDensity.adaptivePlatformDensity,
+				appBarTheme: AppBarTheme(
+					backgroundColor: Colors.white,
+					foregroundColor: Colors.black,
+					elevation: 0,
+				),
 			),
 			initialRoute: '/',
 			routes: {

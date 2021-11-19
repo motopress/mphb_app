@@ -100,74 +100,79 @@ class _BookingsFilterState extends State<BookingsFilter> {
 	Widget build(BuildContext context) {
 
 		return Scaffold(
+			backgroundColor: Colors.white,
 			appBar: AppBar(
 				title: const Text('Filters'),
+				actions: <Widget>[
+					Padding(
+						padding: EdgeInsets.all(10.0),
+						child: TextButton(
+							onPressed: reset,
+							child: const Text('Reset'),
+							style: TextButton.styleFrom(
+								primary: Colors.black,
+							),
+						),
+					),
+				],
 			),
-			body: Container(
-				padding: const EdgeInsets.all(20.0),
-				child: Column(
-					mainAxisAlignment: MainAxisAlignment.start,
-					crossAxisAlignment: CrossAxisAlignment.start,
-					children: <Widget>[
+			body: SingleChildScrollView(
+				child: Container(
+					padding: const EdgeInsets.all(20.0),
+					child: Column(
+						mainAxisAlignment: MainAxisAlignment.start,
+						crossAxisAlignment: CrossAxisAlignment.start,
+						children: <Widget>[
 
-						Container(
-							padding: const EdgeInsets.only(top: 0.0),
-							child: Column(
-								crossAxisAlignment: CrossAxisAlignment.start,
-								children: [
-									Padding(
-										padding: const EdgeInsets.only(bottom: 10.0),
-										child: Text('Booking Status:'),
-									),
-									Wrap(
-										children: bookingStatusesFilter.toList(),
-									),
-									SizedBox(height: 10),
-									Text('Look for: ${bookings_filters.post_status.join(', ')}'),
-								],
+							Container(
+								margin: const EdgeInsets.only(top: 0.0),
+								child: Column(
+									crossAxisAlignment: CrossAxisAlignment.start,
+									children: [
+										Padding(
+											padding: const EdgeInsets.only(bottom: 10.0),
+											child: Text('Booking Status:'),
+										),
+										Wrap(
+											children: bookingStatusesFilter.toList(),
+										),
+										SizedBox(height: 10),
+										//Text('Look for: ${bookings_filters.post_status.join(', ')}'),
+									],
+								),
 							),
-						),
-						Container(
-							padding: const EdgeInsets.only(top: 20.0),
-							child: Column(
-								crossAxisAlignment: CrossAxisAlignment.start,
-								children: [
-									Padding(
-										padding: const EdgeInsets.only(bottom: 10.0),
-										child: Text('Booking Status:'),
-									),
-									Wrap(
-										children: bookingDateRangeFilter.toList(),
-									),
-									SizedBox(height: 10),
-									Text('Look for: ${bookings_filters.date_range}'),
-								],
+							Container(
+								margin: const EdgeInsets.only(top: 20.0),
+								child: Column(
+									crossAxisAlignment: CrossAxisAlignment.start,
+									children: [
+										Padding(
+											padding: const EdgeInsets.only(bottom: 10.0),
+											child: Text('Date Range:'),
+										),
+										Wrap(
+											children: bookingDateRangeFilter.toList(),
+										),
+										SizedBox(height: 10),
+										//Text('Look for: ${bookings_filters.date_range}'),
+									],
+								),
 							),
-						),
-						SizedBox(height: 100),
-						Divider(
-							height: 1,
-							thickness: 1,
-						),
-						Container(
-							padding: const EdgeInsets.only(top: 20.0),
-							child: Row(
-								children: [
-									ElevatedButton(
-										onPressed: close,
-										child: const Text('Apply'),
-									),
-									SizedBox(width: 10),
-									ElevatedButton(
-										onPressed: reset,
-										child: const Text('Reset'),
-									),
-								]
-							),
-						),
-					],
+						],
+					),
 				),
 			),
+
+			persistentFooterButtons: [
+				ElevatedButton(
+					style: ElevatedButton.styleFrom(
+						minimumSize: Size(double.infinity, 50), // double.infinity is the width and 50 is the height
+						padding: EdgeInsets.all(10),
+					),
+					onPressed: close,
+					child: const Text('Apply'),
+				),
+			],
 		);
 
 	}

@@ -68,8 +68,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 										child: Padding(
 											padding: const EdgeInsets.all(10),
 											child: SizedBox(
-												child: CircularProgressIndicator.adaptive(
-													valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+												child: CircularProgressIndicator(
+													color: Colors.black,
 													strokeWidth: 2.0,
 												),
 												height: 20.0,
