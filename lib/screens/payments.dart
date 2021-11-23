@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:mphb_app/screens/bookings/booking_list_item.dart';
-import 'package:mphb_app/screens/bookings/bookings_filter.dart';
-import 'package:mphb_app/controller/bookings_controller.dart';
-import 'package:mphb_app/models/booking.dart';
-import 'package:mphb_app/models/bookings_filters.dart';
+import 'package:mphb_app/screens/payments/payments_list_item.dart';
+import 'package:mphb_app/screens/payments/payments_filter.dart';
+import 'package:mphb_app/controller/payments_controller.dart';
+import 'package:mphb_app/models/payment.dart';
+import 'package:mphb_app/models/payments_filters.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class BookingsPage extends StatefulWidget {
+class PaymentsPage extends StatefulWidget {
   @override
-  _BookingsListViewState createState() => _BookingsListViewState();
+  _PaymentsListViewState createState() => _PaymentsListViewState();
 }
 
-class _BookingsListViewState extends State<BookingsPage> {
+class _PaymentsListViewState extends State<PaymentsPage> {
 
 	static const _pageSize = 10;
 
-	final PagingController<int, Booking> _pagingController =
+	final PagingController<int, Payment> _pagingController =
 		PagingController(firstPageKey: 0);
 
-	late final BookingsController _bookingsController;
+	late final PaymentsController _paymentsController;
 
-	late Bookings_Filters _bookings_filters;
+	late Payments_Filters _payments_filters;
 
 	@override
 	void initState() {
 		super.initState();
 
-		_bookingsController = new BookingsController();
+		_paymentsController = new PaymentsController();
 
-		_bookings_filters = new Bookings_Filters();
+		_payments_filters = new Payments_Filters();
 
 		_pagingController.addPageRequestListener((pageKey) {
 			_fetchPage(pageKey);
@@ -38,7 +38,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 	Future<void> _fetchPage(int pageKey) async {
 		try {
 
-			final newItems = await _bookingsController.wpGetBookings(pageKey, _pageSize, _bookings_filters);
+			final newItems = await _paymentsController.wpGetPayments(pageKey, _pageSize, _payments_filters);
 			final isLastPage = newItems.length < _pageSize;
 
 			if (isLastPage) {
@@ -60,7 +60,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 		return Scaffold(
 
 			appBar: AppBar(
-				title: Text('Bookings'),
+				title: Text('Payments'),
 				actions: <Widget>[
 					IconButton(
 						icon: const Icon(Icons.sync),
@@ -78,20 +78,20 @@ class _BookingsListViewState extends State<BookingsPage> {
 								onPressed: () async {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
-											return BookingsFilter( bookings_filters: _bookings_filters );
+											return PaymentsFilter( payments_filters: _payments_filters );
 										},
-									)).then((bookings_filters) {
+									)).then((payments_filters) {
 
-										if ( bookings_filters != null ) {
+										if ( payments_filters != null ) {
 											setState(() {
-												_bookings_filters = bookings_filters;
+												_payments_filters = payments_filters;
 											});
 											_pagingController.refresh();
 										}
 									});
 								},
 							),
-							if ( ! _bookings_filters.isEmpty() )
+							if ( ! _payments_filters.isEmpty() )
 								IgnorePointer(
 									child: Center(
 										child: Container(
@@ -153,14 +153,14 @@ class _BookingsListViewState extends State<BookingsPage> {
 					onRefresh: () => Future.sync(
 						() => _pagingController.refresh(),
 					),
-					child: PagedListView<int, Booking>(
+					child: PagedListView<int, Payment>(
 						padding: EdgeInsets.all(20.0),
 						pagingController: _pagingController,
-						builderDelegate: PagedChildBuilderDelegate<Booking>(
-							itemBuilder: (context, item, index) => BookingListItem(
+						builderDelegate: PagedChildBuilderDelegate<Payment>(
+							itemBuilder: (context, item, index) => PaymentListItem(
 								pagingController: _pagingController,
 								index: index,
-								booking: item,
+								payment: item,
 							),
 							noItemsFoundIndicatorBuilder: (context) => Center(child: Text('Nothing Found',),),
 							firstPageErrorIndicatorBuilder: (context) => Text('Error'),
@@ -169,18 +169,6 @@ class _BookingsListViewState extends State<BookingsPage> {
 					),
 				),
 			),
-			/*bottomNavigationBar: BottomNavigationBar(
-				items: const <BottomNavigationBarItem>[
-					BottomNavigationBarItem(
-						icon: Icon(Icons.event),
-						label: 'Bookings',
-					),
-					BottomNavigationBarItem(
-						icon: Icon(Icons.payments),
-						label: 'Payments',
-					),
-				],
-			),*/
 		);
 	}
 
