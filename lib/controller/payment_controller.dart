@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:mphb_app/controller/basic_controller.dart';
 import 'package:mphb_app/models/payment.dart';
+import 'package:mphb_app/models/enum/payment_status.dart';
 
 class PaymentController extends BasicController{
 
@@ -16,13 +17,9 @@ class PaymentController extends BasicController{
 
 		final headers = super.getHeaders();
 
-		final queryParameters = <String, String> {
-			'_embed' : 'accommodation,accommodation_type,services,rate'
-		};
-
 		var queryEndpoint = '$_queryEndpoint/${paymentID.toString()}';
 
-		final uri = super.getUriHttps( queryEndpoint, queryParameters);
+		final uri = super.getUriHttps( queryEndpoint );
 
 		print( Uri.decodeFull(uri.toString()) );
 		final response = await http.get(

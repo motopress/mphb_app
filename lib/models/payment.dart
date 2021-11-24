@@ -1,3 +1,5 @@
+import 'package:mphb_app/models/customer.dart';
+
 class Payment {
 
     final int id;
@@ -18,7 +20,7 @@ class Payment {
 	final int booking_id;
 	final String gateway_mode;
 
-	final Map billing_info;
+	final Customer billing_info;
 
 	Payment({
 		required this.id,
@@ -60,7 +62,7 @@ class Payment {
 			date_expiration_utc: json.containsKey( 'gateway_id' ) ? json['gateway_id'] as String : '',
 			booking_id: json.containsKey( 'booking_id' ) ? json['booking_id'] as int : 0,
 			gateway_mode: json.containsKey( 'gateway_mode' ) ? json['gateway_mode'] as String : '',
-			billing_info: json.containsKey( 'billing_info' ) ? json['billing_info'] as Map : {},
+			billing_info: json.containsKey( 'billing_info' ) ? Customer.fromJson( json['billing_info'] ) : Customer.empty(),
 
 		);
 	}

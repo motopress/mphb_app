@@ -36,4 +36,29 @@ class Customer {
 		);
 	}
 
+	Customer.empty() :
+		email = '',
+		first_name = '',
+		last_name = '',
+		phone = '',
+		country = '',
+		state = '',
+		city = '',
+		zip = '',
+		address1 = '';
+
+	bool isEmpty() {
+		return(
+			email == '' &&
+			first_name == '' &&
+			last_name == '' &&
+			phone == '' &&
+			country == '' &&
+			state == '' &&
+			city == '' &&
+			zip == '' &&
+			address1 == ''
+		);
+	}
+
 }

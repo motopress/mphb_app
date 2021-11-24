@@ -14,6 +14,20 @@ class BookingDetailActions extends StatelessWidget {
 		return Wrap(
 			children: [
 				ListTile(
+					leading: Icon(Icons.done),
+					title: Text('Set to Confirmed'),
+					onTap: () {
+						Navigator.pop(context, BookingStatusEnum.CONFIRMED);
+					},
+				),
+				ListTile(
+					leading: Icon(Icons.block),
+					title: Text('Set to Cancelled'),
+					onTap: () {
+						Navigator.pop(context, BookingStatusEnum.CANCELLED);
+					},
+				),
+				ListTile(
 					leading: Icon(Icons.hourglass_empty),
 					title: Text('Set to Pending Admin'),
 					onTap: () {
@@ -32,20 +46,6 @@ class BookingDetailActions extends StatelessWidget {
 					title: Text('Set to Pending Payment'),
 					onTap: () {
 						Navigator.pop(context, BookingStatusEnum.PENDING_PAYMENT);
-					},
-				),
-				ListTile(
-					leading: Icon(Icons.block),
-					title: Text('Set to Cancelled'),
-					onTap: () {
-						Navigator.pop(context, BookingStatusEnum.CANCELLED);
-					},
-				),
-				ListTile(
-					leading: Icon(Icons.done),
-					title: Text('Set to Confirmed'),
-					onTap: () {
-						Navigator.pop(context, BookingStatusEnum.CONFIRMED);
 					},
 				),
 				Divider(),

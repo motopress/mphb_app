@@ -37,13 +37,12 @@ class _PaymentListItemState extends State<PaymentListItem> {
 			context,
 			MaterialPageRoute(builder: (context) => PaymentDetailScreen( payment: payment )),
 		);
-		print(newPayment);
+		//print(newPayment);
 
-
-		/*if ( widget.payment.status != newPayment.status ) {
+		if ( widget.payment.status != newPayment.status ) {
 			widget.payment.status = newPayment.status;
 			widget.pagingController.notifyListeners();
-		}*/
+		}
 	}
 
 	@override
@@ -82,23 +81,20 @@ class _PaymentListItemState extends State<PaymentListItem> {
 											Padding(
 												padding: EdgeInsets.only(right: 10.0),
 												child: Row(
+													crossAxisAlignment: CrossAxisAlignment.baseline,
+													textBaseline: TextBaseline.ideographic,
 													children: [
-														Padding(
-															padding: EdgeInsets.only(right: 10.0),
-															child: Icon(
-																Icons.attach_money,
-																size: 12,
-																color: Colors.indigo.shade100
-															)
-														),
 														Text(
 															payment.amount.toString(),
 															style: TextStyle(fontWeight: FontWeight.bold),
 														),
 														Padding(
-															padding: EdgeInsets.only(left: 10.0),
+															padding: EdgeInsets.only(left: 5.0),
 															child: Text(
 																payment.currency,
+																style: TextStyle(
+																	fontSize: 12,
+																),
 															),
 														),
 													]
@@ -141,7 +137,7 @@ class _PaymentListItemState extends State<PaymentListItem> {
 												Padding(
 													padding: EdgeInsets.only(right: 3.0, left: 8.0),
 													child: Icon(
-														Icons.event_available,
+														Icons.description,
 														size: 12,
 														color: Colors.indigo.shade100
 													)
@@ -180,7 +176,12 @@ class _PaymentListItemState extends State<PaymentListItem> {
 												Radius.circular(4)
 											)
 										),
-										color: payment.status == PaymentStatusEnum.COMPLETED ? Colors.green : Colors.orange,
+										color:
+											(payment.status == PaymentStatusEnum.COMPLETED || payment.status == PaymentStatusEnum.ON_HOLD) ?
+												Colors.green
+											: (payment.status == PaymentStatusEnum.CANCELLED || payment.status == PaymentStatusEnum.REFUNDED) ?
+												Colors.orange
+											:  Colors.blueGrey,
 									),
 									child: Text(
 										payment.status,

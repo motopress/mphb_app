@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/controller/payment_controller.dart';
 import 'package:mphb_app/models/payment.dart';
+import 'package:mphb_app/screens/payment_detail/payment_detail_status.dart';
+import 'package:mphb_app/screens/payment_detail/payment_detail_amount.dart';
+import 'package:mphb_app/screens/payment_detail/payment_detail_booking.dart';
+import 'package:mphb_app/screens/payment_detail/payment_detail_gateway.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail_customer.dart';
+import 'package:mphb_app/screens/payment_detail/payment_detail_actions.dart';
 
 class PaymentDetailScreen extends StatefulWidget {
 
@@ -74,8 +80,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 
 									Payment payment = snapshot.data;
 
-									return Container();
-									/*return IconButton(
+									return IconButton(
 										icon: const Icon(Icons.more_vert),
 										tooltip: 'Actions',
 										onPressed: () {
@@ -100,7 +105,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 												}
 											});
 										},
-									);*/
+									);
 								}
 							}
 						),
@@ -132,7 +137,17 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 										padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
 										child: Column(
 											children: [
-												
+												// payment id + status
+												PaymentDetailStatus( payment: payment ),
+												// amount
+												PaymentDetailAmount( payment: payment ),
+												// amount
+												PaymentDetailBooking( payment: payment ),
+												// gateway
+												PaymentDetailGateway( payment: payment ),
+												// billing info
+												if ( ! payment.billing_info.isEmpty() )
+													BookingDetailCustomer( customer: payment.billing_info ),
 											],
 										),
 									),
