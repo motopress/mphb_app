@@ -8,4 +8,8 @@ class PaymentStatusEnum {
 	static const String REFUNDED = 'refunded';
 	static const String ON_HOLD = 'on-hold';
 
+	static String toWPPaymentStatus( String status ) {
+		return 'mphb-p-' + status;
+	}
+
 }

@@ -113,38 +113,6 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 								),
 						],
 					),
-					PopupMenuButton<String>(
-						onSelected: (index){},
-						itemBuilder: (BuildContext context) {
-							return {'Logout', 'Settings'}.map((String choice) {
-								return PopupMenuItem<String>(
-									value: choice,
-									child: Text(choice),
-								);
-							}).toList();
-						},
-					),
-					IconButton(
-						icon: const Icon(Icons.settings),
-						tooltip: 'Settings',
-						onPressed: () {
-							Navigator.push(context, MaterialPageRoute<void>(
-								builder: (BuildContext context) {
-									return Scaffold(
-										appBar: AppBar(
-											title: const Text('Settings'),
-										),
-										body: const Center(
-											child: Text(
-												'Settings page',
-												style: TextStyle(fontSize: 24),
-											),
-										),
-									);
-								},
-							));
-						},
-					),
 				],
 			),
 
@@ -156,6 +124,7 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 					child: PagedListView<int, Payment>(
 						padding: EdgeInsets.all(20.0),
 						pagingController: _pagingController,
+						scrollController: ScrollController(),
 						builderDelegate: PagedChildBuilderDelegate<Payment>(
 							itemBuilder: (context, item, index) => PaymentListItem(
 								pagingController: _pagingController,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-//import 'package:mphb_app/screens/payment_detail/payment_detail.dart';
+import 'package:mphb_app/screens/payment_detail/payment_detail.dart';
 import 'package:mphb_app/models/payment.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mphb_app/models/enum/payment_status.dart';
@@ -33,14 +33,14 @@ class _PaymentListItemState extends State<PaymentListItem> {
 
 	void _showPaymentDetails(BuildContext context) async {
 
-		/*final Payment newPayment = await Navigator.push(
+		final Payment newPayment = await Navigator.push(
 			context,
 			MaterialPageRoute(builder: (context) => PaymentDetailScreen( payment: payment )),
 		);
-		//print(newPayment);
+		print(newPayment);
 
 
-		if ( widget.payment.status != newPayment.status ) {
+		/*if ( widget.payment.status != newPayment.status ) {
 			widget.payment.status = newPayment.status;
 			widget.pagingController.notifyListeners();
 		}*/
@@ -95,6 +95,12 @@ class _PaymentListItemState extends State<PaymentListItem> {
 															payment.amount.toString(),
 															style: TextStyle(fontWeight: FontWeight.bold),
 														),
+														Padding(
+															padding: EdgeInsets.only(left: 10.0),
+															child: Text(
+																payment.currency,
+															),
+														),
 													]
 												),
 											),
@@ -125,6 +131,40 @@ class _PaymentListItemState extends State<PaymentListItem> {
 														size: 12,
 														color: Colors.indigo.shade100
 													)
+												),
+												Text(
+													DateFormat('yyyy-MM-dd').format( DateTime.parse(payment.date_created) ),
+													style: TextStyle(
+														fontSize: 12,
+													),
+												),
+												Padding(
+													padding: EdgeInsets.only(right: 3.0, left: 8.0),
+													child: Icon(
+														Icons.event_available,
+														size: 12,
+														color: Colors.indigo.shade100
+													)
+												),
+												Text(
+													payment.booking_id.toString(),
+													style: TextStyle(
+														fontSize: 12,
+													),
+												),
+												Padding(
+													padding: EdgeInsets.only(right: 3.0, left: 8.0),
+													child: Icon(
+														Icons.credit_card,
+														size: 12,
+														color: Colors.indigo.shade100
+													)
+												),
+												Text(
+													payment.gateway_id,
+													style: TextStyle(
+														fontSize: 12,
+													),
 												),
 											]
 										),

@@ -32,7 +32,7 @@ class Bookings_Filters {
 		Map<String, String> map = {};
 
 		if ( post_status.length > 0 ) {
-			map['filter[post_status]'] = post_status.join(', ');
+			map['filter[post_status]'] = post_status.join(',');
 		}
 
 		if ( ! date_range.isEmpty ) {

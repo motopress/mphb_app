@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/screens/bookings.dart';
 import 'package:mphb_app/screens/payments.dart';
+import 'package:mphb_app/screens/settings.dart';
 
 class MyHomePage extends StatefulWidget {
   
@@ -19,6 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
 	static final List<Widget> _widgetOptions = [
 		BookingsPage(),
 		PaymentsPage(),
+		SettingsPage(),
 	];
 
 	@override
@@ -30,6 +32,8 @@ class _MyHomePageState extends State<MyHomePage> {
 				index: _selectedIndex,
 			),
 			bottomNavigationBar: BottomNavigationBar(
+				showSelectedLabels: false,
+				showUnselectedLabels: false,
 				items: const <BottomNavigationBarItem>[
 					BottomNavigationBarItem(
 						icon: Icon(Icons.event),
@@ -39,9 +43,13 @@ class _MyHomePageState extends State<MyHomePage> {
 						icon: Icon(Icons.payments),
 						label: 'Payments',
 					),
+					BottomNavigationBarItem(
+						icon: Icon(Icons.settings),
+						label: 'Settings',
+					),
 				],
 				currentIndex: _selectedIndex,
-				selectedItemColor: Colors.indigo,
+				selectedItemColor: Colors.black,
 				onTap: (index) => setState(() => _selectedIndex = index),
 			),
 		);
