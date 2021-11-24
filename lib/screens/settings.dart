@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mphb_app/local_storage.dart';
 
 class SettingsPage extends StatefulWidget {
 
@@ -18,10 +19,13 @@ class _SettingsPageState extends State<SettingsPage> {
 			appBar: AppBar(
 				title: const Text('Settings'),
 			),
-			body: const Center(
-				child: Text(
-					'Settings page',
-					style: TextStyle(fontSize: 24),
+			body: Center(
+				child: OutlinedButton(
+					onPressed: () {
+						LocalStorage().clear();
+						Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+					},
+					child: Text("Log out"),
 				),
 			),
 		);

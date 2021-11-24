@@ -27,6 +27,10 @@ class MyCustomFormState extends State<MyCustomForm> {
 	
 	final model = FormModel();
 
+	final domainController = TextEditingController();
+	final keyController = TextEditingController();
+	final secretController = TextEditingController();
+
 	@override
 	void initState() {
 		// TODO: implement initState
@@ -75,16 +79,23 @@ class MyCustomFormState extends State<MyCustomForm> {
 										SizedBox(height: 25.0),
 
 										OutlinedButton.icon(
-											onPressed: () {
+											onPressed: () async {
 
 												/*
 												 * Web issue
 												 * https://github.com/juliuscanute/qr_code_scanner/issues/441
 												 */												
-												Navigator.push(
-												context,
+												await Navigator.push(
+													context,
 													MaterialPageRoute(builder: (context) => Scanner()),
-												);
+												).then((formModel) {
+
+													if ( formModel != null ) {
+														domainController.text = formModel.domain;
+														keyController.text = formModel.consumer_key;
+														secretController.text = formModel.consumer_secret;
+													}
+												});
 
 											},
 											icon: Icon(Icons.qr_code_scanner),
@@ -100,17 +111,28 @@ class MyCustomFormState extends State<MyCustomForm> {
 											key: _formKey,
 											child: Column(
 												children: [
+													OutlinedButton(
+														onPressed: () {
+															domainController.text = 'https://uglywebsites.org/booking-api/wp-json/mphb/v1';
+															keyController.text = 'ck_09c4163541fb26930cf9531ba1601f711f5c1ab9';
+															secretController.text = 'cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8';
+														},
+														child: Text("Demo Data"),
+													),
+													SizedBox(height: 10),
 													TextFormField(
-														initialValue: "https://uglywebsites.org/booking-api/wp-json/mphb/v1",
+														//initialValue: "https://uglywebsites.org/booking-api/wp-json/mphb/v1",
+														controller: domainController,
 														decoration: const InputDecoration(
-															hintText: 'Domain',
+															hintText: 'https://mywebsite.com/booking-api/wp-json/mphb/v1',
 															labelText: 'Domain',
+															floatingLabelBehavior: FloatingLabelBehavior.always,
 															border: OutlineInputBorder(),
 														),
 														// The validator receives the text that the user has entered.
 														validator: (value) {
 															if (value == null || value.isEmpty) {
-																return 'Please enter some text';
+																return 'Please enter Domain';
 															}
 															return null;
 														},
@@ -120,16 +142,18 @@ class MyCustomFormState extends State<MyCustomForm> {
 													),
 													SizedBox(height: 30),
 													TextFormField(
-														initialValue: "ck_09c4163541fb26930cf9531ba1601f711f5c1ab9",
+														//initialValue: "ck_09c4163541fb26930cf9531ba1601f711f5c1ab9",
+														controller: keyController,
 														decoration: const InputDecoration(
-															hintText: 'consumer_key',
+															hintText: 'ck_xxxxxxxxxx',
 															labelText: 'Key',
+															floatingLabelBehavior: FloatingLabelBehavior.always,
 															border: OutlineInputBorder(),
 														),
 														// The validator receives the text that the user has entered.
 														validator: (value) {
 															if (value == null || value.isEmpty) {
-																return 'Please enter some text';
+																return 'Please enter Key';
 															}
 															return null;
 														},
@@ -139,17 +163,19 @@ class MyCustomFormState extends State<MyCustomForm> {
 													),
 													SizedBox(height: 30),
 													TextFormField(
-														initialValue: "cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8",
+														//initialValue: "cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8",
+														controller: secretController,
 														decoration: const InputDecoration(
-															hintText: 'consumer_secret',
+															hintText: 'cs_xxxxxxxxxx',
 															labelText: 'Secret',
+															floatingLabelBehavior: FloatingLabelBehavior.always,
 															border: OutlineInputBorder(),
 														),
 														obscureText: true,
 														// The validator receives the text that the user has entered.
 														validator: (value) {
 															if (value == null || value.isEmpty) {
-																return 'Please enter some text';
+																return 'Please enter Secret';
 															}
 															return null;
 														},

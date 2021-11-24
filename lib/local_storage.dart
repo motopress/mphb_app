@@ -42,4 +42,17 @@ class LocalStorage {
 		_prefs.getString('consumer_secret') ?? ''
 	);
 
+	bool hasData() {
+
+		return (
+			! domain.isEmpty &&
+			! consumer_key.isEmpty &&
+			! consumer_secret.isEmpty
+		);
+	}
+
+	void clear() async {
+		await _prefs.clear();
+	}
+
 }

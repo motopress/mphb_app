@@ -31,10 +31,16 @@ class MyApp extends StatelessWidget {
 					foregroundColor: Colors.black,
 					elevation: 0,
 				),
+				elevatedButtonTheme: ElevatedButtonThemeData(
+					style: ElevatedButton.styleFrom(
+						primary: Colors.black,
+					)
+				),
+
 			),
-			initialRoute: '/',
+			//home: const MyHomePage(),
+			home: LocalStorage().hasData() ? const MyHomePage() : const MyCustomForm(),
 			routes: {
-				'/': (context) => const MyCustomForm(),
 				'/home': (context) => const MyHomePage(),
 			},
 		);

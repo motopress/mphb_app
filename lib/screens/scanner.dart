@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:mphb_app/models/form_model.dart';
 
 class Scanner extends StatefulWidget {
 	@override
@@ -73,6 +74,16 @@ class _ScannerState extends State<Scanner> {
 
 			controller.pauseCamera();
 
+			String? rawData = scanData.code;
+			FormModel formModel = FormModel();
+			
+			try {
+				formModel = FormModel.fromRawData(rawData ?? '');
+			} on Exception catch (e) {
+				print(e);
+				controller.resumeCamera();
+			}
+
 			showDialog(
 				context: context,
 				builder: (BuildContext context) {
@@ -81,16 +92,17 @@ class _ScannerState extends State<Scanner> {
 						content: SingleChildScrollView(
 							child: ListBody(
 								children: <Widget>[
-									Text('Barcode Type: ${describeEnum(scanData.format)}'),
-									Text('Data: ${scanData.code}'),
+									Text('Data: ${formModel.domain}'),
+									Text('Data: ${formModel.consumer_key}'),
+									Text('Data: ${formModel.consumer_secret}'),
 								],
 							),
 						),
 						actions: <Widget>[
 							TextButton(
-								child: Text('Ok'),
+								child: Text('Apply'),
 								onPressed: () {
-									Navigator.of(context).pop();
+									Navigator.of(context).pop( formModel );
 								},
 							),
 						],
