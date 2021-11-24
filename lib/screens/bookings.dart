@@ -125,6 +125,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 						padding: EdgeInsets.all(20.0),
 						pagingController: _pagingController,
 						scrollController: ScrollController(),
+						physics: const AlwaysScrollableScrollPhysics(),
 						builderDelegate: PagedChildBuilderDelegate<Booking>(
 							itemBuilder: (context, item, index) => BookingListItem(
 								pagingController: _pagingController,

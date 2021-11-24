@@ -125,6 +125,7 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 						padding: EdgeInsets.all(20.0),
 						pagingController: _pagingController,
 						scrollController: ScrollController(),
+						physics: const AlwaysScrollableScrollPhysics(),
 						builderDelegate: PagedChildBuilderDelegate<Payment>(
 							itemBuilder: (context, item, index) => PaymentListItem(
 								pagingController: _pagingController,
