@@ -215,7 +215,12 @@ class _BookingListItemState extends State<BookingListItem> {
 												Radius.circular(4)
 											)
 										),
-										color: booking.status == BookingStatusEnum.CONFIRMED ? Colors.green : Colors.orange,
+										color:
+											booking.status == BookingStatusEnum.CONFIRMED ?
+												Colors.green
+											: (booking.status == BookingStatusEnum.CANCELLED) ?
+												Colors.orange
+											:  Colors.blueGrey,
 									),
 									child: Text(
 										booking.status,

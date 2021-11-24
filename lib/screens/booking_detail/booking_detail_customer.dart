@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mphb_app/models/customer.dart';
 
@@ -86,7 +87,22 @@ class BookingDetailCustomer extends StatelessWidget {
 									if ( !customer.email.isEmpty )
 										Padding(
 											padding: EdgeInsets.only(top: 10.0),
-											child: Text(customer.email,),
+											child: Row(
+												children: [
+													Text(customer.email,),
+													IconButton(
+														icon: const Icon(Icons.content_copy, size: 14),
+														tooltip: 'Copy',
+														onPressed: () {
+															Clipboard.setData(ClipboardData(text: customer.email))
+																.then((_) {
+																	final snackBar = SnackBar( content: Text('${customer.email} copied') );
+																	ScaffoldMessenger.of(context).showSnackBar(snackBar);
+																});
+														},
+													),
+												],
+											),
 										),
 									if ( !customer.phone.isEmpty )
 										Padding(

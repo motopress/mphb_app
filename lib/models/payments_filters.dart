@@ -1,12 +1,13 @@
 import 'package:intl/intl.dart';
 import 'package:mphb_app/models/enum/date_range.dart';
+import 'package:mphb_app/models/enum/payment_status.dart';
 
-class Bookings_Filters {
+class Payments_Filters {
 
     final List<String> post_status = <String>[];
     String date_range = '';
 
-	Bookings_Filters();
+	Payments_Filters();
 
 	//now
 	final now = DateTime.now();
@@ -32,7 +33,8 @@ class Bookings_Filters {
 		Map<String, String> map = {};
 
 		if ( post_status.length > 0 ) {
-			map['filter[post_status]'] = post_status.join(',');
+			var wp_post_status = post_status.map( (status) => PaymentStatusEnum.toWPPaymentStatus(status) ).toList();
+			map['filter[post_status]'] = wp_post_status.join(',');
 		}
 
 		if ( ! date_range.isEmpty ) {

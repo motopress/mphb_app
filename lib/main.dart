@@ -4,13 +4,14 @@ import 'package:mphb_app/screens/home.dart';
 import 'package:mphb_app/local_storage.dart';
 
 void main() async {
-  // Required for async calls in `main`
-  WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize SharedPrefs instance.
-  await LocalStorage();
+	// Required for async calls in `main`
+	WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp());
+	// Initialize SharedPrefs instance.
+	await LocalStorage();
+
+	runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
 			initialRoute: '/',
 			routes: {
 				'/': (context) => const MyCustomForm(),
-				'/bookings': (context) => MyHomePage(),
+				'/home': (context) => const MyHomePage(),
 			},
 		);
 	}

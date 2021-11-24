@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mphb_app/models/booking.dart';
-import 'package:mphb_app/models/enum/booking_status.dart';
+import 'package:mphb_app/models/payment.dart';
+import 'package:mphb_app/models/enum/payment_status.dart';
 
-class BookingDetailStatus extends StatelessWidget {
+class PaymentDetailStatus extends StatelessWidget {
 
-	const BookingDetailStatus({required this.booking, Key? key}) : super(key: key);
+	const PaymentDetailStatus({required this.payment, Key? key}) : super(key: key);
 
-	final Booking booking;
+	final Payment payment;
 
 	@override
 	Widget build(BuildContext context) {
@@ -21,13 +21,13 @@ class BookingDetailStatus extends StatelessWidget {
 						crossAxisAlignment: CrossAxisAlignment.start,
 						children: [
 							Text(
-								'Booking #' + booking.id.toString(),
+								'Payment #' + payment.id.toString(),
 								style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 							),
 							Padding (
 								padding: EdgeInsets.only(top: 5.0),
 								child: Text(
-									DateFormat('yyyy-MM-dd HH:mm').format( DateTime.parse(booking.date_created) ),
+									DateFormat('yyyy-MM-dd HH:mm').format( DateTime.parse(payment.date_created) ),
 									style: TextStyle(fontSize: 12),
 								),
 							),
@@ -37,15 +37,15 @@ class BookingDetailStatus extends StatelessWidget {
 						decoration: BoxDecoration(
 							borderRadius: BorderRadius.all(Radius.circular(4)),
 							color:
-								booking.status == BookingStatusEnum.CONFIRMED ?
+								(payment.status == PaymentStatusEnum.COMPLETED || payment.status == PaymentStatusEnum.ON_HOLD) ?
 									Colors.green
-								: (booking.status == BookingStatusEnum.CANCELLED) ?
+								: (payment.status == PaymentStatusEnum.CANCELLED || payment.status == PaymentStatusEnum.REFUNDED) ?
 									Colors.orange
 								:  Colors.blueGrey,
 						),
 						padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10.0, right: 10.0),
 						child: Text(
-							booking.status,
+							payment.status,
 							style: TextStyle(
 								color: Colors.white,
 								fontSize: 16,

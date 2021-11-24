@@ -174,7 +174,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 																LocalStorage().consumer_key = model.consumer_key;
 																LocalStorage().consumer_secret = model.consumer_secret;
 																
-																Navigator.pushReplacementNamed(context, '/bookings');
+																Navigator.pushReplacementNamed(context, '/home');
 															}
 														},
 														child: const Text(
