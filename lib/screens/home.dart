@@ -32,6 +32,8 @@ class _MyHomePageState extends State<MyHomePage> {
 				index: _selectedIndex,
 			),
 			bottomNavigationBar: BottomNavigationBar(
+				backgroundColor: Color(0x00ffffff),
+				elevation: 0,
 				showSelectedLabels: false,
 				showUnselectedLabels: false,
 				items: const <BottomNavigationBarItem>[
