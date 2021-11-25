@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mphb_app/screens/form.dart';
 import 'package:mphb_app/screens/home.dart';
 import 'package:mphb_app/local_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
 
 	// Required for async calls in `main`
 	WidgetsFlutterBinding.ensureInitialized();
+
+	// Quick fix to initialize SharedPreferences
+	final prefs = await SharedPreferences.getInstance();
 
 	// Initialize SharedPrefs instance.
 	await LocalStorage();
@@ -17,7 +21,6 @@ void main() async {
 class MyApp extends StatelessWidget {
 
 	@override
-
 	Widget build(BuildContext context) {
 		return MaterialApp(
 			debugShowCheckedModeBanner: false,
@@ -31,11 +34,18 @@ class MyApp extends StatelessWidget {
 					foregroundColor: Colors.black,
 					elevation: 0,
 				),
+				elevatedButtonTheme: ElevatedButtonThemeData(
+					style: ElevatedButton.styleFrom(
+						primary: Colors.black,
+					)
+				),
+
 			),
-			initialRoute: '/',
+			//home: LocalStorage().hasData() ? const MyHomePage() : const MyCustomForm(),
+			initialRoute: LocalStorage().hasData() ? '/home' : '/login',
 			routes: {
-				'/': (context) => const MyCustomForm(),
 				'/home': (context) => const MyHomePage(),
+				'/login': (context) => const MyCustomForm(),
 			},
 		);
 	}

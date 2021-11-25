@@ -9,12 +9,12 @@ class LocalStorage {
 	}
 
 	late SharedPreferences _prefs;
+	final Future<SharedPreferences> _prefsFuture = SharedPreferences.getInstance();
 
 	LocalStorage._privateConstructor() {
-		SharedPreferences.getInstance().then((prefs) {
-			if ( prefs != null) {
-				_prefs = prefs;
-			}
+
+		_prefsFuture.then((SharedPreferences prefs) {
+			_prefs = prefs;
 		});
 	}
 
@@ -41,5 +41,18 @@ class LocalStorage {
 	String get consumer_secret => (
 		_prefs.getString('consumer_secret') ?? ''
 	);
+
+	bool hasData() {
+
+		return (
+			! LocalStorage().domain.isEmpty &&
+			! LocalStorage().consumer_key.isEmpty &&
+			! LocalStorage().consumer_secret.isEmpty
+		);
+	}
+
+	void clear() async {
+		await _prefs.clear();
+	}
 
 }
