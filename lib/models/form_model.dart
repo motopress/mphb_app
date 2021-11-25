@@ -15,7 +15,7 @@ class FormModel {
 		List<String> data = rawData.split("|"); 
 
 		if ( data.length < 3 || data[0].isEmpty || data[1].isEmpty || data[2].isEmpty ) {
-			throw ArgumentError('Unexpected type for data');
+			throw Exception('Unexpected type for data');
 		}
 
 		return FormModel(
@@ -24,5 +24,11 @@ class FormModel {
 			consumer_secret: data[2],
 		);
 	}
+
+	bool get isEmpty => (
+		domain.isEmpty &&
+		consumer_key.isEmpty &&
+		consumer_secret.isEmpty
+	);
 
 }
