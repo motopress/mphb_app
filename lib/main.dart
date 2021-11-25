@@ -41,10 +41,11 @@ class MyApp extends StatelessWidget {
 				),
 
 			),
-			//home: const MyHomePage(),
-			home: LocalStorage().hasData() ? const MyHomePage() : const MyCustomForm(),
+			//home: LocalStorage().hasData() ? const MyHomePage() : const MyCustomForm(),
+			initialRoute: LocalStorage().hasData() ? '/home' : '/login',
 			routes: {
 				'/home': (context) => const MyHomePage(),
+				'/login': (context) => const MyCustomForm(),
 			},
 		);
 	}

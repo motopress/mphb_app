@@ -23,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
 				child: OutlinedButton(
 					onPressed: () {
 						LocalStorage().clear();
-						Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+						Navigator.pushNamedAndRemoveUntil(context, '/login', (_) => false);
 					},
 					child: Text("Log out"),
 				),
