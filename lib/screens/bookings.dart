@@ -5,6 +5,7 @@ import 'package:mphb_app/controller/bookings_controller.dart';
 import 'package:mphb_app/models/booking.dart';
 import 'package:mphb_app/models/bookings_filters.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:mphb_app/screens/bookings/create/create_booking.dart';
 
 class BookingsPage extends StatefulWidget {
   @override
@@ -62,6 +63,18 @@ class _BookingsListViewState extends State<BookingsPage> {
 			appBar: AppBar(
 				title: Text('Bookings'),
 				actions: <Widget>[
+					IconButton(
+						icon: const Icon(Icons.add),
+						tooltip: 'New Booking',
+						onPressed: () async {
+							await Navigator.push(context, MaterialPageRoute (
+								builder: (BuildContext context) {
+									return CreateBookingPage();
+								},
+							)).then((value) {
+							});
+						},
+					),
 					IconButton(
 						icon: const Icon(Icons.sync),
 						tooltip: 'Refresh',

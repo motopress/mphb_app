@@ -14,14 +14,13 @@ class Accommodation {
 		required this.excerpt,
 	});
 
-
 	factory Accommodation.fromJson(Map<String, dynamic> json) {
 		return Accommodation(
-			id: json['id'],
-			status: json['status'],
-			accommodation_type_id: json['accommodation_type_id'],
-			title: json['title'],
-			excerpt: json['excerpt'],
+			id:						json.containsKey('id') ? json['id'] : 0,
+			status:					json.containsKey('status') ? json['status'] : '',
+			accommodation_type_id: 	json.containsKey('accommodation_type_id') ? json['accommodation_type_id'] : 0,
+			title:					json.containsKey('title') ? json['title'] : '',
+			excerpt:				json.containsKey('excerpt') ? json['excerpt'] : '',
 		);
 	}
 
