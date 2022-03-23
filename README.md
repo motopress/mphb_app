@@ -25,11 +25,11 @@
 
 ## Другое
 
-### Иконка приложения
+#### Иконка приложения
 Сборка `flutter pub run flutter_launcher_icons:main`
 https://github.com/fluttercommunity/flutter_launcher_icons
 
-## Название приложения
+#### Название приложения
 https://stackoverflow.com/questions/49353199/how-can-i-change-the-app-display-name-build-with-flutter
 
 ## Ссылки
