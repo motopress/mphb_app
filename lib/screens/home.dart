@@ -34,8 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
 			bottomNavigationBar: BottomNavigationBar(
 				backgroundColor: Color(0x00ffffff),
 				elevation: 0,
-				showSelectedLabels: false,
-				showUnselectedLabels: false,
+				showSelectedLabels: true,
+				showUnselectedLabels: true,
 				items: const <BottomNavigationBarItem>[
 					BottomNavigationBarItem(
 						icon: Icon(Icons.event),

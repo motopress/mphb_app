@@ -20,12 +20,22 @@ class _SettingsPageState extends State<SettingsPage> {
 				title: const Text('Settings'),
 			),
 			body: Center(
-				child: OutlinedButton(
-					onPressed: () {
-						LocalStorage().clear();
-						Navigator.pushNamedAndRemoveUntil(context, '/login', (_) => false);
-					},
-					child: Text("Log out"),
+				child: Column(
+					crossAxisAlignment: CrossAxisAlignment.center,
+					mainAxisAlignment: MainAxisAlignment.center,
+					children: [
+						Text(
+							LocalStorage().domain
+						),
+						SizedBox(height: 25.0),
+						OutlinedButton(
+							onPressed: () {
+								LocalStorage().clear();
+								Navigator.pushNamedAndRemoveUntil(context, '/login', (_) => false);
+							},
+							child: Text("Log out"),
+						),
+					]
 				),
 			),
 		);
