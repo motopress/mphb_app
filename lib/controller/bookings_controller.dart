@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:mphb_app/controller/basic_controller.dart';
 import 'package:mphb_app/models/booking.dart';
+import 'package:mphb_app/models/accommodation_availability.dart';
 import 'package:mphb_app/models/bookings_filters.dart';
 
 /*
@@ -50,6 +51,65 @@ class BookingsController extends BasicController{
 		if ( response.statusCode == HttpStatus.OK ) {
 
 			return compute( BookingsController_parseBookings, response.body );
+
+		} else {
+
+			throw Exception('Request failed with status: ${response.statusCode}.');
+		}
+
+	}
+
+	Future<List<Accommodation_Availability>> wpCheckAvailability( Map<String, String> params ) async {
+
+		final headers = super.getHeaders();
+
+		final uri = super.getUriHttps( _queryEndpoint + '/availability', {
+			   ...params,
+			}
+		);
+
+		print( Uri.decodeFull(uri.toString()) );
+		final response = await http.get(
+			uri,
+			headers: headers
+		);
+
+		if ( response.statusCode == HttpStatus.OK ) {
+
+			/*final parsed = jsonDecode(response.body) as Map;
+			final parsed_availability = parsed['availability'].cast<Map<String, dynamic>>();*/
+
+			final Map<String, dynamic> parsed = jsonDecode(response.body);
+			final availability = parsed['availability'].cast<Map<String, dynamic>>();
+
+			return availability.map<Accommodation_Availability>((json) => Accommodation_Availability.fromJson(json)).toList();
+
+		} else {
+
+			throw Exception('Request failed with status: ${response.statusCode}.');
+		}
+
+	}
+
+
+	Future<Booking> wpCreateBooking( Map params ) async {
+
+		final headers = super.getHeaders();
+
+		final uri = super.getUriHttps( _queryEndpoint );
+
+		print( Uri.decodeFull(uri.toString()) );
+		final response = await http.post(
+			uri,
+			headers: headers,
+			body: jsonEncode(params),
+		);
+
+		if (response.statusCode == 201) {
+
+			Booking booking = Booking.fromJson(jsonDecode(response.body));
+
+			return booking;
 
 		} else {
 

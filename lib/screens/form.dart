@@ -4,25 +4,16 @@ import 'package:mphb_app/models/form_model.dart';
 import 'package:mphb_app/screens/scanner.dart';
 import 'package:mphb_app/local_storage.dart';
 
-// Create a Form widget.
 class MyCustomForm extends StatefulWidget {
+
 	const MyCustomForm({Key? key}) : super(key: key);
 
 	@override
-	MyCustomFormState createState() {
-		return MyCustomFormState();
-	}
+	_MyCustomFormState createState() => _MyCustomFormState();
 }
 
-// Create a corresponding State class.
-// This class holds data related to the form.
-class MyCustomFormState extends State<MyCustomForm> {
+class _MyCustomFormState extends State<MyCustomForm> {
 
-	// Create a global key that uniquely identifies the Form widget
-	// and allows validation of the form.
-	//
-	// Note: This is a GlobalKey<FormState>,
-	// not a GlobalKey<MyCustomFormState>.
 	final _formKey = GlobalKey<FormState>();
 	
 	final model = FormModel();
@@ -32,14 +23,8 @@ class MyCustomFormState extends State<MyCustomForm> {
 	final secretController = TextEditingController();
 
 	@override
-	void initState() {
-		// TODO: implement initState
-		super.initState();
-	}
-
-	@override
 	Widget build(BuildContext context) {
-		// Build a Form widget using the _formKey created above.
+
 		return Scaffold(
 			body: Center(
 				child: SingleChildScrollView(
@@ -210,7 +195,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 														SizedBox(height: 20),
 														ElevatedButton(
 															style: ElevatedButton.styleFrom(
-																minimumSize: Size(double.infinity, 50), // double.infinity is the width and 50 is the height
+																minimumSize: Size(double.infinity, 50),
 																padding: EdgeInsets.all(10),
 															),
 															onPressed: () {
