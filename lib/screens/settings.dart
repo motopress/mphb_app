@@ -25,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
 					mainAxisAlignment: MainAxisAlignment.center,
 					children: [
 						Text(
-							LocalStorage().domain
+							LocalStorage().domain.replaceAll('/wp-json/mphb/v1', ''),
 						),
 						SizedBox(height: 25.0),
 						OutlinedButton(

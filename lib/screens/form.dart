@@ -30,7 +30,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
 				child: SingleChildScrollView(
 					child: Container(
 
-						padding: const EdgeInsets.all(36.0),
+						padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0, bottom: 30.0),
 						child: Column(
 
 							crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,7 +38,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
 							children: <Widget>[
 								Container(
-									padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 30.0, bottom: 30.0),
+									padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0, bottom: 30.0),
 
 									decoration: BoxDecoration(
 										color: Colors.white,
@@ -58,13 +58,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
 									child: Column(
 										children: [
 
-											Text(
-												'Setup',
-												style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-											),
-											SizedBox(height: 25.0),
-
-											OutlinedButton.icon(
+											ElevatedButton.icon(
 												onPressed: () async {
 
 													/*
@@ -95,12 +89,23 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
 												},
 												icon: Icon(Icons.qr_code_scanner),
-												label: Text("Scan QRCode"),
-												style: OutlinedButton.styleFrom(
-													padding: EdgeInsets.all(10),
+												label: Text(
+													"Scan QR Code",
+													style: const TextStyle(fontSize: 16),
+												),
+												style: ElevatedButton.styleFrom(
+													padding: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 20.0, right: 20.0),
+													minimumSize: Size(double.infinity, 0),
 												),
 											),
 
+											SizedBox(height: 30.0),
+
+											Text(
+												'Navigate to Settings > Advanced to generate API keys and scan QR code. Or enter your data in the form below.',
+												style: const TextStyle(fontSize: 12),
+												textAlign: TextAlign.center,
+											),
 											SizedBox(height: 25.0),
 
 											Form(
@@ -112,7 +117,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
 															children: [
 																TextButton(
 																	onPressed: () {
-																		domainController.text = 'https://uglywebsites.org/booking-api/wp-json/mphb/v1';
+																		domainController.text = 'https://uglywebsites.org/booking-api';
 																		keyController.text = 'ck_09c4163541fb26930cf9531ba1601f711f5c1ab9';
 																		secretController.text = 'cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8';
 																	},
@@ -129,16 +134,15 @@ class _MyCustomFormState extends State<MyCustomForm> {
 															],
 														),
 														SizedBox(height: 10),
+
 														TextFormField(
-															//initialValue: "https://uglywebsites.org/booking-api/wp-json/mphb/v1",
 															controller: domainController,
 															decoration: const InputDecoration(
-																hintText: 'https://mywebsite.com/booking-api/wp-json/mphb/v1',
+																hintText: 'https://mywebsite.com',
 																labelText: 'Domain',
-																floatingLabelBehavior: FloatingLabelBehavior.always,
-																border: OutlineInputBorder(),
+																//floatingLabelBehavior: FloatingLabelBehavior.always,
+																//border: OutlineInputBorder(),
 															),
-															// The validator receives the text that the user has entered.
 															validator: (value) {
 																if (value == null || value.isEmpty) {
 																	return 'Please enter Domain';
@@ -156,10 +160,9 @@ class _MyCustomFormState extends State<MyCustomForm> {
 															decoration: const InputDecoration(
 																hintText: 'ck_xxxxxxxxxx',
 																labelText: 'Key',
-																floatingLabelBehavior: FloatingLabelBehavior.always,
-																border: OutlineInputBorder(),
+																//floatingLabelBehavior: FloatingLabelBehavior.always,
+																//border: OutlineInputBorder(),
 															),
-															// The validator receives the text that the user has entered.
 															validator: (value) {
 																if (value == null || value.isEmpty) {
 																	return 'Please enter Key';
@@ -177,11 +180,10 @@ class _MyCustomFormState extends State<MyCustomForm> {
 															decoration: const InputDecoration(
 																hintText: 'cs_xxxxxxxxxx',
 																labelText: 'Secret',
-																floatingLabelBehavior: FloatingLabelBehavior.always,
-																border: OutlineInputBorder(),
+																//floatingLabelBehavior: FloatingLabelBehavior.always,
+																//border: OutlineInputBorder(),
 															),
 															obscureText: true,
-															// The validator receives the text that the user has entered.
 															validator: (value) {
 																if (value == null || value.isEmpty) {
 																	return 'Please enter Secret';
@@ -192,11 +194,11 @@ class _MyCustomFormState extends State<MyCustomForm> {
 																model.consumer_secret = value ?? '';
 															},
 														),
-														SizedBox(height: 20),
-														ElevatedButton(
-															style: ElevatedButton.styleFrom(
-																minimumSize: Size(double.infinity, 50),
-																padding: EdgeInsets.all(10),
+														SizedBox(height: 25),
+														OutlinedButton(
+															style: OutlinedButton.styleFrom(
+																minimumSize: Size(double.infinity, 0),
+																padding: EdgeInsets.all(15),
 															),
 															onPressed: () {
 																// Validate returns true if the form is valid, or false otherwise.
@@ -205,7 +207,12 @@ class _MyCustomFormState extends State<MyCustomForm> {
 																	_formKey.currentState!.save();
 
 																	// set value
-																	LocalStorage().domain = model.domain;
+
+																	if ( model.domain.endsWith('/') ) {
+																		model.domain = model.domain.substring(0, model.domain.length - 1);
+																	}
+
+																	LocalStorage().domain = model.domain + '/wp-json/mphb/v1';
 																	LocalStorage().consumer_key = model.consumer_key;
 																	LocalStorage().consumer_secret = model.consumer_secret;
 																	
@@ -221,6 +228,20 @@ class _MyCustomFormState extends State<MyCustomForm> {
 											),
 										]
 									),
+								),
+
+								SizedBox(height: 25.0),								
+								Text(
+									'Hotel Booking Application by MotoPress.',
+									style: const TextStyle(fontSize: 11),
+									textAlign: TextAlign.center,
+								),
+
+								SizedBox(height: 5.0),
+								Text(
+									'Version: 1.0.0-alpha',
+									style: const TextStyle(fontSize: 11),
+									textAlign: TextAlign.center,
 								),
 							]
 						),

@@ -43,6 +43,8 @@ class BookingDetailCustomer extends StatelessWidget {
 								)
 							),
 
+							if ( (customer.first_name  + customer.last_name).isEmpty ) Text('-'),
+
 							Flexible(
 								child: Text(
 									customer.first_name + ' ' + customer.last_name,
@@ -57,7 +59,7 @@ class BookingDetailCustomer extends StatelessWidget {
 										onPressed: () {
 											launch(('tel://${customer.phone}'));
 										},
-										child: Text('Call'),
+										child: const Icon(Icons.call),
 									),
 								),
 							if ( !customer.email.isEmpty )
@@ -74,7 +76,7 @@ class BookingDetailCustomer extends StatelessWidget {
 											launch(_emailLaunchUri.toString());
 
 										},
-										child: Text('Email'),
+										child: const Icon(Icons.email),
 									),
 								),
 						]
@@ -106,8 +108,23 @@ class BookingDetailCustomer extends StatelessWidget {
 										),
 									if ( !customer.phone.isEmpty )
 										Padding(
-											padding: EdgeInsets.only(top: 10.0),
-											child: Text(customer.phone,),
+											padding: EdgeInsets.only(top: 0.0),
+											child: Row(
+												children: [
+													Text(customer.phone,),
+													IconButton(
+														icon: const Icon(Icons.content_copy, size: 14),
+														tooltip: 'Copy',
+														onPressed: () {
+															Clipboard.setData(ClipboardData(text: customer.phone))
+																.then((_) {
+																	final snackBar = SnackBar( content: Text('${customer.phone} copied') );
+																	ScaffoldMessenger.of(context).showSnackBar(snackBar);
+																});
+														},
+													),
+												],
+											),
 										),
 								]
 							),

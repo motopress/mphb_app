@@ -95,7 +95,7 @@ class _BookingListItemState extends State<BookingListItem> {
 												child: Row(
 													children: [
 														Padding(
-															padding: EdgeInsets.only(right: 10.0),
+															padding: EdgeInsets.only(right: 5.0),
 															child: Icon(
 																Icons.flight_land,
 																size: 12,
@@ -114,7 +114,7 @@ class _BookingListItemState extends State<BookingListItem> {
 												child: Row(
 													children: [
 														Padding(
-															padding: EdgeInsets.only(right: 10.0),
+															padding: EdgeInsets.only(right: 5.0),
 															child: Icon(
 																Icons.flight_takeoff,
 																size: 12,
@@ -208,7 +208,7 @@ class _BookingListItemState extends State<BookingListItem> {
 							),
 							Flexible(
 								child: Container(
-									padding: EdgeInsets.all(6.0),
+									padding: EdgeInsets.only(top: 6.0, bottom: 6.0, left: 6.0, right: 6.0),
 									decoration: ShapeDecoration(
 										shape: RoundedRectangleBorder(
 											borderRadius: BorderRadius.all(
@@ -224,7 +224,7 @@ class _BookingListItemState extends State<BookingListItem> {
 									),
 									child: Text(
 										booking.status,
-										style: TextStyle(color: Colors.white,),
+										style: TextStyle(color: Colors.white, fontSize: 12),
 										overflow: TextOverflow.ellipsis,
 									),
 								),

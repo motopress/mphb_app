@@ -134,7 +134,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 					Row(
 						children: [
 							Expanded(
-								child: OutlinedButton(
+								child: ElevatedButton(
 									onPressed: () {
 										if (_formKey.currentState!.validate()) {
 

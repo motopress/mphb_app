@@ -39,7 +39,7 @@ class BookingDetailDates extends StatelessWidget {
 								child: Row(
 									children: [
 										Padding(
-											padding: EdgeInsets.all(10),
+											padding: EdgeInsets.all(5),
 											child: Icon(
 												Icons.flight_land,
 												size: 12,
@@ -73,7 +73,7 @@ class BookingDetailDates extends StatelessWidget {
 								child: Row(
 									children: [
 										Padding(
-											padding: EdgeInsets.all(10),
+											padding: EdgeInsets.all(5),
 											child: Icon(
 												Icons.flight_takeoff,
 												size: 12,

@@ -36,6 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
 				elevation: 0,
 				showSelectedLabels: true,
 				showUnselectedLabels: true,
+				selectedFontSize: 12,
+				unselectedFontSize: 12,
 				items: const <BottomNavigationBarItem>[
 					BottomNavigationBarItem(
 						icon: Icon(Icons.event),

@@ -81,8 +81,8 @@ class _PaymentListItemState extends State<PaymentListItem> {
 											Padding(
 												padding: EdgeInsets.only(right: 10.0),
 												child: Row(
-													crossAxisAlignment: CrossAxisAlignment.baseline,
-													textBaseline: TextBaseline.ideographic,
+													//crossAxisAlignment: CrossAxisAlignment.baseline,
+													//textBaseline: TextBaseline.ideographic,
 													children: [
 														Text(
 															payment.amount.toString(),
@@ -95,6 +95,20 @@ class _PaymentListItemState extends State<PaymentListItem> {
 																style: TextStyle(
 																	fontSize: 12,
 																),
+															),
+														),
+														Padding(
+															padding: EdgeInsets.only(right: 3.0, left: 10.0),
+															child: Icon(
+																Icons.credit_card,
+																size: 12,
+																color: Colors.indigo.shade100
+															)
+														),
+														Text(
+															payment.gateway_id,
+															style: TextStyle(
+																fontSize: 12,
 															),
 														),
 													]
@@ -148,20 +162,6 @@ class _PaymentListItemState extends State<PaymentListItem> {
 														fontSize: 12,
 													),
 												),
-												Padding(
-													padding: EdgeInsets.only(right: 3.0, left: 8.0),
-													child: Icon(
-														Icons.credit_card,
-														size: 12,
-														color: Colors.indigo.shade100
-													)
-												),
-												Text(
-													payment.gateway_id,
-													style: TextStyle(
-														fontSize: 12,
-													),
-												),
 											]
 										),
 									),
@@ -169,7 +169,7 @@ class _PaymentListItemState extends State<PaymentListItem> {
 							),
 							Flexible(
 								child: Container(
-									padding: EdgeInsets.all(6.0),
+									padding: EdgeInsets.only(top: 6.0, bottom: 6.0, left: 6.0, right: 6.0),
 									decoration: ShapeDecoration(
 										shape: RoundedRectangleBorder(
 											borderRadius: BorderRadius.all(
@@ -185,7 +185,7 @@ class _PaymentListItemState extends State<PaymentListItem> {
 									),
 									child: Text(
 										payment.status,
-										style: TextStyle(color: Colors.white,),
+										style: TextStyle(color: Colors.white, fontSize: 12),
 										overflow: TextOverflow.ellipsis,
 									),
 								),

@@ -64,7 +64,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 				title: Text('Bookings'),
 				actions: <Widget>[
 					IconButton(
-						icon: const Icon(Icons.add),
+						icon: const Icon(Icons.add_circle_outline),
 						tooltip: 'New Booking',
 						onPressed: () async {
 							await Navigator.push(context, MaterialPageRoute (
