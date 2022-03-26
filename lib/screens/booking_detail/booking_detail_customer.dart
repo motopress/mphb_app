@@ -91,6 +91,13 @@ class BookingDetailCustomer extends StatelessWidget {
 											padding: EdgeInsets.only(top: 10.0),
 											child: Row(
 												children: [
+													Padding(
+														padding: EdgeInsets.only(right: 10.0),
+														child: Icon(
+															Icons.email,
+															size: 12,
+														)
+													),
 													Text(customer.email,),
 													IconButton(
 														icon: const Icon(Icons.content_copy, size: 14),
@@ -111,6 +118,13 @@ class BookingDetailCustomer extends StatelessWidget {
 											padding: EdgeInsets.only(top: 0.0),
 											child: Row(
 												children: [
+													Padding(
+														padding: EdgeInsets.only(right: 10.0),
+														child: Icon(
+															Icons.call,
+															size: 12,
+														)
+													),
 													Text(customer.phone,),
 													IconButton(
 														icon: const Icon(Icons.content_copy, size: 14),

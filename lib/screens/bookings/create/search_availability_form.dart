@@ -93,7 +93,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 										border: OutlineInputBorder(),
 									),
 									value: _adults,
-									items: List<String>.generate(10, (i) => (i + 1).toString()).map((String value) {
+									items: List<String>.generate(30, (i) => (i + 1).toString()).map((String value) {
 										return DropdownMenuItem<String>(
 											value: value,
 											child: Text(value),
@@ -115,7 +115,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 										border: OutlineInputBorder(),
 									),
 									value: _children,
-									items: List<String>.generate(11, (i) => (i).toString()).map((String value) {
+									items: List<String>.generate(31, (i) => (i).toString()).map((String value) {
 										return DropdownMenuItem<String>(
 											value: value,
 											child: Text(value),

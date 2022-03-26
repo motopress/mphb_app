@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking_search.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking_book.dart';
+import 'package:mphb_app/models/new_booking.dart';
 
 class CreateBookingPage extends StatefulWidget {
 
@@ -17,77 +18,82 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 
 	final _navigatorKey = GlobalKey<NavigatorState>();
 
-	final Map _booking = {
-		'selectedAccommodations':[],
-	};
+	final NewBooking _booking = new NewBooking();
 
 	@override
 	Widget build(BuildContext context) {
 
-		return Scaffold(
-			backgroundColor: Colors.white,
-			appBar: AppBar(
-				title: const Text('Add Booking'),
-				actions: <Widget>[
-					Padding(
-						padding: EdgeInsets.all(10.0),
-						child: TextButton(
-							onPressed: () {},
-							child: const Text('Reset'),
-							style: TextButton.styleFrom(
-								primary: Colors.black,
+		return NotificationListener<Notification>(
+			child: Scaffold(
+				backgroundColor: Colors.white,
+				appBar: AppBar(
+					title: const Text('Add Booking'),
+				),
+				body: Navigator(
+					key: _navigatorKey,
+					initialRoute: 'create_booking/search',
+					onGenerateRoute: (RouteSettings settings) {
+						WidgetBuilder builder;
+						switch (settings.name) {
+
+							case 'create_booking/search':
+								builder = (BuildContext context) => CreateBookingSearchPage(
+									booking: _booking
+								);
+								break;
+
+							case 'create_booking/book':
+								builder = (BuildContext _) => CreateBookingBookPage(
+									booking: _booking
+								);
+								break;
+
+							default:
+								throw Exception('Invalid route: ${settings.name}');
+						}
+						return MaterialPageRoute<void>(builder: builder, settings: settings);
+					},
+				),
+				persistentFooterButtons: [
+
+						if ( _booking.state != NewBooking.INITIAL )
+							OutlinedButton(
+								onPressed: () {
+									if ( _navigatorKey.currentState!.canPop() ) {
+
+										_navigatorKey.currentState!.pop();
+
+										setState(() {
+											_booking.state = NewBooking.INITIAL;
+										});
+									}
+								},
+								child: const Text('Back'),
 							),
-						),
-					),
+
+						if ( _booking.state != NewBooking.CHECKOUT )
+							ElevatedButton(
+								onPressed: _booking.accommodations.isEmpty ? null : () {
+
+									_navigatorKey.currentState!.pushNamed(
+										'create_booking/book',
+									);
+
+									setState(() {
+										_booking.state = NewBooking.CHECKOUT;
+									});
+
+								},
+								child: const Text('Continue'),
+							),
 				],
 			),
-			body: Navigator(
-				key: _navigatorKey,
-				initialRoute: 'create_booking/search',
-				onGenerateRoute: (RouteSettings settings) {
-					WidgetBuilder builder;
-					switch (settings.name) {
+			onNotification: (n) {
 
-						case 'create_booking/search':
-							builder = (BuildContext context) => CreateBookingSearchPage(
-								booking: _booking
-							);
-							break;
+				setState( () {} );
 
-						case 'create_booking/book':
-							builder = (BuildContext _) => CreateBookingBookPage(
-								onSignupComplete: () {
-
-									Navigator.of(context).pop();
-								},
-								booking: _booking
-							);
-							break;
-
-						default:
-							throw Exception('Invalid route: ${settings.name}');
-					}
-					return MaterialPageRoute<void>(builder: builder, settings: settings);
-				},
-			),
-			persistentFooterButtons: [
-				OutlinedButton(
-					onPressed: () {
-						_navigatorKey.currentState!.pop();
-					},
-					child: const Text('Back'),
-				),
-				ElevatedButton(
-					onPressed: () {
-						var exampleArgument = 'example string';
-						_navigatorKey.currentState!.pushNamed(
-							'create_booking/book',
-							arguments: {'booking': exampleArgument},
-						);
-					},
-					child: const Text('Continue'),
-				),
-			],
+				return true;
+			}
 		);
 	}
 

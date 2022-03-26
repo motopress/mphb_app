@@ -3,15 +3,16 @@ import 'package:mphb_app/screens/bookings/create/search_availability_form.dart';
 import 'package:mphb_app/controller/bookings_controller.dart';
 import 'package:mphb_app/models/accommodation_availability.dart';
 import 'package:mphb_app/models/accommodation.dart';
+import 'package:mphb_app/models/new_booking.dart';
 
 class CreateBookingSearchPage extends StatefulWidget {
 
-	const CreateBookingSearchPage({
+	CreateBookingSearchPage({
 		Key? key,
 		required this.booking,
 	}) : super(key: key);
 
-	final Map booking;
+	late NewBooking booking;
 
 	@override
 	_CreateBookingSearchPageState createState() => _CreateBookingSearchPageState( booking: booking );
@@ -24,7 +25,7 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 		required this.booking,
 	});
 
-	final Map booking;
+	late NewBooking booking;
 
 	late final BookingsController _bookingsController;
 
@@ -43,6 +44,9 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 
 		try {
 
+			//reset search results
+			booking.accommodations.clear();
+
 			setState(() {_state = 'waiting';});
 
 			final items = await _bookingsController.wpCheckAvailability( params );
@@ -52,8 +56,8 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 				_state = 'complete';
 			});
 
-			booking['check_in_date'] = params['check_in_date'];
-			booking['check_out_date'] = params['check_out_date'];
+			booking.check_in_date = params['check_in_date'];
+			booking.check_out_date = params['check_out_date'];
 
 
 		} catch (error) {
@@ -89,7 +93,9 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 
 			yield ExpansionTile(
 				initiallyExpanded: i == 0,
-				title: Text(accommodation_availability.title),
+				title: Text(accommodation_availability.title +
+					' (' + accommodation_availability.accommodations.length.toString() + ')'),
+				subtitle: Text('Base price: ' + accommodation_availability.base_price.toStringAsFixed(2)),
 				children: [
 					ListView.builder(
 						shrinkWrap: true,
@@ -100,14 +106,16 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 
 							return CheckboxListTile(
 								title: Text( accommodation.title ),
-								value: booking['selectedAccommodations'].contains(accommodation.id),
+								value: booking.accommodations.contains(accommodation),
 								onChanged: (bool? value) {
 									setState(() {
-										value! ? booking['selectedAccommodations'].add(accommodation.id) :
-											booking['selectedAccommodations'].remove(accommodation.id);
+										value! ? booking.accommodations.add(accommodation) :
+											booking.accommodations.remove(accommodation);
 									});
 
-									print(booking['selectedAccommodations']);
+									booking.dispatch(context);
+
+									booking.accommodations.forEach((element) => print(element.id));
 								},
 							);
 						}

@@ -13,7 +13,7 @@ class BookingDetailStatus extends StatelessWidget {
 	Widget build(BuildContext context) {
 
 		return Container(
-			margin: const EdgeInsets.only(bottom: 20.0),
+			margin: const EdgeInsets.only(bottom: 30.0),
 			child: Row(
 				mainAxisAlignment: MainAxisAlignment.spaceBetween,
 				children: [
