@@ -25,7 +25,7 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 
 		return NotificationListener<Notification>(
 			child: Scaffold(
-				backgroundColor: Colors.white,
+				//backgroundColor: Colors.white,
 				appBar: AppBar(
 					title: const Text('Add Booking'),
 				),

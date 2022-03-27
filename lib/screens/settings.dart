@@ -27,6 +27,10 @@ class _SettingsPageState extends State<SettingsPage> {
 						Text(
 							LocalStorage().domain.replaceAll('/wp-json/mphb/v1', ''),
 						),
+						SizedBox(height: 10.0),
+						Text(
+							LocalStorage().consumer_key,
+						),
 						SizedBox(height: 25.0),
 						OutlinedButton(
 							onPressed: () {

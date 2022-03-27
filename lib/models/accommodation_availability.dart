@@ -16,11 +16,18 @@ class Accommodation_Availability {
 
 
 	factory Accommodation_Availability.fromJson(Map<String, dynamic> json) {
+
+		// fix to add accommodation_type_id to each available accommodation
+		for (var accommodation in json['accommodations']) {
+			accommodation['accommodation_type_id'] = json['accommodation_type'];
+		}
+
 		return Accommodation_Availability(
 			accommodation_type: json['accommodation_type'],
 			title: json['title'],
 			base_price: json['base_price'],
-			accommodations: json['accommodations'].cast<Map<String, dynamic>>().map<Accommodation>((json) => Accommodation.fromJson(json)).toList(),
+			accommodations: json['accommodations'].cast<Map<String, dynamic>>().map<Accommodation>(
+				(json) => Accommodation.fromJson(json)).toList(),
 		);
 	}
 

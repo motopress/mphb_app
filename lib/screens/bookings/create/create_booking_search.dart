@@ -92,10 +92,13 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 			Accommodation_Availability accommodation_availability = _accommodations[i];
 
 			yield ExpansionTile(
-				initiallyExpanded: i == 0,
+				//initiallyExpanded: i == 0,
 				title: Text(accommodation_availability.title +
 					' (' + accommodation_availability.accommodations.length.toString() + ')'),
-				subtitle: Text('Base price: ' + accommodation_availability.base_price.toStringAsFixed(2)),
+				subtitle: Text(
+					'Base price: ' + accommodation_availability.base_price.toStringAsFixed(2),
+					style: const TextStyle(fontSize: 11),
+				),
 				children: [
 					ListView.builder(
 						shrinkWrap: true,
@@ -135,12 +138,44 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 				children: [
 					Container(
 						padding: EdgeInsets.all(20.00),
-						margin: EdgeInsets.only(bottom: 10.00),
+						margin: EdgeInsets.all(10.00),
 						child: SearchAvailabilityForm( callback: _checkAvailability ),
+						decoration: BoxDecoration(
+							color: Colors.white,
+							borderRadius: BorderRadius.all(
+								Radius.circular(6)
+							),
+							boxShadow: [
+								BoxShadow(
+									color: Colors.grey.withOpacity(0.1),
+									spreadRadius: 0,
+									blurRadius: 2,
+									offset: Offset(0, 4), // changes position of shadow
+								),
+							],
+						),
 					),
-					Column(
-						crossAxisAlignment: CrossAxisAlignment.start,
-						children: getChildren(),
+					Container(
+						padding: getChildren().isEmpty ? EdgeInsets.all(0.00) : EdgeInsets.all(20.00),
+						margin: EdgeInsets.all(10.00),
+						child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: getChildren(),
+						),
+						decoration: BoxDecoration(
+							color: Colors.white,
+							borderRadius: BorderRadius.all(
+								Radius.circular(6)
+							),
+							boxShadow: [
+								BoxShadow(
+									color: Colors.grey.withOpacity(0.1),
+									spreadRadius: 0,
+									blurRadius: 2,
+									offset: Offset(0, 4), // changes position of shadow
+								),
+							],
+						),
 					),
 				],
 			),

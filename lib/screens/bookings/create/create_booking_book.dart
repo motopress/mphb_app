@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/controller/bookings_controller.dart';
 import 'package:mphb_app/models/new_booking.dart';
+import 'package:mphb_app/models/accommodation.dart';
+import 'package:mphb_app/models/reserved_accommodation.dart';
+import 'package:mphb_app/screens/bookings/create/single_accommodation.dart';
 
 class CreateBookingBookPage extends StatefulWidget {
 
@@ -22,7 +25,7 @@ class _CreateBookingBookPageState extends State<CreateBookingBookPage> {
 		required this.booking,
 	});
 
-	final NewBooking booking;
+	late NewBooking booking;
 
 	String _state = '';
 
@@ -33,6 +36,26 @@ class _CreateBookingBookPageState extends State<CreateBookingBookPage> {
 
 		super.initState();
 		_bookingsController = new BookingsController();
+
+		/*for (var accommodation in booking.accommodations) {
+
+			var reserved_accommodation = new Reserved_Accommodation(
+
+				accommodation: accommodation.id,
+				accommodation_type: accommodation.accommodation_type_id,
+				rate: 0,
+				adults: 1,
+				children: 0,
+				services: [],
+				accommodation_price_per_days: [],
+				fees: [],
+				taxes: {},
+				discount: 0
+
+			);
+
+			booking.reserved_accommodations.add( reserved_accommodation );
+		}*/
 	}
 
 	void bookNow() async {
@@ -75,6 +98,10 @@ class _CreateBookingBookPageState extends State<CreateBookingBookPage> {
 				mainAxisAlignment: MainAxisAlignment.start,
 				crossAxisAlignment: CrossAxisAlignment.start,
 				children: [
+					Column(
+						crossAxisAlignment: CrossAxisAlignment.start,
+						children: getChildren(),
+					),
 					Container(
 						padding: EdgeInsets.all(20.00),
 						margin: EdgeInsets.only(bottom: 10.00),
@@ -89,5 +116,26 @@ class _CreateBookingBookPageState extends State<CreateBookingBookPage> {
 			),
 		);
 	}
+
+	List<Widget> getChildren() {
+
+		return buildAccommodations.toList();
+	}
+
+	Iterable<Widget> get buildAccommodations sync* {
+
+		var accommodations = booking.accommodations;
+
+		for (var i = 0; i < accommodations.length; i++) {
+
+			Accommodation accommodation = accommodations[i];
+
+			yield SingleAccommodation(
+				accommodation:accommodation,
+				booking: booking
+			);
+		}
+	}
+
 
 }
