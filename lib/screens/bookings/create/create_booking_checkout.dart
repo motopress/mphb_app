@@ -69,32 +69,38 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 									decoration: const InputDecoration(
 										labelText: 'First Name',
 									),
+									keyboardType: TextInputType.name,
+									textCapitalization: TextCapitalization.sentences,
 									onChanged: (text) {
-										booking.customer.first_name = text;
+										booking.customer.first_name = text.trim();
 									},
 								),
 								TextField(
 									decoration: const InputDecoration(
 										labelText: 'Last Name',
 									),
+									keyboardType: TextInputType.name,
+									textCapitalization: TextCapitalization.words,
 									onChanged: (text) {
-										booking.customer.last_name = text;
+										booking.customer.last_name = text.trim();
 									},
 								),
 								TextField(
 									decoration: const InputDecoration(
 										labelText: 'Email',
 									),
+									keyboardType: TextInputType.emailAddress,
 									onChanged: (text) {
-										booking.customer.email = text;
+										booking.customer.email = text.trim();
 									},
 								),
 								TextField(
 									decoration: const InputDecoration(
 										labelText: 'Phone',
 									),
+									keyboardType: TextInputType.numberWithOptions(signed: true),
 									onChanged: (text) {
-										booking.customer.phone = text;
+										booking.customer.phone = text.trim();
 									},
 								),
 							]

@@ -43,6 +43,29 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 		super.initState();
 	}
 
+	void deleteBooking( Booking booking ) async {
+
+		print('Delete booking!');
+
+		try {
+			
+			Booking deletedBooking = await _bookingController.wpDeleteBooking(booking.id);
+
+			ScaffoldMessenger.of(context).showSnackBar(
+				SnackBar(content: Text('Booking ${deletedBooking.id} deleted.'))
+			);
+
+			Navigator.maybePop(context);
+
+		} catch (error) {
+
+			print(error);
+			ScaffoldMessenger.of(context).showSnackBar(
+				SnackBar(content: Text(error.toString()))
+			);
+		}
+	}
+
 	@override
 	Widget build(BuildContext context) {
 
@@ -97,9 +120,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 												//print('Action: $action');
 												if ( action != null ) {
 													switch ( action ) {
+
 														case 'delete':
-															print('Delete booking!');
+															deleteBooking( booking );
 															break;
+
 														default:
 															setState(() {
 																_bookingFuture = _bookingController.wpUpdateBookingStatus( booking, action );

@@ -74,14 +74,27 @@ class _CreateBookingCompletePageState extends State<CreateBookingCompletePage> {
 		/*await Future.delayed(const Duration(milliseconds: 5000));
 		setState(() {_state = 'complete';});*/
 
+		try {
 
-		final bookingObj = await _bookingsController.wpCreateBooking( params );
+			final bookingObj = await _bookingsController.wpCreateBooking( params );
 
-		setState(() {_state = 'complete';});
-		
-		ScaffoldMessenger.of(context).showSnackBar(
-			SnackBar(content: Text('Booking ${bookingObj.id} created.'))
-		);
+			setState(() {_state = 'complete';});
+			
+			ScaffoldMessenger.of(context).showSnackBar(
+				SnackBar(content: Text('Booking ${bookingObj.id} created.'))
+			);
+
+		} catch (error) {
+			print(error);
+
+			setState(() {
+				_state = '';
+			});
+
+			ScaffoldMessenger.of(context).showSnackBar(
+				SnackBar(content: Text(error.toString()))
+			);
+		}
 	}
 
 	Widget getChild() {

@@ -55,14 +55,6 @@ class PaymentDetailActions extends StatelessWidget {
 						Navigator.pop(context, PaymentStatusEnum.REFUNDED);
 					},
 				),
-				Divider(),
-				ListTile(
-					leading: Icon(Icons.delete),
-					title: Text('Delete'),
-					onTap: () {
-						Navigator.pop(context, 'delete');
-					},
-				),
 			],
 		);
 

@@ -29,7 +29,9 @@ class _SettingsPageState extends State<SettingsPage> {
 						),
 						SizedBox(height: 10.0),
 						Text(
-							LocalStorage().consumer_key,
+							'Consumer key ending in: ' +
+							LocalStorage().consumer_key.substring(
+								LocalStorage().consumer_key.length - 7),
 						),
 						SizedBox(height: 25.0),
 						OutlinedButton(

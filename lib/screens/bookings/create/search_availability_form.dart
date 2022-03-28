@@ -36,6 +36,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 							Expanded(
 								child: TextFormField(
 									initialValue: _checkInDate,
+									keyboardType: TextInputType.numberWithOptions(signed: true),
 									decoration: const InputDecoration(
 										isDense: true,
 										hintText: '1970-12-31',
@@ -60,6 +61,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 							Expanded(
 								child: TextFormField(
 									initialValue: _checkOutDate,
+									keyboardType: TextInputType.numberWithOptions(signed: true),
 									decoration: const InputDecoration(
 										isDense: true,
 										hintText: '1970-12-31',
@@ -136,6 +138,13 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 							Expanded(
 								child: ElevatedButton(
 									onPressed: () {
+
+										//remove focus from fields
+										FocusScopeNode currentFocus = FocusScope.of(context);
+										if (!currentFocus.hasPrimaryFocus) {
+											currentFocus.unfocus();
+										}
+
 										if (_formKey.currentState!.validate()) {
 
 											var params = {

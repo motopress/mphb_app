@@ -79,4 +79,36 @@ class BookingController extends BasicController{
 
 	}
 
+	Future<Booking> wpDeleteBooking( int bookingID ) async {
+
+		final headers = super.getHeaders();
+
+		final queryParameters = <String, String> {
+			'_embed' : 'accommodation,accommodation_type,services,rate'
+		};
+
+		var queryEndpoint = '$_queryEndpoint/${bookingID.toString()}';
+
+		final uri = super.getUriHttps( queryEndpoint, queryParameters);
+
+		print( Uri.decodeFull(uri.toString()) );
+		final response = await http.delete(
+			uri,
+			headers: headers,
+			body: jsonEncode(<String, bool>{
+				'force': true,
+			}),
+		);
+
+		if ( response.statusCode == HttpStatus.OK ) {
+
+			return Booking.fromJson(jsonDecode(response.body));
+
+		} else {
+
+			throw Exception('Request failed with status: ${response.statusCode}.');
+		}
+
+	}
+
 }

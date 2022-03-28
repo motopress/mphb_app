@@ -76,9 +76,6 @@ class BookingsController extends BasicController{
 
 		if ( response.statusCode == HttpStatus.OK ) {
 
-			/*final parsed = jsonDecode(response.body) as Map;
-			final parsed_availability = parsed['availability'].cast<Map<String, dynamic>>();*/
-
 			final Map<String, dynamic> parsed = jsonDecode(response.body);
 			final availability = parsed['availability'].cast<Map<String, dynamic>>();
 

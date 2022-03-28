@@ -81,8 +81,6 @@ class _SingleAccommodationState extends State<SingleAccommodation> {
 		} );
 
 		booking.dispatch(context);
-		
-		print( accommodationType );
 	}
 
 	List<Widget> getChildren() {

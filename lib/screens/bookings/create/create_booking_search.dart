@@ -31,7 +31,7 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 
 	List<Accommodation_Availability> _accommodations = [];
 
-	String _state = 'initialized'; // initialized, waiting, complete
+	String _state = ''; // waiting, complete
 
 	@override
 	void initState() {
@@ -62,6 +62,14 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 
 		} catch (error) {
 			print(error);
+
+			setState(() {
+				_state = '';
+			});
+
+			ScaffoldMessenger.of(context).showSnackBar(
+				SnackBar(content: Text(error.toString()))
+			);
 		}
 	}
 
