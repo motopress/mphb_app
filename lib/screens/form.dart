@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:mphb_app/models/form_model.dart';
 import 'package:mphb_app/screens/scanner.dart';
 import 'package:mphb_app/local_storage.dart';
@@ -21,6 +22,27 @@ class _MyCustomFormState extends State<MyCustomForm> {
 	final domainController = TextEditingController();
 	final keyController = TextEditingController();
 	final secretController = TextEditingController();
+
+	PackageInfo _packageInfo = PackageInfo(
+		appName: 'Unknown',
+		packageName: 'Unknown',
+		version: 'Unknown',
+		buildNumber: 'Unknown',
+		buildSignature: 'Unknown',
+	);
+
+	@override
+	void initState() {
+		super.initState();
+		_initPackageInfo();
+	}
+
+	Future<void> _initPackageInfo() async {
+		final info = await PackageInfo.fromPlatform();
+		setState(() {
+			_packageInfo = info;
+		});
+	}
 
 	@override
 	Widget build(BuildContext context) {
@@ -239,7 +261,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
 								SizedBox(height: 5.0),
 								Text(
-									'Version: 1.0.0-alpha',
+									'Version: ${_packageInfo.version} build ${_packageInfo.buildNumber}',
 									style: const TextStyle(fontSize: 11),
 									textAlign: TextAlign.center,
 								),

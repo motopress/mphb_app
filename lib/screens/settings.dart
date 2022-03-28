@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/local_storage.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsPage extends StatefulWidget {
 
@@ -11,6 +12,27 @@ class SettingsPage extends StatefulWidget {
 
 
 class _SettingsPageState extends State<SettingsPage> {
+
+	PackageInfo _packageInfo = PackageInfo(
+		appName: 'Unknown',
+		packageName: 'Unknown',
+		version: 'Unknown',
+		buildNumber: 'Unknown',
+		buildSignature: 'Unknown',
+	);
+
+	@override
+	void initState() {
+		super.initState();
+		_initPackageInfo();
+	}
+
+	Future<void> _initPackageInfo() async {
+		final info = await PackageInfo.fromPlatform();
+		setState(() {
+			_packageInfo = info;
+		});
+	}
 
 	@override
 	Widget build(BuildContext context) {
@@ -32,6 +54,12 @@ class _SettingsPageState extends State<SettingsPage> {
 							'Consumer key ending in: ' +
 							LocalStorage().consumer_key.substring(
 								LocalStorage().consumer_key.length - 7),
+						),
+						SizedBox(height: 25.0),
+						Text(
+							'Version: ${_packageInfo.version} build ${_packageInfo.buildNumber}',
+							style: const TextStyle(fontSize: 11),
+							textAlign: TextAlign.center,
 						),
 						SizedBox(height: 25.0),
 						OutlinedButton(
