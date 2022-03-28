@@ -34,6 +34,7 @@ https://stackoverflow.com/questions/49353199/how-can-i-change-the-app-display-na
 
 ## Ссылки
 1. https://docs.flutter.dev/get-started/install
+1. https://fonts.google.com/icons
 
 ---
 (1) - `port` paramenter is set to save SharedPreferences for each session, [more](https://stackoverflow.com/questions/59503499/flutter-web-shared-preferences-not-available-when-tab-is-closed-and-reopened).

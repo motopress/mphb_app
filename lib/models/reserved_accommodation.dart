@@ -5,8 +5,8 @@ class Reserved_Accommodation {
 	final int accommodation;
 	final int accommodation_type;
 	final int rate;
-	final int adults;
-	final int children;
+	int adults;
+	int children;
 	final List<Reserved_Service> services;
 	final List accommodation_price_per_days;
 	final List fees;

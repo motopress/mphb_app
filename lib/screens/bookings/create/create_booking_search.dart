@@ -3,7 +3,7 @@ import 'package:mphb_app/screens/bookings/create/search_availability_form.dart';
 import 'package:mphb_app/controller/bookings_controller.dart';
 import 'package:mphb_app/models/accommodation_availability.dart';
 import 'package:mphb_app/models/accommodation.dart';
-import 'package:mphb_app/models/new_booking.dart';
+import 'package:mphb_app/models/create_booking.dart';
 
 class CreateBookingSearchPage extends StatefulWidget {
 
@@ -12,7 +12,7 @@ class CreateBookingSearchPage extends StatefulWidget {
 		required this.booking,
 	}) : super(key: key);
 
-	late NewBooking booking;
+	late Create_Booking booking;
 
 	@override
 	_CreateBookingSearchPageState createState() => _CreateBookingSearchPageState( booking: booking );
@@ -25,7 +25,7 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 		required this.booking,
 	});
 
-	late NewBooking booking;
+	late Create_Booking booking;
 
 	late final BookingsController _bookingsController;
 
@@ -77,7 +77,7 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 				break;
 			
 			case 'waiting':
-				return [Center(child:CircularProgressIndicator())];
+				return [CircularProgressIndicator()];
 				break;
 			default:
 				return [];
@@ -118,7 +118,7 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 
 									booking.dispatch(context);
 
-									booking.accommodations.forEach((element) => print(element.id));
+									//booking.accommodations.forEach((element) => print(element.id));
 								},
 							);
 						}
@@ -133,8 +133,8 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 
 		return SingleChildScrollView(
 			child: Column(
-				mainAxisAlignment: MainAxisAlignment.start,
-				crossAxisAlignment: CrossAxisAlignment.start,
+				crossAxisAlignment: _state == 'waiting' ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+				mainAxisAlignment: _state == 'waiting' ? MainAxisAlignment.center : MainAxisAlignment.start,
 				children: [
 					Container(
 						padding: EdgeInsets.all(20.00),
@@ -159,13 +159,12 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 						padding: getChildren().isEmpty ? EdgeInsets.all(0.00) : EdgeInsets.all(20.00),
 						margin: EdgeInsets.all(10.00),
 						child: Column(
-							crossAxisAlignment: CrossAxisAlignment.start,
 							children: getChildren(),
 						),
 						decoration: BoxDecoration(
 							color: Colors.white,
 							borderRadius: BorderRadius.all(
-								Radius.circular(6)
+								Radius.circular( _state == 'waiting' ? 100: 6 )
 							),
 							boxShadow: [
 								BoxShadow(

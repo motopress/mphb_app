@@ -1,14 +1,14 @@
 class Customer {
 
-    final String first_name;
-    final String last_name;
-    final String email;
-    final String phone;
-    final String country;
-    final String state;
-    final String city;
-    final String zip;
-    final String address1;
+    String first_name;
+    String last_name;
+    String email;
+    String phone;
+    String country;
+    String state;
+    String city;
+    String zip;
+    String address1;
 
 	Customer({
 		required this.email,

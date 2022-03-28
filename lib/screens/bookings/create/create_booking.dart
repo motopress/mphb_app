@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking_search.dart';
-import 'package:mphb_app/screens/bookings/create/create_booking_book.dart';
-import 'package:mphb_app/models/new_booking.dart';
+import 'package:mphb_app/screens/bookings/create/create_booking_checkout.dart';
+import 'package:mphb_app/screens/bookings/create/create_booking_complete.dart';
+import 'package:mphb_app/models/create_booking.dart';
 
 class CreateBookingPage extends StatefulWidget {
 
@@ -18,22 +19,45 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 
 	final _navigatorKey = GlobalKey<NavigatorState>();
 
-	final NewBooking _booking = new NewBooking();
+	final Create_Booking _booking = new Create_Booking();
+
+	void _onBackPressed() {
+
+		if ( _navigatorKey.currentState!.canPop() && _booking.state != Create_Booking.COMPLETE ) {
+
+			_navigatorKey.currentState!.pop();
+
+			String state = ( _booking.state == Create_Booking.COMPLETE ) ?
+				Create_Booking.CHECKOUT : Create_Booking.INITIAL;
+
+			setState(() {
+				_booking.state = state;
+			});
+
+		} else {
+	
+			Navigator.maybePop(context);
+		}
+	}
 
 	@override
 	Widget build(BuildContext context) {
 
 		return NotificationListener<Notification>(
+
 			child: Scaffold(
-				//backgroundColor: Colors.white,
+
 				appBar: AppBar(
 					title: const Text('Add Booking'),
+					leading: BackButton(onPressed: _onBackPressed),
 				),
 				body: Navigator(
 					key: _navigatorKey,
 					initialRoute: 'create_booking/search',
 					onGenerateRoute: (RouteSettings settings) {
+
 						WidgetBuilder builder;
+
 						switch (settings.name) {
 
 							case 'create_booking/search':
@@ -42,8 +66,14 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 								);
 								break;
 
-							case 'create_booking/book':
-								builder = (BuildContext _) => CreateBookingBookPage(
+							case 'create_booking/checkout':
+								builder = (BuildContext _) => CreateBookingCheckoutPage(
+									booking: _booking
+								);
+								break;
+
+							case 'create_booking/complete':
+								builder = (BuildContext _) => CreateBookingCompletePage(
 									booking: _booking
 								);
 								break;
@@ -51,41 +81,48 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 							default:
 								throw Exception('Invalid route: ${settings.name}');
 						}
+
 						return MaterialPageRoute<void>(builder: builder, settings: settings);
 					},
 				),
+
 				persistentFooterButtons: [
 
-						if ( _booking.state != NewBooking.INITIAL )
-							OutlinedButton(
-								onPressed: () {
-									if ( _navigatorKey.currentState!.canPop() ) {
+					if ( _booking.state == Create_Booking.INITIAL )
+						ElevatedButton(
+							child: const Text('Continue'),
+							onPressed: _booking.accommodations.isEmpty ? null : () {
 
-										_navigatorKey.currentState!.pop();
+								_navigatorKey.currentState!.pushNamed(
+									'create_booking/checkout',
+								);
 
-										setState(() {
-											_booking.state = NewBooking.INITIAL;
-										});
-									}
-								},
-								child: const Text('Back'),
-							),
+								setState(() {
+									_booking.state = Create_Booking.CHECKOUT;
+								});
 
-						if ( _booking.state != NewBooking.CHECKOUT )
-							ElevatedButton(
-								onPressed: _booking.accommodations.isEmpty ? null : () {
+							},
+						),
 
-									_navigatorKey.currentState!.pushNamed(
-										'create_booking/book',
-									);
+					if ( _booking.state == Create_Booking.CHECKOUT )
+						ElevatedButton(
+							child: const Text('Book Now'),
+							onPressed: _booking.reserved_accommodations.isEmpty ? null : () {
+								_navigatorKey.currentState!.pushNamed(
+									'create_booking/complete',
+								);
 
-									setState(() {
-										_booking.state = NewBooking.CHECKOUT;
-									});
+								setState(() {
+									_booking.state = Create_Booking.COMPLETE;
+								});
+							},
+						),
 
-								},
-								child: const Text('Continue'),
-							),
+					if ( _booking.state == Create_Booking.COMPLETE )
+						OutlinedButton(
+							child: const Text('Quit'),
+							onPressed: _onBackPressed,
+						),
 				],
 			),
 			onNotification: (n) {
