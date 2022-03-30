@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.motopress.mphb_app">
+   <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="Hotel Booking"
         android:icon="@mipmap/ic_launcher">
