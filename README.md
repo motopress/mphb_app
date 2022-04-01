@@ -31,6 +31,20 @@
 1. Установить билд на эмулятор `adb install path_to_apk`
 ...
 
+## Build and release
+
+### Build and release iOS
+
+[ссылка](https://docs.flutter.dev/deployment/ios)
+
+### Build and release Android
+
+[ссылка](https://docs.flutter.dev/deployment/android)
+
+1. Сбилдить `flutter build appbundle`
+1. Найти релиз `[project]/build/app/outputs/bundle/release/app.aab`
+1. Загрузить на Google Play [ссылка](https://play.google.com/console/u/0/developers/5796146987033170077/app-list)
+
 ## Другое
 
 #### Иконка приложения
