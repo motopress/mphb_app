@@ -23,6 +23,14 @@
 1. Команда `flutter run` должна запустить приложение на эмуляторе.
 1. Для запуска на устройстве его нужно подключить по кабелю и выполнить `flutter run`. Устройство не должно быть заблокировано.
 
+## Запуск на Android эмуляторе
+
+1. Установить Android SDK и инструменты для билда. Например через Android Studio или только SDK через [sdkmanager](https://developer.android.com/studio/command-line/sdkmanager).
+1. [Собрать релиз-билд](https://docs.flutter.dev/deployment/android).
+1. Запустить [эмулятор](https://gist.github.com/mrk-han/66ac1a724456cadf1c93f4218c6060ae)
+1. Установить билд на эмулятор `adb install path_to_apk`
+...
+
 ## Другое
 
 #### Иконка приложения
