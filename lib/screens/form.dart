@@ -228,13 +228,31 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
 																	_formKey.currentState!.save();
 
-																	// set value
-
+																	// trim slash
 																	if ( model.domain.endsWith('/') ) {
 																		model.domain = model.domain.substring(0, model.domain.length - 1);
 																	}
 
-																	LocalStorage().domain = model.domain + '/wp-json/mphb/v1';
+																	/*
+																	 * https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/
+																	 * 
+																	 * 1. All routes should be built onto this route, the wp-json portion can be changed,
+																	 *    but in general, it is advised to keep it the same.
+																	 * 2. On sites without pretty permalinks, the route is instead added to the URL as the
+																	 *    rest_route parameter. For the above example, the full URL would then be
+																	 *    http://example.com/?rest_route=/wp/v2/posts/123
+																	 */
+
+																	 //TODO: make it better
+																	if ( model.domain.endsWith( '/wp-json/mphb/v1' ) ) {
+
+																		LocalStorage().domain = model.domain;
+
+																	} else {
+
+																		LocalStorage().domain = model.domain + '/wp-json/mphb/v1';
+																	}
+
 																	LocalStorage().consumer_key = model.consumer_key;
 																	LocalStorage().consumer_secret = model.consumer_secret;
 																	
