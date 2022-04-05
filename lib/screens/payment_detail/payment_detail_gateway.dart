@@ -65,6 +65,8 @@ class PaymentDetailGateway extends StatelessWidget {
 											Clipboard.setData(ClipboardData(text: payment.transaction_id))
 												.then((_) {
 													final snackBar = SnackBar( content: Text('${payment.transaction_id} copied') );
+
+													ScaffoldMessenger.of(context).clearSnackBars();
 													ScaffoldMessenger.of(context).showSnackBar(snackBar);
 												});
 										},

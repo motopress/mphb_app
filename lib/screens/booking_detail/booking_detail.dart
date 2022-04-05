@@ -38,9 +38,31 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 	void initState() {
 
 		_bookingController = new BookingController();
-		_bookingFuture = _bookingController.wpGetBooking( bookingID );
+
+		_bookingFuture = _getBooking( bookingID );
 
 		super.initState();
+	}
+
+	Future<Booking> _getBooking( int id ) {
+
+		var bookingFuture;
+
+		try {
+
+			bookingFuture = _bookingController.wpGetBooking( id );
+
+		} catch (error) {
+
+			bookingFuture = null;
+
+			print(error);
+			ScaffoldMessenger.of(context).showSnackBar(
+				SnackBar(content: Text(error.toString()))
+			);
+		}
+
+		return bookingFuture;
 	}
 
 	void deleteBooking( Booking booking ) async {
@@ -79,7 +101,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 							tooltip: 'Refresh',
 							onPressed: () {
 								setState(() {
-									_bookingFuture = _bookingController.wpGetBooking( bookingID );
+									_bookingFuture = _getBooking( bookingID );
 								});
 							},
 						),
@@ -126,9 +148,23 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 															break;
 
 														default:
-															setState(() {
-																_bookingFuture = _bookingController.wpUpdateBookingStatus( booking, action );
-															});
+
+															try {
+			
+																setState(() {
+																	_bookingFuture =
+																		_bookingController.wpUpdateBookingStatus(
+																			booking, action );
+																});
+
+															} catch (error) {
+
+																print(error);
+																ScaffoldMessenger.of(context).showSnackBar(
+																	SnackBar(content: Text(error.toString()))
+																);
+															}
+															break;
 													}
 												}
 											});
@@ -148,7 +184,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 								child: new CircularProgressIndicator(),
 							);
 						} else*/ if (snapshot.hasError) {
-							return new Text('Error: ${snapshot.error}');
+							return new Center(child: Text('Error: ${snapshot.error}') );
 						} else {
 
 							Booking booking = snapshot.data;
@@ -156,7 +192,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 							return RefreshIndicator(
 								onRefresh: () => Future.sync(
 									() => setState(() {
-										_bookingFuture = _bookingController.wpGetBooking( bookingID );
+										_bookingFuture = _getBooking( bookingID );
 									}),
 								),
 								child: SingleChildScrollView(

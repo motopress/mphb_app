@@ -12,8 +12,7 @@ class BasicController {
 	}
 
 	/*
-	 * https://booking.loc/wp-json/mphb/v1
-	 * https://uglywebsites.org/booking-api/wp-json/mphb/v1
+	 * https://domain.com/wp-json/mphb/v1
 	 */
 	String getPath( [ String pathSegment = '' ] ) {
 

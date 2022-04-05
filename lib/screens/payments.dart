@@ -36,6 +36,7 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 	}
 
 	Future<void> _fetchPage(int pageKey) async {
+
 		try {
 
 			final newItems = await _paymentsController.wpGetPayments(pageKey, _pageSize, _payments_filters);
@@ -133,8 +134,8 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 								payment: item,
 							),
 							noItemsFoundIndicatorBuilder: (context) => Center(child: Text('Nothing Found',),),
-							firstPageErrorIndicatorBuilder: (context) => Text('Error'),
-							newPageErrorIndicatorBuilder: (context) => Text('Error'),
+							firstPageErrorIndicatorBuilder: (context) => Center(child: Text(_pagingController.error.toString())),
+							newPageErrorIndicatorBuilder: (context) => Center(child: Text(_pagingController.error.toString())),
 						),
 					),
 				),

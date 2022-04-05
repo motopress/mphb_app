@@ -35,9 +35,30 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 	void initState() {
 
 		_paymentController = new PaymentController();
-		_paymentFuture = _paymentController.wpGetPayment( paymentID );
+		_paymentFuture = _getPayment( paymentID );
 
 		super.initState();
+	}
+
+	Future<Payment> _getPayment( int id ) {
+
+		var paymentFuture;
+
+		try {
+
+			paymentFuture = _paymentController.wpGetPayment( id );
+
+		} catch (error) {
+
+			paymentFuture = null;
+
+			print(error);
+			ScaffoldMessenger.of(context).showSnackBar(
+				SnackBar(content: Text(error.toString()))
+			);
+		}
+
+		return paymentFuture;
 	}
 
 	@override
@@ -53,7 +74,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 							tooltip: 'Refresh',
 							onPressed: () {
 								setState(() {
-									_paymentFuture = _paymentController.wpGetPayment( paymentID );
+									_paymentFuture = _getPayment( paymentID );
 								});
 							},
 						),
@@ -98,9 +119,23 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 															print('Delete payment!');
 															break;
 														default:
-															setState(() {
-																_paymentFuture = _paymentController.wpUpdatePaymentStatus( payment, action );
-															});
+
+															try {
+			
+																setState(() {
+																	_paymentFuture =
+																		_paymentController.wpUpdatePaymentStatus(
+																			payment, action );
+																});
+
+															} catch (error) {
+
+																print(error);
+																ScaffoldMessenger.of(context).showSnackBar(
+																	SnackBar(content: Text(error.toString()))
+																);
+															}
+															break;
 													}
 												}
 											});
@@ -128,7 +163,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 							return RefreshIndicator(
 								onRefresh: () => Future.sync(
 									() => setState(() {
-										_paymentFuture = _paymentController.wpGetPayment( paymentID );
+										_paymentFuture = _getPayment( paymentID );
 									}),
 								),
 								child: SingleChildScrollView(

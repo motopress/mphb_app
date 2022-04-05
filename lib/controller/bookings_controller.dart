@@ -24,8 +24,7 @@ class BookingsController extends BasicController{
 	final String _queryEndpoint = '/bookings';
 
 	/*
-	 * https://booking.loc/wp-json/mphb/v1/bookings?consumer_key=ck_1d9a5f63a7d95d69db24ea6d2a1a883cace7a127&consumer_secret=cs_993ee46f420b9472bc4b98aed6b2b1ca5e92b717
-	 * https://uglywebsites.org/booking-api/wp-json/mphb/v1/bookings?consumer_key=ck_09c4163541fb26930cf9531ba1601f711f5c1ab9&consumer_secret=cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8
+	 * https://domain.com/wp-json/mphb/v1/bookings
 	 */
 	Future<List<Booking>> wpGetBookings( int offset, int limit, Bookings_Filters filters ) async {
 

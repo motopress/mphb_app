@@ -51,36 +51,50 @@ class _SingleAccommodationState extends State<SingleAccommodation> {
 
 	void getAccommodationType() async {
 
-		setState(() {_state = 'waiting';});
+		try {
 
-		final accommodationType = await _accommodationTypeController.wpGetAccommodationType(
-			accommodation.accommodation_type_id );
+			setState(() {_state = 'waiting';});
 
-		//Reserved_Accommodation
-		Reserved_Accommodation reserved_accommodation = new Reserved_Accommodation(
+			final accommodationType = await _accommodationTypeController.wpGetAccommodationType(
+				accommodation.accommodation_type_id );
 
-			accommodation: accommodation.id,
-			accommodation_type: accommodation.accommodation_type_id,
-			rate: 0,
-			adults: 1,
-			children: 0,
-			services: [],
-			accommodation_price_per_days: [],
-			fees: [],
-			taxes: {},
-			discount: 0
+			//Reserved_Accommodation
+			Reserved_Accommodation reserved_accommodation = new Reserved_Accommodation(
 
-		);
+				accommodation: accommodation.id,
+				accommodation_type: accommodation.accommodation_type_id,
+				rate: 0,
+				adults: 1,
+				children: 0,
+				services: [],
+				accommodation_price_per_days: [],
+				fees: [],
+				taxes: {},
+				discount: 0
 
-		booking.reserved_accommodations.add( reserved_accommodation );
+			);
 
-		setState(() {
-			_state = 'complete';
-			accommodation_type = accommodationType;
-			_reserved_accommodation = reserved_accommodation;
-		} );
+			booking.reserved_accommodations.add( reserved_accommodation );
 
-		booking.dispatch(context);
+			setState(() {
+				_state = 'complete';
+				accommodation_type = accommodationType;
+				_reserved_accommodation = reserved_accommodation;
+			} );
+
+			booking.dispatch(context);
+
+		} catch (error) {
+			
+			setState(() {_state = 'complete';});
+
+			ScaffoldMessenger.of(context).clearSnackBars();
+			ScaffoldMessenger.of(context).showSnackBar(
+				SnackBar(content: Text(error.toString()))
+			);
+
+			print(error);
+		}
 	}
 
 	List<Widget> getChildren() {

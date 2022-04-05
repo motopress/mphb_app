@@ -105,7 +105,10 @@ class BookingDetailCustomer extends StatelessWidget {
 														onPressed: () {
 															Clipboard.setData(ClipboardData(text: customer.email))
 																.then((_) {
+
 																	final snackBar = SnackBar( content: Text('${customer.email} copied') );
+																	
+																	ScaffoldMessenger.of(context).clearSnackBars();
 																	ScaffoldMessenger.of(context).showSnackBar(snackBar);
 																});
 														},
@@ -132,7 +135,10 @@ class BookingDetailCustomer extends StatelessWidget {
 														onPressed: () {
 															Clipboard.setData(ClipboardData(text: customer.phone))
 																.then((_) {
+
 																	final snackBar = SnackBar( content: Text('${customer.phone} copied') );
+
+																	ScaffoldMessenger.of(context).clearSnackBars();
 																	ScaffoldMessenger.of(context).showSnackBar(snackBar);
 																});
 														},

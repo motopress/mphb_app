@@ -10,7 +10,7 @@ class BookingController extends BasicController{
 	final String _queryEndpoint = '/bookings';
 
 	/*
-	 * https://booking.loc/wp-json/mphb/v1/bookings/6827?&consumer_key=ck_1d9a5f63a7d95d69db24ea6d2a1a883cace7a127&consumer_secret=cs_993ee46f420b9472bc4b98aed6b2b1ca5e92b717
+	 * https://domain.com/wp-json/mphb/v1/bookings/ID
 	 */
 	Future<Booking> wpGetBooking( int bookingID ) async {
 

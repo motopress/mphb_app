@@ -84,6 +84,14 @@ class _PaymentListItemState extends State<PaymentListItem> {
 													//crossAxisAlignment: CrossAxisAlignment.baseline,
 													//textBaseline: TextBaseline.ideographic,
 													children: [
+														Padding(
+															padding: EdgeInsets.only(right: 3.0),
+															child: Icon(
+																Icons.money,
+																size: 12,
+																color: Colors.indigo.shade100
+															)
+														),
 														Text(
 															payment.amount.toString(),
 															style: TextStyle(fontWeight: FontWeight.bold),

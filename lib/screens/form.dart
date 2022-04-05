@@ -95,7 +95,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
 														if ( formModel.isEmpty ) {
 
-															ScaffoldMessenger.of(context).removeCurrentSnackBar();
+															ScaffoldMessenger.of(context).clearSnackBars();
 															ScaffoldMessenger.of(context).showSnackBar(
 																SnackBar(
 																	backgroundColor: Colors.red,
@@ -140,8 +140,8 @@ class _MyCustomFormState extends State<MyCustomForm> {
 																TextButton(
 																	onPressed: () {
 																		domainController.text = 'https://uglywebsites.org/booking-api';
-																		keyController.text = 'ck_09c4163541fb26930cf9531ba1601f711f5c1ab9';
-																		secretController.text = 'cs_47fd90af2ca6ec49dcb9b5ad73766cd6545c25a8';
+																		keyController.text = 'ck_dd368d402c57152e55028183e4a731e50df201a7';
+																		secretController.text = 'cs_dc67e95a34a754b3755f7770a72fe49f85ccd059';
 																	},
 																	child: Text("Demo Data"),
 																),

@@ -91,6 +91,7 @@ class _CreateBookingCompletePageState extends State<CreateBookingCompletePage> {
 				_state = '';
 			});
 
+			ScaffoldMessenger.of(context).clearSnackBars();
 			ScaffoldMessenger.of(context).showSnackBar(
 				SnackBar(content: Text(error.toString()))
 			);
