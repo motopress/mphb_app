@@ -27,7 +27,8 @@ class BookingDetailStatus extends StatelessWidget {
 							Padding (
 								padding: EdgeInsets.only(top: 5.0),
 								child: Text(
-									DateFormat('yyyy-MM-dd HH:mm').format( DateTime.parse(booking.date_created) ),
+									DateFormat('yyyy-MM-dd HH:mm').format(
+											DateTime.parse(booking.date_created) ),
 									style: TextStyle(fontSize: 12),
 								),
 							),

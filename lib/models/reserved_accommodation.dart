@@ -28,13 +28,16 @@ class Reserved_Accommodation {
 
 
 	factory Reserved_Accommodation.fromJson(Map<String, dynamic> json) {
+
 		return Reserved_Accommodation(
+
 			accommodation: json['accommodation'],
 			accommodation_type: json['accommodation_type'],
 			rate: json['rate'],
 			adults: json['adults'],
 			children: json['children'],
-			services: json['services'].cast<Map<String, dynamic>>().map<Reserved_Service>((json) => Reserved_Service.fromJson(json)).toList(),
+			services: json['services'].cast<Map<String, dynamic>>().
+				map<Reserved_Service>((json) => Reserved_Service.fromJson(json)).toList(),
 			accommodation_price_per_days: json['accommodation_price_per_days'],
 			fees: json['fees'],
 			taxes: json['taxes'],

@@ -27,7 +27,8 @@ class PaymentDetailStatus extends StatelessWidget {
 							Padding (
 								padding: EdgeInsets.only(top: 5.0),
 								child: Text(
-									DateFormat('yyyy-MM-dd HH:mm').format( DateTime.parse(payment.date_created) ),
+									DateFormat('yyyy-MM-dd HH:mm').format(
+										DateTime.parse(payment.date_created) ),
 									style: TextStyle(fontSize: 12),
 								),
 							),
@@ -37,10 +38,12 @@ class PaymentDetailStatus extends StatelessWidget {
 						decoration: BoxDecoration(
 							borderRadius: BorderRadius.all(Radius.circular(4)),
 							color:
-								(payment.status == PaymentStatusEnum.COMPLETED || payment.status == PaymentStatusEnum.ON_HOLD) ?
-									Colors.green
-								: (payment.status == PaymentStatusEnum.CANCELLED || payment.status == PaymentStatusEnum.REFUNDED) ?
-									Colors.orange
+								(payment.status == PaymentStatusEnum.COMPLETED ||
+									payment.status == PaymentStatusEnum.ON_HOLD) ?
+										Colors.green
+								: (payment.status == PaymentStatusEnum.CANCELLED ||
+									payment.status == PaymentStatusEnum.REFUNDED) ?
+										Colors.orange
 								:  Colors.blueGrey,
 						),
 						padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10.0, right: 10.0),

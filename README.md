@@ -29,7 +29,7 @@
 1. [Собрать релиз-билд](https://docs.flutter.dev/deployment/android).
 1. Запустить [эмулятор](https://gist.github.com/mrk-han/66ac1a724456cadf1c93f4218c6060ae)
 1. Установить билд на эмулятор `adb install path_to_apk`
-...
+(TBD)
 
 ## Build and release
 

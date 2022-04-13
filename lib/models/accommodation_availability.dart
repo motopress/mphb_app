@@ -23,6 +23,7 @@ class Accommodation_Availability {
 		}
 
 		return Accommodation_Availability(
+
 			accommodation_type: json['accommodation_type'],
 			title: json['title'],
 			base_price: json['base_price'],

@@ -14,7 +14,8 @@ class CreateBookingCheckoutPage extends StatefulWidget {
 	final Create_Booking booking;
 
 	@override
-	_CreateBookingCheckoutPageState createState() => _CreateBookingCheckoutPageState( booking: booking );
+	_CreateBookingCheckoutPageState createState() =>
+		_CreateBookingCheckoutPageState( booking: booking );
 
 }
 
@@ -56,7 +57,7 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 									color: Colors.grey.withOpacity(0.1),
 									spreadRadius: 0,
 									blurRadius: 2,
-									offset: Offset(0, 4), // changes position of shadow
+									offset: Offset(0, 4),
 								),
 							],
 						),

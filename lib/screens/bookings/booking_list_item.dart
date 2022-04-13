@@ -37,20 +37,10 @@ class _BookingListItemState extends State<BookingListItem> {
 			context,
 			MaterialPageRoute(builder: (context) => BookingDetailScreen( booking: booking )),
 		);
-		//print(newBooking);
 
 		/*
 		 * https://github.com/EdsonBueno/infinite_scroll_pagination/issues/17
 		 */
-
-		/*final newList = widget.pagingController.itemList!.toList();
-		newList.removeAt(widget.index);
-		newList.insert(widget.index, newBooking);
-		//debugger();
-		widget.pagingController.itemList = newList;
-		widget.pagingController.notifyListeners();
-		*/
-
 		if ( widget.booking.status != newBooking.status ) {
 			widget.booking.status = newBooking.status;
 			widget.pagingController.notifyListeners();
@@ -71,7 +61,7 @@ class _BookingListItemState extends State<BookingListItem> {
 						color: Colors.grey.withOpacity(0.1),
 						spreadRadius: 0,
 						blurRadius: 2,
-						offset: Offset(0, 2), // changes position of shadow
+						offset: Offset(0, 2),
 					),
 				],
 			),
@@ -157,11 +147,13 @@ class _BookingListItemState extends State<BookingListItem> {
 													)
 												),
 												Text(
-													DateFormat('yyyy-MM-dd').format( DateTime.parse(booking.date_created) ),
+													DateFormat('yyyy-MM-dd').format(
+														DateTime.parse(booking.date_created) ),
 													style: TextStyle(
 														fontSize: 12,
 													),
 												),
+
 												if ( booking.imported == true )
 													Row(
 														children: [

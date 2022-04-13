@@ -55,8 +55,9 @@ class _SingleAccommodationState extends State<SingleAccommodation> {
 
 			setState(() {_state = 'waiting';});
 
-			final accommodationType = await _accommodationTypeController.wpGetAccommodationType(
-				accommodation.accommodation_type_id );
+			final accommodationType =
+				await _accommodationTypeController.wpGetAccommodationType(
+					accommodation.accommodation_type_id );
 
 			//Reserved_Accommodation
 			Reserved_Accommodation reserved_accommodation = new Reserved_Accommodation(
@@ -116,13 +117,17 @@ class _SingleAccommodationState extends State<SingleAccommodation> {
 									Text( 'Adults' ),
 									DropdownButton<String>(
 										value: _reserved_accommodation.adults.toString(),
+
 										items: List<String>.generate(
-												accommodation_type.adults, (i) => (i + 1).toString()).map((String value) {
+												accommodation_type.adults, (i) => (i + 1).toString()
+											).map((String value) {
+
 											return DropdownMenuItem<String>(
 												value: value,
 												child: Text(value),
 											);
 										}).toList(),
+
 										onChanged: (String? newValue) {
 											setState(() {
 												_reserved_accommodation.adults = int.parse(newValue!);
@@ -143,12 +148,15 @@ class _SingleAccommodationState extends State<SingleAccommodation> {
 									DropdownButton<String>(
 										value: _reserved_accommodation.children.toString(),
 										items: List<String>.generate(
-												accommodation_type.children + 1, (i) => (i).toString()).map((String value) {
+												accommodation_type.children + 1, (i) => (i).toString()
+											).map((String value) {
+
 											return DropdownMenuItem<String>(
 												value: value,
 												child: Text(value),
 											);
 										}).toList(),
+
 										onChanged: (String? newValue) {
 											setState(() {
 												_reserved_accommodation.children = int.parse(newValue!);
@@ -194,7 +202,7 @@ class _SingleAccommodationState extends State<SingleAccommodation> {
 						color: Colors.grey.withOpacity(0.1),
 						spreadRadius: 0,
 						blurRadius: 2,
-						offset: Offset(0, 4), // changes position of shadow
+						offset: Offset(0, 4),
 					),
 				],
 			),

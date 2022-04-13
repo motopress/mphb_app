@@ -78,7 +78,8 @@ class BookingsController extends BasicController{
 			final Map<String, dynamic> parsed = jsonDecode(response.body);
 			final availability = parsed['availability'].cast<Map<String, dynamic>>();
 
-			return availability.map<Accommodation_Availability>((json) => Accommodation_Availability.fromJson(json)).toList();
+			return availability.map<Accommodation_Availability>((json) =>
+				Accommodation_Availability.fromJson(json)).toList();
 
 		} else {
 

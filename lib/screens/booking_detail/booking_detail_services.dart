@@ -52,7 +52,8 @@ class BookingDetailServices extends StatelessWidget {
 					child: Padding(
 						padding: const EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0),
 						child: Text(
-							booking.getServiceByID(reserved_service.id)?.title ?? reserved_service.id.toString(),
+							booking.getServiceByID(reserved_service.id)?.title ??
+								reserved_service.id.toString(),
 						),
 					),
 				),
@@ -60,7 +61,8 @@ class BookingDetailServices extends StatelessWidget {
 					child: Padding(
 						padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
 						child: Text(
-							reserved_service.adults != null ? 'x ' + reserved_service.adults.toString() + ' guest(s)' : '',
+							reserved_service.adults != null ?
+								'x ' + reserved_service.adults.toString() + ' guest(s)' : '',
 							style: TextStyle(fontStyle: FontStyle.italic),
 						),
 					),
@@ -71,7 +73,11 @@ class BookingDetailServices extends StatelessWidget {
 						child: Text(
 							reserved_service.quantity != null ?
 								'x ' + reserved_service.quantity.toString() + ' time(s)' :
-								(booking.getServiceByID(reserved_service.id)?.periodicity['typeof'] == 'once' ? 'Once' : 'Daily'),
+									(
+										booking.getServiceByID(
+											reserved_service.id)?.periodicity['typeof'] == 'once' ?
+												'Once' : 'Daily'
+									),
 							style: TextStyle(fontStyle: FontStyle.italic),
 						),
 					),

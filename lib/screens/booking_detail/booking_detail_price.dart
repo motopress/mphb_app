@@ -24,7 +24,7 @@ class BookingDetailPrice extends StatelessWidget {
 						color: Colors.grey.withOpacity(0.1),
 						spreadRadius: 0,
 						blurRadius: 2,
-						offset: Offset(0, 4), // changes position of shadow
+						offset: Offset(0, 4),
 					),
 				],
 			),
@@ -36,7 +36,10 @@ class BookingDetailPrice extends StatelessWidget {
 							children: [
 								Text(
 									booking.total_price.toStringAsFixed(2),
-									style: TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
+									style: TextStyle(
+										fontWeight: FontWeight.bold,
+										color: Colors.indigo
+									),
 								),
 								Padding (
 									padding: EdgeInsets.only(top: 5.0),
@@ -53,7 +56,10 @@ class BookingDetailPrice extends StatelessWidget {
 							children: [
 								Text(
 									booking.getPaid().toStringAsFixed(2),
-									style: TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
+									style: TextStyle(
+										fontWeight: FontWeight.bold,
+										color: Colors.indigo
+									),
 								),
 								Padding (
 									padding: EdgeInsets.only(top: 5.0),
@@ -70,7 +76,10 @@ class BookingDetailPrice extends StatelessWidget {
 							children: [
 								Text(
 									booking.getToPay().toStringAsFixed(2),
-									style: TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
+									style: TextStyle(
+										fontWeight: FontWeight.bold,
+										color: Colors.indigo
+									),
 								),
 								Padding (
 									padding: EdgeInsets.only(top: 5.0),

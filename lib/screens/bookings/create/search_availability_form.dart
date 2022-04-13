@@ -20,7 +20,9 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 	final _formKey = GlobalKey<FormState>();
 
 	String _checkInDate = DateFormat('yyyy-MM-dd').format( DateTime.now() );
-	String _checkOutDate = DateFormat('yyyy-MM-dd').format( DateTime.now().add(const Duration(days: 1)) );
+	String _checkOutDate = DateFormat('yyyy-MM-dd').format(
+		DateTime.now().add(const Duration(days: 1)) );
+
 	String _adults = '1';
 	String _children = '0';
 
@@ -95,12 +97,16 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 										border: OutlineInputBorder(),
 									),
 									value: _adults,
-									items: List<String>.generate(30, (i) => (i + 1).toString()).map((String value) {
+
+									items: List<String>.generate(
+										30, (i) => (i + 1).toString()).map((String value) {
+
 										return DropdownMenuItem<String>(
 											value: value,
 											child: Text(value),
 										);
 									}).toList(),
+
 									onChanged: (String? newValue) {
 										setState(() {
 											_adults = newValue!;
@@ -117,12 +123,15 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 										border: OutlineInputBorder(),
 									),
 									value: _children,
-									items: List<String>.generate(31, (i) => (i).toString()).map((String value) {
+									items: List<String>.generate(
+										31, (i) => (i).toString()).map((String value) {
+
 										return DropdownMenuItem<String>(
 											value: value,
 											child: Text(value),
 										);
 									}).toList(),
+
 									onChanged: (String? newValue) {
 										setState(() {
 											_children = newValue!;

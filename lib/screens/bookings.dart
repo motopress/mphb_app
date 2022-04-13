@@ -39,7 +39,8 @@ class _BookingsListViewState extends State<BookingsPage> {
 	Future<void> _fetchPage(int pageKey) async {
 		try {
 
-			final newItems = await _bookingsController.wpGetBookings(pageKey, _pageSize, _bookings_filters);
+			final newItems = await _bookingsController.wpGetBookings(
+				pageKey, _pageSize, _bookings_filters);
 			final isLastPage = newItems.length < _pageSize;
 
 			if (isLastPage) {
@@ -91,7 +92,8 @@ class _BookingsListViewState extends State<BookingsPage> {
 								onPressed: () async {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
-											return BookingsFilter( bookings_filters: _bookings_filters );
+											return BookingsFilter(
+												bookings_filters: _bookings_filters );
 										},
 									)).then((bookings_filters) {
 
@@ -145,9 +147,14 @@ class _BookingsListViewState extends State<BookingsPage> {
 								index: index,
 								booking: item,
 							),
-							noItemsFoundIndicatorBuilder: (context) => Center(child: Text('Nothing Found',),),
-							firstPageErrorIndicatorBuilder: (context) => Center(child: Text(_pagingController.error.toString())),
-							newPageErrorIndicatorBuilder: (context) => Center(child: Text(_pagingController.error.toString())),
+							noItemsFoundIndicatorBuilder: (context) =>
+								Center( child: Text('Nothing Found') ),
+
+							firstPageErrorIndicatorBuilder: (context) =>
+								Center( child: Text(_pagingController.error.toString()) ),
+
+							newPageErrorIndicatorBuilder: (context) =>
+								Center( child: Text(_pagingController.error.toString()) ),
 						),
 					),
 				),

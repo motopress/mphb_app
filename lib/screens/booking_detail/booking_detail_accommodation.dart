@@ -34,7 +34,7 @@ class BookingDetailAccommodation extends StatelessWidget {
 						color: Colors.grey.withOpacity(0.1),
 						spreadRadius: 0,
 						blurRadius: 2,
-						offset: Offset(0, 4), // changes position of shadow
+						offset: Offset(0, 4),
 					),
 				],
 			),
@@ -48,9 +48,11 @@ class BookingDetailAccommodation extends StatelessWidget {
 								child: Column(
 									crossAxisAlignment: CrossAxisAlignment.start,
 									children: [
-										if ( booking.getAccommodationByID( reserved_accommodation.accommodation ) != null ) ...[
+										if ( booking.getAccommodationByID(
+												reserved_accommodation.accommodation ) != null ) ...[
 											Text(
-												booking.getAccommodationByID( reserved_accommodation.accommodation )?.title ?? '',
+												booking.getAccommodationByID(
+													reserved_accommodation.accommodation )?.title ?? '',
 												style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 											),
 										] else ...[
@@ -59,11 +61,13 @@ class BookingDetailAccommodation extends StatelessWidget {
 												style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 											),
 										],
-										if ( booking.getAccommodationTypeByID( reserved_accommodation.accommodation_type ) != null ) ...[
+										if ( booking.getAccommodationTypeByID(
+												reserved_accommodation.accommodation_type ) != null ) ...[
 											Padding(
 												padding: EdgeInsets.only(top: 5.0),
 												child: Text(
-													booking.getAccommodationTypeByID( reserved_accommodation.accommodation_type )?.title ?? '',
+													booking.getAccommodationTypeByID(
+														reserved_accommodation.accommodation_type )?.title ?? '',
 													style: TextStyle(fontSize: 12),
 												),
 											),
@@ -124,14 +128,17 @@ class BookingDetailAccommodation extends StatelessWidget {
 									tilePadding: EdgeInsets.zero,
 									childrenPadding: EdgeInsets.zero,
 									title: Text(
-										'Rate: ' + (booking.getRateByID( reserved_accommodation.rate )?.title ?? reserved_accommodation.rate.toString() ),
+										'Rate: ' + (booking.getRateByID(
+											reserved_accommodation.rate )?.title ??
+												reserved_accommodation.rate.toString() ),
 										style: DefaultTextStyle.of(context).style
 									),
 									children: List.generate(1,(index){
 										return Padding (
 											padding: EdgeInsets.only(bottom: 10.0),
 											child: Text(
-												booking.getRateByID( reserved_accommodation.rate )?.description ?? ''
+												booking.getRateByID(
+													reserved_accommodation.rate )?.description ?? ''
 											),
 										);
 									}),

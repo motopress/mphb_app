@@ -39,7 +39,8 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 
 		try {
 
-			final newItems = await _paymentsController.wpGetPayments(pageKey, _pageSize, _payments_filters);
+			final newItems = await _paymentsController.wpGetPayments(
+				pageKey, _pageSize, _payments_filters);
 			final isLastPage = newItems.length < _pageSize;
 
 			if (isLastPage) {
@@ -79,7 +80,8 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 								onPressed: () async {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
-											return PaymentsFilter( payments_filters: _payments_filters );
+											return PaymentsFilter(
+												payments_filters: _payments_filters );
 										},
 									)).then((payments_filters) {
 
@@ -133,9 +135,15 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 								index: index,
 								payment: item,
 							),
-							noItemsFoundIndicatorBuilder: (context) => Center(child: Text('Nothing Found',),),
-							firstPageErrorIndicatorBuilder: (context) => Center(child: Text(_pagingController.error.toString())),
-							newPageErrorIndicatorBuilder: (context) => Center(child: Text(_pagingController.error.toString())),
+
+							noItemsFoundIndicatorBuilder: (context) =>
+								Center( child: Text('Nothing Found') ),
+
+							firstPageErrorIndicatorBuilder: (context) =>
+								Center( child: Text(_pagingController.error.toString()) ),
+							
+							newPageErrorIndicatorBuilder: (context) =>
+								Center( child: Text(_pagingController.error.toString()) ),
 						),
 					),
 				),

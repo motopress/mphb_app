@@ -15,7 +15,8 @@ class PaymentDetailScreen extends StatefulWidget {
 	final Payment payment;
 
 	@override
-	_PaymentDetailScreenState createState() => _PaymentDetailScreenState( paymentID: this.payment.id );
+	_PaymentDetailScreenState createState() =>
+		_PaymentDetailScreenState( paymentID: this.payment.id );
 
 }
 
@@ -61,6 +62,49 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 		return paymentFuture;
 	}
 
+	_showModalBottomSheet( BuildContext context, Payment payment ) {
+
+		showModalBottomSheet(
+			context: context,
+			builder: (context) {
+				return PaymentDetailActions( payment: payment );
+			},
+
+		).then((action) {
+
+			if ( action != null ) {
+
+				switch ( action ) {
+
+					case 'delete':
+						print('Delete payment!');
+						break;
+
+					default:
+						try {
+
+							setState(() {
+								_paymentFuture =
+									_paymentController.wpUpdatePaymentStatus(
+										payment, action
+									);
+							});
+
+						} catch (error) {
+
+							print(error);
+							ScaffoldMessenger.of(context).showSnackBar(
+								SnackBar(
+									content: Text(error.toString())
+								)
+							);
+						}
+						break;
+				}
+			}
+		});
+	}
+
 	@override
 	Widget build(BuildContext context) {
 
@@ -104,42 +148,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 									return IconButton(
 										icon: const Icon(Icons.more_vert),
 										tooltip: 'Actions',
-										onPressed: () {
-											showModalBottomSheet(
-												context: context,
-												builder: (context) {
-													return PaymentDetailActions( payment: payment );
-												},
-											).then((action) {
-
-												//print('Action: $action');
-												if ( action != null ) {
-													switch ( action ) {
-														case 'delete':
-															print('Delete payment!');
-															break;
-														default:
-
-															try {
-			
-																setState(() {
-																	_paymentFuture =
-																		_paymentController.wpUpdatePaymentStatus(
-																			payment, action );
-																});
-
-															} catch (error) {
-
-																print(error);
-																ScaffoldMessenger.of(context).showSnackBar(
-																	SnackBar(content: Text(error.toString()))
-																);
-															}
-															break;
-													}
-												}
-											});
-										},
+										onPressed: () => _showModalBottomSheet( context, payment ),
 									);
 								}
 							}
@@ -150,11 +159,9 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 					future: _paymentFuture,
 					initialData: widget.payment,
 					builder: (context, AsyncSnapshot snapshot) {
-						/*if (snapshot.connectionState == ConnectionState.waiting) {
-							return new Center(
-								child: new CircularProgressIndicator(),
-							);
-						} else*/ if (snapshot.hasError) {
+
+						if (snapshot.hasError) {
+
 							return new Text('Error: ${snapshot.error}');
 						} else {
 
@@ -182,7 +189,8 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 												PaymentDetailGateway( payment: payment ),
 												// billing info
 												if ( ! payment.billing_info.isEmpty() )
-													BookingDetailCustomer( customer: payment.billing_info ),
+													BookingDetailCustomer(
+														customer: payment.billing_info ),
 											],
 										),
 									),

@@ -40,7 +40,9 @@ class Accommodation_Type {
 
 
 	factory Accommodation_Type.fromJson(Map<String, dynamic> json) {
+
 		return Accommodation_Type(
+
 			id: json['id'],
 			title: json['title'],
 			description: json['description'],

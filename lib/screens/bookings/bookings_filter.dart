@@ -13,7 +13,8 @@ class BookingsFilter extends StatefulWidget {
 	}) : super(key: key);
 
 	@override
-	_BookingsFilterState createState() => _BookingsFilterState( bookings_filters: this.bookings_filters );
+	_BookingsFilterState createState() =>
+		_BookingsFilterState( bookings_filters: this.bookings_filters );
 
 }
 
@@ -41,6 +42,7 @@ class _BookingsFilterState extends State<BookingsFilter> {
 	];
 
 	Iterable<Widget> get bookingStatusesFilter sync* {
+
 		for (final status in _bookingStatusesOptions) {
 			yield Padding(
 				padding: const EdgeInsets.all(4.0),
@@ -50,8 +52,11 @@ class _BookingsFilterState extends State<BookingsFilter> {
 					onSelected: (bool value) {
 						setState(() {
 							if (value) {
+
 								bookings_filters.post_status.add(status['value']);
+
 							} else {
+
 								bookings_filters.post_status.removeWhere((String value) {
 									return value == status['value'];
 								});
@@ -64,6 +69,7 @@ class _BookingsFilterState extends State<BookingsFilter> {
 	}
 
 	Iterable<Widget> get bookingDateRangeFilter sync* {
+
 		for (final range in _bookingDateRangeOptions) {
 			yield Padding(
 				padding: const EdgeInsets.all(4.0),
@@ -73,8 +79,10 @@ class _BookingsFilterState extends State<BookingsFilter> {
 					onSelected: (bool value) {
 						setState(() {
 							if (value) {
+
 								bookings_filters.date_range = range['value'];
 							} else {
+
 								bookings_filters.date_range = '';
 							}
 						});
@@ -137,7 +145,6 @@ class _BookingsFilterState extends State<BookingsFilter> {
 											children: bookingStatusesFilter.toList(),
 										),
 										SizedBox(height: 10),
-										//Text('Look for: ${bookings_filters.post_status.join(', ')}'),
 									],
 								),
 							),
@@ -154,7 +161,6 @@ class _BookingsFilterState extends State<BookingsFilter> {
 											children: bookingDateRangeFilter.toList(),
 										),
 										SizedBox(height: 10),
-										//Text('Look for: ${bookings_filters.date_range}'),
 									],
 								),
 							),
@@ -166,7 +172,7 @@ class _BookingsFilterState extends State<BookingsFilter> {
 			persistentFooterButtons: [
 				ElevatedButton(
 					style: ElevatedButton.styleFrom(
-						minimumSize: Size(double.infinity, 50), // double.infinity is the width and 50 is the height
+						minimumSize: Size(double.infinity, 50),
 						padding: EdgeInsets.all(10),
 					),
 					onPressed: close,

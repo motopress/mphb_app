@@ -67,8 +67,6 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
 	void deleteBooking( Booking booking ) async {
 
-		print('Delete booking!');
-
 		try {
 			
 			Booking deletedBooking = await _bookingController.wpDeleteBooking(booking.id);
@@ -86,6 +84,46 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 				SnackBar(content: Text(error.toString()))
 			);
 		}
+	}
+
+	_showModalBottomSheet ( BuildContext context, Booking booking ) {
+
+		showModalBottomSheet(
+			context: context,
+			builder: (context) {
+				return BookingDetailActions( booking: booking );
+			},
+
+		).then((action) {
+
+			if ( action != null ) {
+
+				switch ( action ) {
+
+					case 'delete':
+						deleteBooking( booking );
+						break;
+
+					default:
+						try {
+
+							setState(() {
+								_bookingFuture =
+									_bookingController.wpUpdateBookingStatus(
+										booking, action );
+							});
+
+						} catch (error) {
+
+							print(error);
+							ScaffoldMessenger.of(context).showSnackBar(
+								SnackBar(content: Text(error.toString()))
+							);
+						}
+						break;
+				}
+			}
+		});
 	}
 
 	@override
@@ -131,44 +169,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 									return IconButton(
 										icon: const Icon(Icons.more_vert),
 										tooltip: 'Actions',
-										onPressed: () {
-											showModalBottomSheet(
-												context: context,
-												builder: (context) {
-													return BookingDetailActions( booking: booking );
-												},
-											).then((action) {
-
-												//print('Action: $action');
-												if ( action != null ) {
-													switch ( action ) {
-
-														case 'delete':
-															deleteBooking( booking );
-															break;
-
-														default:
-
-															try {
-			
-																setState(() {
-																	_bookingFuture =
-																		_bookingController.wpUpdateBookingStatus(
-																			booking, action );
-																});
-
-															} catch (error) {
-
-																print(error);
-																ScaffoldMessenger.of(context).showSnackBar(
-																	SnackBar(content: Text(error.toString()))
-																);
-															}
-															break;
-													}
-												}
-											});
-										},
+										onPressed: () => _showModalBottomSheet( context, booking ),
 									);
 								}
 							}
@@ -179,12 +180,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 					future: _bookingFuture,
 					initialData: widget.booking,
 					builder: (context, AsyncSnapshot snapshot) {
-						/*if (snapshot.connectionState == ConnectionState.waiting) {
-							return new Center(
-								child: new CircularProgressIndicator(),
-							);
-						} else*/ if (snapshot.hasError) {
+
+						if (snapshot.hasError) {
+
 							return new Center(child: Text('Error: ${snapshot.error}') );
+
 						} else {
 
 							Booking booking = snapshot.data;
@@ -221,11 +221,17 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														crossAxisAlignment: CrossAxisAlignment.start,
 														children: [
 															Text('Reservation'),
-															for ( var reserved_accommodation in booking.reserved_accommodations )
+															for (
+																	var reserved_accommodation
+																	in booking.reserved_accommodations
+															)
+
 																BookingDetailAccommodation(
-																	reserved_accommodation: reserved_accommodation,
+																	reserved_accommodation:
+																		reserved_accommodation,
 																	booking: booking
 																),
+															//end:for
 														],
 													),
 												),

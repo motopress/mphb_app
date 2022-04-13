@@ -25,7 +25,7 @@ class PaymentDetailGateway extends StatelessWidget {
 						color: Colors.grey.withOpacity(0.1),
 						spreadRadius: 0,
 						blurRadius: 2,
-						offset: Offset(0, 4), // changes position of shadow
+						offset: Offset(0, 4),
 					),
 				],
 			),
@@ -62,9 +62,14 @@ class PaymentDetailGateway extends StatelessWidget {
 										icon: const Icon(Icons.content_copy, size: 14),
 										tooltip: 'Copy',
 										onPressed: () {
-											Clipboard.setData(ClipboardData(text: payment.transaction_id))
+											Clipboard.setData(
+												ClipboardData(text: payment.transaction_id))
 												.then((_) {
-													final snackBar = SnackBar( content: Text('${payment.transaction_id} copied') );
+													final snackBar = SnackBar(
+														content: Text(
+															'${payment.transaction_id} copied'
+														)
+													);
 
 													ScaffoldMessenger.of(context).clearSnackBars();
 													ScaffoldMessenger.of(context).showSnackBar(snackBar);

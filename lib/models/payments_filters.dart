@@ -16,24 +16,29 @@ class Payments_Filters {
 
 	//today
 	String get todayStart => getDate(now).toIso8601String();
-	String get todayEnd => getDate(now).add(Duration(hours: 23, minutes: 59, seconds: 59 )).toIso8601String();
+	String get todayEnd => getDate(now).add(
+		Duration(hours: 23, minutes: 59, seconds: 59 )).toIso8601String();
 
 	//this week
-	String get firstDayOfWeek => getDate(now.subtract(Duration(days: now.weekday - 1))).toIso8601String();
+	String get firstDayOfWeek => getDate(
+		now.subtract(Duration(days: now.weekday - 1))).toIso8601String();
 	String get lastDayOfWeek => getDate(now.
 		add(Duration(days: DateTime.daysPerWeek - now.weekday))).
 			add(Duration(hours: 23, minutes: 59, seconds: 59 )).toIso8601String();
 
 	//this month
-	String get firstDayOfMonth => DateTime(now.year, now.month, 1).toIso8601String();
-	String get lastDayOfMonth => DateTime(now.year, now.month + 1, 1, 0, 0, -1).toIso8601String();
+	String get firstDayOfMonth => DateTime(
+		now.year, now.month, 1).toIso8601String();
+	String get lastDayOfMonth => DateTime(
+		now.year, now.month + 1, 1, 0, 0, -1).toIso8601String();
 
 	Map<String, String> toMap() {
 
 		Map<String, String> map = {};
 
 		if ( post_status.length > 0 ) {
-			var wp_post_status = post_status.map( (status) => PaymentStatusEnum.toWPPaymentStatus(status) ).toList();
+			var wp_post_status = post_status.map( (status) =>
+				PaymentStatusEnum.toWPPaymentStatus(status) ).toList();
 			map['filter[post_status]'] = wp_post_status.join(',');
 		}
 
@@ -58,6 +63,7 @@ class Payments_Filters {
 	}
 
 	bool isEmpty() {
+
 		return (
 			post_status.length == 0 &&
 			date_range.isEmpty

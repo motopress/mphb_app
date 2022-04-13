@@ -15,7 +15,8 @@ class CreateBookingSearchPage extends StatefulWidget {
 	late Create_Booking booking;
 
 	@override
-	_CreateBookingSearchPageState createState() => _CreateBookingSearchPageState( booking: booking );
+	_CreateBookingSearchPageState createState() =>
+		_CreateBookingSearchPageState( booking: booking );
 
 }
 
@@ -114,7 +115,8 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 						itemCount: accommodation_availability.accommodations.length,
 						itemBuilder: (BuildContext context, int index) {
 
-							Accommodation accommodation = accommodation_availability.accommodations[index];
+							Accommodation accommodation =
+								accommodation_availability.accommodations[index];
 
 							return CheckboxListTile(
 								title: Text( accommodation.title ),
@@ -126,8 +128,6 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 									});
 
 									booking.dispatch(context);
-
-									//booking.accommodations.forEach((element) => print(element.id));
 								},
 							);
 						}
@@ -142,8 +142,10 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 
 		return SingleChildScrollView(
 			child: Column(
-				crossAxisAlignment: _state == 'waiting' ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-				mainAxisAlignment: _state == 'waiting' ? MainAxisAlignment.center : MainAxisAlignment.start,
+				crossAxisAlignment: _state == 'waiting' ?
+					CrossAxisAlignment.center : CrossAxisAlignment.start,
+				mainAxisAlignment: _state == 'waiting' ?
+					MainAxisAlignment.center : MainAxisAlignment.start,
 				children: [
 					Container(
 						padding: EdgeInsets.all(20.00),
@@ -159,13 +161,14 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 									color: Colors.grey.withOpacity(0.1),
 									spreadRadius: 0,
 									blurRadius: 2,
-									offset: Offset(0, 4), // changes position of shadow
+									offset: Offset(0, 4),
 								),
 							],
 						),
 					),
 					Container(
-						padding: getChildren().isEmpty ? EdgeInsets.all(0.00) : EdgeInsets.all(20.00),
+						padding: getChildren().isEmpty ?
+							EdgeInsets.all(0.00) : EdgeInsets.all(20.00),
 						margin: EdgeInsets.all(10.00),
 						child: Column(
 							children: getChildren(),
@@ -180,7 +183,7 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 									color: Colors.grey.withOpacity(0.1),
 									spreadRadius: 0,
 									blurRadius: 2,
-									offset: Offset(0, 4), // changes position of shadow
+									offset: Offset(0, 4),
 								),
 							],
 						),

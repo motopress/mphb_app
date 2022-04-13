@@ -15,10 +15,12 @@ class Bookings_Filters {
 
 	//today
 	String get todayStart => getDate(now).toIso8601String();
-	String get todayEnd => getDate(now).add(Duration(hours: 23, minutes: 59, seconds: 59 )).toIso8601String();
+	String get todayEnd => getDate(now).add(
+		Duration(hours: 23, minutes: 59, seconds: 59 )).toIso8601String();
 
 	//this week
-	String get firstDayOfWeek => getDate(now.subtract(Duration(days: now.weekday - 1))).toIso8601String();
+	String get firstDayOfWeek => getDate(now.subtract(
+		Duration(days: now.weekday - 1))).toIso8601String();
 	String get lastDayOfWeek => getDate(now.
 		add(Duration(days: DateTime.daysPerWeek - now.weekday))).
 			add(Duration(hours: 23, minutes: 59, seconds: 59 )).toIso8601String();
@@ -56,6 +58,7 @@ class Bookings_Filters {
 	}
 
 	bool isEmpty() {
+
 		return (
 			post_status.length == 0 &&
 			date_range.isEmpty

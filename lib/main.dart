@@ -36,12 +36,11 @@ class MyApp extends StatelessWidget {
 				),
 				elevatedButtonTheme: ElevatedButtonThemeData(
 					style: ElevatedButton.styleFrom(
-						primary: Colors.black,
+						primary: Colors.indigo.shade900,
 					)
 				),
 
 			),
-			//home: LocalStorage().hasData() ? const MyHomePage() : const MyCustomForm(),
 			initialRoute: LocalStorage().hasData() ? '/home' : '/login',
 			routes: {
 				'/home': (context) => const MyHomePage(),

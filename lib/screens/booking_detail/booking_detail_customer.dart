@@ -25,7 +25,7 @@ class BookingDetailCustomer extends StatelessWidget {
 						color: Colors.grey.withOpacity(0.1),
 						spreadRadius: 0,
 						blurRadius: 2,
-						offset: Offset(0, 4), // changes position of shadow
+						offset: Offset(0, 4),
 					),
 				],
 			),
@@ -43,7 +43,9 @@ class BookingDetailCustomer extends StatelessWidget {
 								)
 							),
 
-							if ( (customer.first_name  + customer.last_name).isEmpty ) Text('-'),
+							if ( (customer.first_name  + customer.last_name).isEmpty )
+								Text('-'),
+							//endif
 
 							Flexible(
 								child: Text(
@@ -103,19 +105,28 @@ class BookingDetailCustomer extends StatelessWidget {
 														icon: const Icon(Icons.content_copy, size: 14),
 														tooltip: 'Copy',
 														onPressed: () {
-															Clipboard.setData(ClipboardData(text: customer.email))
+															Clipboard.setData(
+																ClipboardData(text: customer.email))
 																.then((_) {
 
-																	final snackBar = SnackBar( content: Text('${customer.email} copied') );
+																	final snackBar = SnackBar(
+																		content: Text(
+																			'${customer.email} copied'
+																		)
+																	);
 																	
-																	ScaffoldMessenger.of(context).clearSnackBars();
-																	ScaffoldMessenger.of(context).showSnackBar(snackBar);
+																	ScaffoldMessenger.of(context).
+																		clearSnackBars();
+																	ScaffoldMessenger.of(context).
+																		showSnackBar(snackBar);
 																});
 														},
 													),
 												],
 											),
 										),
+									//endif
+
 									if ( !customer.phone.isEmpty )
 										Padding(
 											padding: EdgeInsets.only(top: 0.0),
@@ -133,25 +144,27 @@ class BookingDetailCustomer extends StatelessWidget {
 														icon: const Icon(Icons.content_copy, size: 14),
 														tooltip: 'Copy',
 														onPressed: () {
-															Clipboard.setData(ClipboardData(text: customer.phone))
+															Clipboard.setData(
+																ClipboardData(text: customer.phone))
 																.then((_) {
 
-																	final snackBar = SnackBar( content: Text('${customer.phone} copied') );
+																	final snackBar = SnackBar(
+																		content: Text(
+																			'${customer.phone} copied'
+																		)
+																	);
 
-																	ScaffoldMessenger.of(context).clearSnackBars();
-																	ScaffoldMessenger.of(context).showSnackBar(snackBar);
+																	ScaffoldMessenger.of(context).
+																		clearSnackBars();
+																	ScaffoldMessenger.of(context).
+																		showSnackBar(snackBar);
 																});
 														},
 													),
 												],
 											),
 										),
-								]
-							),
-							Column(
-								crossAxisAlignment: CrossAxisAlignment.start,
-								children: [
-
+									//endif
 								]
 							),
 						]

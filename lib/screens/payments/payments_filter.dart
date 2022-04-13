@@ -13,7 +13,8 @@ class PaymentsFilter extends StatefulWidget {
 	}) : super(key: key);
 
 	@override
-	_PaymentsFilterState createState() => _PaymentsFilterState( payments_filters: this.payments_filters );
+	_PaymentsFilterState createState() =>
+		_PaymentsFilterState( payments_filters: this.payments_filters );
 
 }
 
@@ -53,9 +54,11 @@ class _PaymentsFilterState extends State<PaymentsFilter> {
 							if (value) {
 								payments_filters.post_status.add(status['value']);
 							} else {
-								payments_filters.post_status.removeWhere((String value) {
-									return value == status['value'];
-								});
+								payments_filters.post_status.removeWhere(
+									(String value) {
+										return value == status['value'];
+									}
+								);
 							}
 						});
 					},
@@ -138,7 +141,6 @@ class _PaymentsFilterState extends State<PaymentsFilter> {
 											children: paymentStatusesFilter.toList(),
 										),
 										SizedBox(height: 10),
-										//Text('Look for: ${payments_filters.post_status.join(', ')}'),
 									],
 								),
 							),
@@ -155,7 +157,6 @@ class _PaymentsFilterState extends State<PaymentsFilter> {
 											children: paymentDateRangeFilter.toList(),
 										),
 										SizedBox(height: 10),
-										//Text('Look for: ${payments_filters.date_range}'),
 									],
 								),
 							),
@@ -167,7 +168,7 @@ class _PaymentsFilterState extends State<PaymentsFilter> {
 			persistentFooterButtons: [
 				ElevatedButton(
 					style: ElevatedButton.styleFrom(
-						minimumSize: Size(double.infinity, 50), // double.infinity is the width and 50 is the height
+						minimumSize: Size(double.infinity, 50),
 						padding: EdgeInsets.all(10),
 					),
 					onPressed: close,

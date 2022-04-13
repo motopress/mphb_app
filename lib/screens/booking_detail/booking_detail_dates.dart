@@ -34,7 +34,8 @@ class BookingDetailDates extends StatelessWidget {
 									),
 									color: Colors.white,
 								),
-								padding: EdgeInsets.only(left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
+								padding: EdgeInsets.only(
+									left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
 								margin: EdgeInsets.only(right: 10.0),
 								child: Row(
 									children: [
@@ -48,7 +49,11 @@ class BookingDetailDates extends StatelessWidget {
 										),
 										Text(
 											booking.check_in_date,
-											style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.indigo),
+											style: TextStyle(
+												fontSize: 18,
+												fontWeight: FontWeight.bold,
+												color: Colors.indigo
+											),
 										),
 									]
 								),
@@ -68,7 +73,8 @@ class BookingDetailDates extends StatelessWidget {
 									),
 									color: Colors.white,
 								),
-								padding: EdgeInsets.only(left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
+								padding: EdgeInsets.only(
+									left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
 								margin: EdgeInsets.only(left: 10.0),
 								child: Row(
 									children: [
@@ -82,7 +88,11 @@ class BookingDetailDates extends StatelessWidget {
 										),
 										Text(
 											booking.check_out_date,
-											style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.indigo),
+											style: TextStyle(
+												fontSize: 18,
+												fontWeight: FontWeight.bold,
+												color: Colors.indigo
+											),
 										),
 									]
 								),

@@ -151,7 +151,8 @@ class _PaymentListItemState extends State<PaymentListItem> {
 													)
 												),
 												Text(
-													DateFormat('yyyy-MM-dd').format( DateTime.parse(payment.date_created) ),
+													DateFormat('yyyy-MM-dd').format(
+														DateTime.parse(payment.date_created) ),
 													style: TextStyle(
 														fontSize: 12,
 													),
@@ -185,10 +186,12 @@ class _PaymentListItemState extends State<PaymentListItem> {
 											)
 										),
 										color:
-											(payment.status == PaymentStatusEnum.COMPLETED || payment.status == PaymentStatusEnum.ON_HOLD) ?
-												Colors.green
-											: (payment.status == PaymentStatusEnum.CANCELLED || payment.status == PaymentStatusEnum.REFUNDED) ?
-												Colors.orange
+											(payment.status == PaymentStatusEnum.COMPLETED ||
+												payment.status == PaymentStatusEnum.ON_HOLD) ?
+													Colors.green
+											: (payment.status == PaymentStatusEnum.CANCELLED ||
+												payment.status == PaymentStatusEnum.REFUNDED) ?
+													Colors.orange
 											:  Colors.blueGrey,
 									),
 									child: Text(

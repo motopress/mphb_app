@@ -68,6 +68,7 @@ class Booking {
 	factory Booking.fromJson(Map<String, dynamic> json) {
 
 		return Booking(
+
 			id: json['id'],
 			status: json['status'],
 			date_created: json['date_created'],
@@ -78,18 +79,21 @@ class Booking {
 			check_in_time: json['check_in_time'],
 			check_out_time: json['check_out_time'],
 			customer: Customer.fromJson( json['customer'] ),
-			reserved_accommodations: json['reserved_accommodations'].cast<Map<String, dynamic>>().map<Reserved_Accommodation>((json) => Reserved_Accommodation.fromJson(json)).toList(),
+			reserved_accommodations: json['reserved_accommodations'].cast<Map<String, dynamic>>().
+				map<Reserved_Accommodation>((json) => Reserved_Accommodation.fromJson(json)).toList(),
 			coupon_code: json['coupon_code'],
 			currency: json['currency'],
 			total_price: json['total_price'],
-			payments: json['payments'].cast<Map<String, dynamic>>().map<Payment>((json) => Payment.fromJson(json)).toList(),
+			payments: json['payments'].cast<Map<String, dynamic>>().
+				map<Payment>((json) => Payment.fromJson(json)).toList(),
 			imported: json['imported'],
 			ical_description: json['ical_description'],
 			ical_prodid: json['ical_prodid'],
 			ical_summary: json['ical_summary'],
 			note: json['note'],
 			internal_notes: json['internal_notes'],
-			embedded: json.containsKey( '_embedded' ) ? BookingEmbeded.fromJson( json['_embedded'] ) : null,
+			embedded: json.containsKey( '_embedded' ) ?
+				BookingEmbeded.fromJson( json['_embedded'] ) : null,
 		);
 	}
 

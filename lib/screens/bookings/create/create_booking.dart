@@ -23,7 +23,8 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 
 	void _onBackPressed() {
 
-		if ( _navigatorKey.currentState!.canPop() && _booking.state != Create_Booking.COMPLETE ) {
+		if ( _navigatorKey.currentState!.canPop() &&
+				_booking.state != Create_Booking.COMPLETE ) {
 
 			_navigatorKey.currentState!.pop();
 
@@ -61,21 +62,24 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 						switch (settings.name) {
 
 							case 'create_booking/search':
-								builder = (BuildContext context) => CreateBookingSearchPage(
-									booking: _booking
-								);
+								builder = (BuildContext context) =>
+									CreateBookingSearchPage(
+										booking: _booking
+									);
 								break;
 
 							case 'create_booking/checkout':
-								builder = (BuildContext _) => CreateBookingCheckoutPage(
-									booking: _booking
-								);
+								builder = (BuildContext _) =>
+									CreateBookingCheckoutPage(
+										booking: _booking
+									);
 								break;
 
 							case 'create_booking/complete':
-								builder = (BuildContext _) => CreateBookingCompletePage(
-									booking: _booking
-								);
+								builder = (BuildContext _) =>
+									CreateBookingCompletePage(
+										booking: _booking
+									);
 								break;
 
 							default:
