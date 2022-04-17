@@ -37,6 +37,10 @@
 
 [ссылка](https://docs.flutter.dev/deployment/ios)
 
+1. Run `flutter build ipa` to produce a build archive.
+1. Open build/ios/archive/MyApp.xcarchive in Xcode.
+1. Distribute App.
+
 ### Build and release Android
 
 [ссылка](https://docs.flutter.dev/deployment/android)

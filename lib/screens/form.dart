@@ -80,12 +80,6 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
 	}
 
-	void fillDemoData () {
-		domainController.text = 'https://uglywebsites.org/booking-api';
-		keyController.text = 'ck_dd368d402c57152e55028183e4a731e50df201a7';
-		secretController.text = 'cs_dc67e95a34a754b3755f7770a72fe49f85ccd059';
-	}
-
 	void login () {
 		// Validate returns true if the form is valid, or false otherwise.
 		if (_formKey.currentState!.validate()) {
@@ -117,6 +111,8 @@ class _MyCustomFormState extends State<MyCustomForm> {
 				LocalStorage().domain = model.domain + '/wp-json/mphb/v1';
 			}
 
+
+			//TODO: use secure storage
 			LocalStorage().consumer_key = model.consumer_key;
 			LocalStorage().consumer_secret = model.consumer_secret;
 			
@@ -183,38 +179,19 @@ class _MyCustomFormState extends State<MyCustomForm> {
 												),
 											),
 
-											SizedBox(height: 30.0),
+											SizedBox(height: 20.0),
 
 											Text(
 												_textInstructions,
 												style: const TextStyle(fontSize: 12),
 												textAlign: TextAlign.center,
 											),
-											SizedBox(height: 5.0),
+											SizedBox(height: 15.0),
 
 											Form(
 												key: _formKey,
 												child: Column(
 													children: [
-														Row(
-															mainAxisAlignment: MainAxisAlignment.spaceBetween,
-															children: [
-																TextButton(
-																	onPressed: fillDemoData,
-																	child: Text("Demo Data"),
-																),
-																TextButton(
-																	onPressed: () {
-																		domainController.text = '';
-																		keyController.text = '';
-																		secretController.text = '';
-																	},
-																	child: Text("Clear"),
-																),
-															],
-														),
-														SizedBox(height: 10),
-
 														TextFormField(
 															controller: domainController,
 															decoration: const InputDecoration(
