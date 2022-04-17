@@ -11,6 +11,9 @@ With the Hotel Booking Application you can:
 
 _Note: You will need a WordPress website and the Hotel Booking plugin from MotoPress to use this application._
 
+## Screenshots
+![Hotel Booking Mobile Application](assets/screenshots/screenshot.png?raw=true)
+
 ## Getting Started
 
 1. [Install Flutter](https://docs.flutter.dev/get-started/install).
@@ -40,8 +43,8 @@ _Note: You will need a WordPress website and the Hotel Booking plugin from MotoP
 
 ### Android Emulator
 1. Install Android SDK and build tools. Use [Android Studio](https://docs.flutter.dev/get-started/install/macos#set-up-the-android-emulator) or install SDK by [sdkmanager](https://developer.android.com/studio/command-line/sdkmanager).
-1. [Build and release an Android app](https://docs.flutter.dev/deployment/android).
-1. [Install and create emulator](https://gist.github.com/mrk-han/66ac1a724456cadf1c93f4218c6060ae).
+1. Build and release an [Android app](https://docs.flutter.dev/deployment/android).
+1. Install and create [emulator](https://gist.github.com/mrk-han/66ac1a724456cadf1c93f4218c6060ae).
 1. Install an APK on an emulator or connected device with the install command `adb install path_to_apk`.
 
 (TBD)
@@ -51,7 +54,7 @@ _Note: You will need a WordPress website and the Hotel Booking plugin from MotoP
 ### Build and Release for iOS
 
 1. Run `flutter build ipa` to produce a build archive.
-1. Open build/ios/archive/MyApp.xcarchive in Xcode.
+1. Open `[project]/build/ios/archive/MyApp.xcarchive` in Xcode.
 1. Distribute app to App Store.
 
 [more](https://docs.flutter.dev/deployment/ios)
@@ -76,6 +79,7 @@ _Note: You will need a WordPress website and the Hotel Booking plugin from MotoP
 ## Resources
 1. https://docs.flutter.dev/get-started/install
 1. https://fonts.google.com/icons
+1. https://motopress.github.io/hotel-booking-rest-api/
 
 ## Contributions
 Anyone is welcome to contribute.
@@ -84,3 +88,6 @@ Anyone is welcome to contribute.
     <br/>
     Made with 💙 by <a href="https://motopress.com/">MotoPress</a>.<br/>
 </p>
+
+---
+All trademarks, logos and brand names are the property of their respective owners.
