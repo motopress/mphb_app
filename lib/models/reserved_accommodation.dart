@@ -11,7 +11,7 @@ class Reserved_Accommodation {
 	final List accommodation_price_per_days;
 	final List fees;
 	final Map taxes;
-	final int discount;
+	final num discount;
 
 	Reserved_Accommodation({
 		required this.accommodation,
