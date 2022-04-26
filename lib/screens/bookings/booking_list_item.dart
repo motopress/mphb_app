@@ -31,11 +31,16 @@ class _BookingListItemState extends State<BookingListItem> {
 
 	late Booking booking;
 
+	void onDelete() {
+
+		widget.pagingController.itemList?.removeAt( widget.index );
+		widget.pagingController.notifyListeners();
+	}
+
 	void _showBookingDetails(BuildContext context) async {
 
-		final Booking newBooking = await Navigator.push(
-			context,
-			MaterialPageRoute(builder: (context) => BookingDetailScreen( booking: booking )),
+		final Booking newBooking = await Navigator.push(context,
+			MaterialPageRoute(builder: (context) => BookingDetailScreen( booking: booking, onDelete:onDelete )),
 		);
 
 		/*

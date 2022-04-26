@@ -3,6 +3,7 @@ import 'package:mphb_app/controller/bookings_controller.dart';
 import 'package:mphb_app/models/create_booking.dart';
 import 'package:mphb_app/models/accommodation.dart';
 import 'package:mphb_app/models/reserved_accommodation.dart';
+import 'package:mphb_app/models/booking.dart';
 import 'package:mphb_app/screens/bookings/create/single_accommodation.dart';
 
 class CreateBookingCompletePage extends StatefulWidget {
@@ -10,9 +11,12 @@ class CreateBookingCompletePage extends StatefulWidget {
 	const CreateBookingCompletePage({
 		Key? key,
 		required this.booking,
+		required this.callback,
 	}) : super(key: key);
 
 	final Create_Booking booking;
+
+	final Function(Booking) callback;
 
 	@override
 	_CreateBookingCompletePageState createState() =>
@@ -84,6 +88,8 @@ class _CreateBookingCompletePageState extends State<CreateBookingCompletePage> {
 			ScaffoldMessenger.of(context).showSnackBar(
 				SnackBar(content: Text('Booking ${bookingObj.id} created.'))
 			);
+
+			widget.callback( bookingObj );
 
 		} catch (error) {
 			print(error);
