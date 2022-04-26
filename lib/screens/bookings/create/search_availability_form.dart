@@ -67,7 +67,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 									decoration: const InputDecoration(
 										isDense: true,
 										hintText: '1970-12-31',
-										labelText: 'Check-in',
+										labelText: 'Check-out',
 										floatingLabelBehavior: FloatingLabelBehavior.always,
 										border: OutlineInputBorder(),
 									),
