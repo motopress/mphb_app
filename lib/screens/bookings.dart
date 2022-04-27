@@ -57,7 +57,14 @@ class _BookingsListViewState extends State<BookingsPage> {
 	}
 
 	void createBookingCallback( Booking booking ) {
-		_pagingController.itemList?.insert(0, booking );
+
+		_pagingController.itemList?.insert( 0, booking );
+		_pagingController.notifyListeners();
+	}
+
+	void deleteBookingCallback( int index ) {
+
+		_pagingController.itemList?.removeAt( index );
 		_pagingController.notifyListeners();
 	}
 
@@ -75,7 +82,9 @@ class _BookingsListViewState extends State<BookingsPage> {
 						onPressed: () async {
 							await Navigator.push(context, MaterialPageRoute (
 								builder: (BuildContext context) {
-									return CreateBookingPage( callback:createBookingCallback );
+									return CreateBookingPage(
+										createBookingCallback:createBookingCallback
+									);
 								},
 							)).then((value) {
 							});
@@ -153,6 +162,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 								index: index,
 								booking: item,
 								key: ObjectKey(item),
+								deleteBookingCallback: deleteBookingCallback,
 							),
 							noItemsFoundIndicatorBuilder: (context) =>
 								Center( child: Text('Nothing Found') ),

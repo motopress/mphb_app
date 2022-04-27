@@ -11,12 +11,12 @@ class CreateBookingCompletePage extends StatefulWidget {
 	const CreateBookingCompletePage({
 		Key? key,
 		required this.booking,
-		required this.callback,
+		required this.createBookingCallback,
 	}) : super(key: key);
 
 	final Create_Booking booking;
 
-	final Function(Booking) callback;
+	final Function(Booking) createBookingCallback;
 
 	@override
 	_CreateBookingCompletePageState createState() =>
@@ -74,9 +74,9 @@ class _CreateBookingCompletePageState extends State<CreateBookingCompletePage> {
 		params['customer']['email'] = booking.customer.email;
 		params['customer']['phone'] = booking.customer.phone;
 
-		print(params);
+		/*print(params);
 
-		/*await Future.delayed(const Duration(milliseconds: 5000));
+		await Future.delayed(const Duration(milliseconds: 5000));
 		setState(() {_state = 'complete';});*/
 
 		try {
@@ -89,7 +89,7 @@ class _CreateBookingCompletePageState extends State<CreateBookingCompletePage> {
 				SnackBar(content: Text('Booking ${bookingObj.id} created.'))
 			);
 
-			widget.callback( bookingObj );
+			widget.createBookingCallback( bookingObj );
 
 		} catch (error) {
 			print(error);
@@ -111,7 +111,7 @@ class _CreateBookingCompletePageState extends State<CreateBookingCompletePage> {
 			case 'complete':
 				return Icon(
 					Icons.check_circle,
-					size: 48,
+					size: 64,
 					color: Colors.green,
 				);
 				break;

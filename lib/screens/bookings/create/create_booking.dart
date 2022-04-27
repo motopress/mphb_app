@@ -9,10 +9,10 @@ class CreateBookingPage extends StatefulWidget {
 
 	const CreateBookingPage({
 		Key? key,
-		required this.callback
+		required this.createBookingCallback
 	}) : super(key: key);
 
-	final Function(Booking) callback;
+	final Function(Booking) createBookingCallback;
 
 	@override
 	_CreateBookingPageState createState() => _CreateBookingPageState();
@@ -83,7 +83,7 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 								builder = (BuildContext _) =>
 									CreateBookingCompletePage(
 										booking: _booking,
-										callback: widget.callback
+										createBookingCallback: widget.createBookingCallback
 									);
 								break;
 

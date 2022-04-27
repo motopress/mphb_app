@@ -13,10 +13,13 @@ import 'package:mphb_app/screens/booking_detail/booking_detail_note.dart';
 
 class BookingDetailScreen extends StatefulWidget {
 
-	const BookingDetailScreen({Key? key, required this.booking, required this.onDelete}) : super(key: key);
+	const BookingDetailScreen({
+		Key? key,
+		required this.booking,
+		required this.onDelete,
+	}) : super(key: key);
 
 	final Booking booking;
-
 	final VoidCallback onDelete;
 
 	@override
