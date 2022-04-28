@@ -3,12 +3,16 @@ import 'package:mphb_app/screens/bookings/create/create_booking_search.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking_checkout.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking_complete.dart';
 import 'package:mphb_app/models/create_booking.dart';
+import 'package:mphb_app/models/booking.dart';
 
 class CreateBookingPage extends StatefulWidget {
 
 	const CreateBookingPage({
-		Key? key
+		Key? key,
+		required this.createBookingCallback
 	}) : super(key: key);
+
+	final Function(Booking) createBookingCallback;
 
 	@override
 	_CreateBookingPageState createState() => _CreateBookingPageState();
@@ -78,7 +82,8 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 							case 'create_booking/complete':
 								builder = (BuildContext _) =>
 									CreateBookingCompletePage(
-										booking: _booking
+										booking: _booking,
+										createBookingCallback: widget.createBookingCallback
 									);
 								break;
 

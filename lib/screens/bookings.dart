@@ -56,6 +56,18 @@ class _BookingsListViewState extends State<BookingsPage> {
 		}
 	}
 
+	void createBookingCallback( Booking booking ) {
+
+		_pagingController.itemList?.insert( 0, booking );
+		_pagingController.notifyListeners();
+	}
+
+	void deleteBookingCallback( int index ) {
+
+		_pagingController.itemList?.removeAt( index );
+		_pagingController.notifyListeners();
+	}
+
 	@override
 	Widget build(BuildContext context) {
 
@@ -70,7 +82,9 @@ class _BookingsListViewState extends State<BookingsPage> {
 						onPressed: () async {
 							await Navigator.push(context, MaterialPageRoute (
 								builder: (BuildContext context) {
-									return CreateBookingPage();
+									return CreateBookingPage(
+										createBookingCallback:createBookingCallback
+									);
 								},
 							)).then((value) {
 							});
@@ -80,6 +94,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 						icon: const Icon(Icons.sync),
 						tooltip: 'Refresh',
 						onPressed: () {
+
 							_pagingController.refresh();
 						},
 					),
@@ -146,6 +161,8 @@ class _BookingsListViewState extends State<BookingsPage> {
 								pagingController: _pagingController,
 								index: index,
 								booking: item,
+								key: ObjectKey(item),
+								deleteBookingCallback: deleteBookingCallback,
 							),
 							noItemsFoundIndicatorBuilder: (context) =>
 								Center( child: Text('Nothing Found') ),

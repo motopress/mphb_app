@@ -14,9 +14,14 @@ import 'package:mphb_app/screens/booking_detail/booking_detail_internal_notes.da
 
 class BookingDetailScreen extends StatefulWidget {
 
-	const BookingDetailScreen({Key? key, required this.booking}) : super(key: key);
+	const BookingDetailScreen({
+		Key? key,
+		required this.booking,
+		required this.onDelete,
+	}) : super(key: key);
 
 	final Booking booking;
+	final VoidCallback onDelete;
 
 	@override
 	_BookingDetailScreenState createState() => _BookingDetailScreenState( bookingID: this.booking.id );
@@ -77,6 +82,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 			);
 
 			Navigator.maybePop(context);
+			widget.onDelete();
 
 		} catch (error) {
 
