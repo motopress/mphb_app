@@ -7,6 +7,7 @@ import 'package:mphb_app/models/payment.dart';
 import 'package:mphb_app/models/accommodation.dart';
 import 'package:mphb_app/models/accommodation_type.dart';
 import 'package:mphb_app/models/booking_embeded.dart';
+import 'package:mphb_app/models/booking_internal_note.dart';
 
 class Booking {
 
@@ -91,7 +92,8 @@ class Booking {
 			ical_prodid: json['ical_prodid'],
 			ical_summary: json['ical_summary'],
 			note: json['note'],
-			internal_notes: json['internal_notes'],
+			internal_notes: json['internal_notes'].cast<Map<String, dynamic>>().
+				map<BookingInternalNote>((json) => BookingInternalNote.fromJson(json)).toList(),
 			embedded: json.containsKey( '_embedded' ) ?
 				BookingEmbeded.fromJson( json['_embedded'] ) : null,
 		);

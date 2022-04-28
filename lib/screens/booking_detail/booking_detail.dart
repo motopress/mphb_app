@@ -10,6 +10,7 @@ import 'package:mphb_app/screens/booking_detail/booking_detail_price.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_payment.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_ical.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_note.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail_internal_notes.dart';
 
 class BookingDetailScreen extends StatefulWidget {
 
@@ -260,8 +261,20 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														child: Column(
 															crossAxisAlignment: CrossAxisAlignment.start,
 															children: [
-																Text('Note'),
+																Text('Customer Note'),
 																BookingDetailNote( booking: booking ),
+															],
+														),
+													),
+												//internal notes
+												if ( ! booking.internal_notes.isEmpty )
+													Container(
+														margin: const EdgeInsets.only(top: 0, bottom: 20.0),
+														child: Column(
+															crossAxisAlignment: CrossAxisAlignment.start,
+															children: [
+																Text('Internal Notes'),
+																BookingDetailInternalNotes( booking: booking ),
 															],
 														),
 													),

@@ -67,6 +67,7 @@ class _SingleAccommodationState extends State<SingleAccommodation> {
 				rate: 0,
 				adults: 1,
 				children: 0,
+				guest_name: '',
 				services: [],
 				accommodation_price_per_days: [],
 				fees: [],

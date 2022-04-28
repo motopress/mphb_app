@@ -77,6 +77,28 @@ class BookingDetailAccommodation extends StatelessWidget {
 												style: TextStyle(fontSize: 12),
 											),
 										],
+										if ( ! reserved_accommodation.guest_name.isEmpty )
+											Container(
+												padding: EdgeInsets.only(top: 10.0),
+												child: Row(
+													children: [
+														Padding(
+															padding: EdgeInsets.only(right: 5.0),
+															child:Icon(
+																Icons.person,
+																size: 12,
+																color: Colors.indigo.shade100
+															),
+														),
+														Flexible(
+															child: Text(
+																reserved_accommodation.guest_name,
+																style: TextStyle(fontSize: 12),
+															),
+														),
+													]
+												),
+											),
 									]
 								)
 							),
