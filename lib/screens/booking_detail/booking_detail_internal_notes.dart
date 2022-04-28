@@ -44,7 +44,7 @@ class BookingDetailInternalNotes extends StatelessWidget {
 								DateFormat.yMMMd().format(
 									DateTime.parse(item.date_utc)
 								),
-								style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+								style: TextStyle(fontSize: 12),
 							),
 							SizedBox(height: 10.0),
 							Text(item.note),

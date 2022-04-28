@@ -28,69 +28,87 @@ class BookingDetailPrice extends StatelessWidget {
 					),
 				],
 			),
-			child: Row(
-				mainAxisAlignment: MainAxisAlignment.center,
+			child: Column(
 				children: [
-					Expanded(
-						child: Column(
-							children: [
-								Text(
-									booking.total_price.toStringAsFixed(2),
-									style: TextStyle(
-										fontWeight: FontWeight.bold,
-										color: Colors.indigo
-									),
-								),
-								Padding (
-									padding: EdgeInsets.only(top: 5.0),
-									child: Text(
-										'Total',
-										style: TextStyle(fontSize: 12),
-									),
-								),
-							]
-						)
+					Row(
+						mainAxisAlignment: MainAxisAlignment.center,
+						children: [
+							Expanded(
+								child: Column(
+									children: [
+										Text(
+											booking.total_price.toStringAsFixed(2),
+											style: TextStyle(
+												fontSize: 16,
+												fontWeight: FontWeight.bold,
+												color: Colors.indigo
+											),
+										),
+										Padding (
+											padding: EdgeInsets.only(top: 5.0),
+											child: Text(
+												'Total',
+												style: TextStyle(fontSize: 12),
+											),
+										),
+									]
+								)
+							),
+							Expanded(
+								child: Column(
+									children: [
+										Text(
+											booking.getPaid().toStringAsFixed(2),
+											style: TextStyle(
+												fontSize: 16,
+												fontWeight: FontWeight.bold,
+												color: booking.total_price == booking.getPaid() ?
+													Colors.green : Colors.indigo
+											),
+										),
+										Padding (
+											padding: EdgeInsets.only(top: 5.0),
+											child: Text(
+												'Paid',
+												style: TextStyle(fontSize: 12),
+											),
+										),
+									]
+								)
+							),
+							Expanded(
+								child: Column(
+									children: [
+										Text(
+											booking.getToPay().toStringAsFixed(2),
+											style: TextStyle(
+												fontSize: 16,
+												fontWeight: FontWeight.bold,
+												color: booking.getToPay() > 0 ?
+													Colors.red : Colors.grey
+											),
+										),
+										Padding (
+											padding: EdgeInsets.only(top: 5.0),
+											child: Text(
+												'To Pay',
+												style: TextStyle(fontSize: 12),
+											),
+										),
+									]
+								)
+							),
+						],
 					),
-					Expanded(
-						child: Column(
-							children: [
-								Text(
-									booking.getPaid().toStringAsFixed(2),
-									style: TextStyle(
-										fontWeight: FontWeight.bold,
-										color: Colors.indigo
-									),
-								),
-								Padding (
-									padding: EdgeInsets.only(top: 5.0),
-									child: Text(
-										'Paid',
-										style: TextStyle(fontSize: 12),
-									),
-								),
-							]
-						)
-					),
-					Expanded(
-						child: Column(
-							children: [
-								Text(
-									booking.getToPay().toStringAsFixed(2),
-									style: TextStyle(
-										fontWeight: FontWeight.bold,
-										color: Colors.indigo
-									),
-								),
-								Padding (
-									padding: EdgeInsets.only(top: 5.0),
-									child: Text(
-										'To Pay',
-										style: TextStyle(fontSize: 12),
-									),
-								),
-							]
-						)
-					),
+					if ( ! booking.coupon_code.isEmpty )
+						Padding(
+							padding: EdgeInsets.only(top: 20.0),
+							child: Text(
+								'Coupon code used: ${booking.coupon_code}',
+								style: TextStyle(fontSize: 12),
+							),
+						),
+					//endif
 				],
 			),
 		);
