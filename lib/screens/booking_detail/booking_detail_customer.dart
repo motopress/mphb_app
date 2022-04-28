@@ -96,7 +96,8 @@ class BookingDetailCustomer extends StatelessWidget {
 										),
 									),
 									IconButton(
-										icon: const Icon(Icons.content_copy, size: 14.0),
+										icon: const Icon(Icons.content_copy),
+										iconSize: 14,
 										onPressed: () {
 											Clipboard.setData(
 												ClipboardData(text: customer.email))
@@ -157,7 +158,8 @@ class BookingDetailCustomer extends StatelessWidget {
 										),
 									),
 									IconButton(
-										icon: const Icon(Icons.content_copy, size: 14),
+										icon: const Icon(Icons.content_copy),
+										iconSize: 14,
 										tooltip: 'Copy',
 										onPressed: () {
 											Clipboard.setData(
