@@ -6,6 +6,7 @@ import 'package:mphb_app/models/booking.dart';
 import 'package:mphb_app/models/bookings_filters.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking.dart';
+import 'package:mphb_app/screens/bookings/character_search_input_sliver.dart';
 
 class BookingsPage extends StatefulWidget {
   @override
@@ -28,7 +29,6 @@ class _BookingsListViewState extends State<BookingsPage> {
 		super.initState();
 
 		_bookingsController = new BookingsController();
-
 		_bookings_filters = new Bookings_Filters();
 
 		_pagingController.addPageRequestListener((pageKey) {
@@ -66,6 +66,11 @@ class _BookingsListViewState extends State<BookingsPage> {
 
 		_pagingController.itemList?.removeAt( index );
 		_pagingController.notifyListeners();
+	}
+
+	void _updateSearchTerm( String searchTerm ) {
+		_bookings_filters.searchTerm = searchTerm;
+		_pagingController.refresh();
 	}
 
 	@override
@@ -151,7 +156,37 @@ class _BookingsListViewState extends State<BookingsPage> {
 					onRefresh: () => Future.sync(
 						() => _pagingController.refresh(),
 					),
-					child: PagedListView<int, Booking>(
+					child: CustomScrollView(
+						slivers: <Widget>[
+							CharacterSearchInputSliver(
+								onChanged: _updateSearchTerm,
+							),
+							PagedSliverList<int, Booking>(
+								//padding: EdgeInsets.all(20.0),
+								pagingController: _pagingController,
+								//physics: const AlwaysScrollableScrollPhysics(),
+								builderDelegate: PagedChildBuilderDelegate<Booking>(
+									itemBuilder: (context, item, index) => BookingListItem(
+										pagingController: _pagingController,
+										index: index,
+										booking: item,
+										key: ObjectKey(item),
+										deleteBookingCallback: deleteBookingCallback,
+									),
+									noItemsFoundIndicatorBuilder: (context) =>
+										Center( child: Text('Nothing Found') ),
+
+									firstPageErrorIndicatorBuilder: (context) =>
+										Center( child: Text(_pagingController.error.toString()) ),
+
+									newPageErrorIndicatorBuilder: (context) =>
+										Center( child: Text(_pagingController.error.toString()) ),
+								),
+							),
+						],
+					),
+
+					/*PagedListView<int, Booking>(
 						padding: EdgeInsets.all(20.0),
 						pagingController: _pagingController,
 						scrollController: ScrollController(),
@@ -173,7 +208,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 							newPageErrorIndicatorBuilder: (context) =>
 								Center( child: Text(_pagingController.error.toString()) ),
 						),
-					),
+					),*/
 				),
 			),
 		);
