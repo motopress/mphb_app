@@ -162,9 +162,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 								onChanged: _updateSearchTerm,
 							),
 							PagedSliverList<int, Booking>(
-								//padding: EdgeInsets.all(20.0),
 								pagingController: _pagingController,
-								//physics: const AlwaysScrollableScrollPhysics(),
 								builderDelegate: PagedChildBuilderDelegate<Booking>(
 									itemBuilder: (context, item, index) => BookingListItem(
 										pagingController: _pagingController,
@@ -185,30 +183,6 @@ class _BookingsListViewState extends State<BookingsPage> {
 							),
 						],
 					),
-
-					/*PagedListView<int, Booking>(
-						padding: EdgeInsets.all(20.0),
-						pagingController: _pagingController,
-						scrollController: ScrollController(),
-						physics: const AlwaysScrollableScrollPhysics(),
-						builderDelegate: PagedChildBuilderDelegate<Booking>(
-							itemBuilder: (context, item, index) => BookingListItem(
-								pagingController: _pagingController,
-								index: index,
-								booking: item,
-								key: ObjectKey(item),
-								deleteBookingCallback: deleteBookingCallback,
-							),
-							noItemsFoundIndicatorBuilder: (context) =>
-								Center( child: Text('Nothing Found') ),
-
-							firstPageErrorIndicatorBuilder: (context) =>
-								Center( child: Text(_pagingController.error.toString()) ),
-
-							newPageErrorIndicatorBuilder: (context) =>
-								Center( child: Text(_pagingController.error.toString()) ),
-						),
-					),*/
 				),
 			),
 		);
