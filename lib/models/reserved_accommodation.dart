@@ -7,11 +7,12 @@ class Reserved_Accommodation {
 	final int rate;
 	int adults;
 	int children;
+	String guest_name;
 	final List<Reserved_Service> services;
 	final List accommodation_price_per_days;
 	final List fees;
 	final Map taxes;
-	final int discount;
+	final num discount;
 
 	Reserved_Accommodation({
 		required this.accommodation,
@@ -19,6 +20,7 @@ class Reserved_Accommodation {
 		required this.rate,
 		required this.adults,
 		required this.children,
+		required this.guest_name,
 		required this.services,
 		required this.accommodation_price_per_days,
 		required this.fees,
@@ -36,6 +38,7 @@ class Reserved_Accommodation {
 			rate: json['rate'],
 			adults: json['adults'],
 			children: json['children'],
+			guest_name: json.containsKey( 'guest_name' ) ? json['guest_name'] : '',
 			services: json['services'].cast<Map<String, dynamic>>().
 				map<Reserved_Service>((json) => Reserved_Service.fromJson(json)).toList(),
 			accommodation_price_per_days: json['accommodation_price_per_days'],

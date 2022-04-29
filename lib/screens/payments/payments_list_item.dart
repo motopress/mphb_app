@@ -85,7 +85,7 @@ class _PaymentListItemState extends State<PaymentListItem> {
 													//textBaseline: TextBaseline.ideographic,
 													children: [
 														Padding(
-															padding: EdgeInsets.only(right: 3.0),
+															padding: EdgeInsets.only(right: 8.0),
 															child: Icon(
 																Icons.money,
 																size: 12,
@@ -97,7 +97,7 @@ class _PaymentListItemState extends State<PaymentListItem> {
 															style: TextStyle(fontWeight: FontWeight.bold),
 														),
 														Padding(
-															padding: EdgeInsets.only(left: 5.0),
+															padding: EdgeInsets.only(left: 8.0),
 															child: Text(
 																payment.currency,
 																style: TextStyle(

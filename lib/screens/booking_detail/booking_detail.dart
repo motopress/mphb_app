@@ -10,12 +10,18 @@ import 'package:mphb_app/screens/booking_detail/booking_detail_price.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_payment.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_ical.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_note.dart';
+import 'package:mphb_app/screens/booking_detail/booking_detail_internal_notes.dart';
 
 class BookingDetailScreen extends StatefulWidget {
 
-	const BookingDetailScreen({Key? key, required this.booking}) : super(key: key);
+	const BookingDetailScreen({
+		Key? key,
+		required this.booking,
+		required this.onDelete,
+	}) : super(key: key);
 
 	final Booking booking;
+	final VoidCallback onDelete;
 
 	@override
 	_BookingDetailScreenState createState() => _BookingDetailScreenState( bookingID: this.booking.id );
@@ -76,6 +82,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 			);
 
 			Navigator.maybePop(context);
+			widget.onDelete();
 
 		} catch (error) {
 
@@ -260,8 +267,20 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														child: Column(
 															crossAxisAlignment: CrossAxisAlignment.start,
 															children: [
-																Text('Note'),
+																Text('Customer Note'),
 																BookingDetailNote( booking: booking ),
+															],
+														),
+													),
+												//internal notes
+												if ( ! booking.internal_notes.isEmpty )
+													Container(
+														margin: const EdgeInsets.only(top: 0, bottom: 20.0),
+														child: Column(
+															crossAxisAlignment: CrossAxisAlignment.start,
+															children: [
+																Text('Internal Notes'),
+																BookingDetailInternalNotes( booking: booking ),
 															],
 														),
 													),

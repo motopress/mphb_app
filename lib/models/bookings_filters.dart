@@ -4,9 +4,10 @@ import 'package:mphb_app/models/enum/date_range.dart';
 class Bookings_Filters {
 
     final List<String> post_status = <String>[];
+
     String date_range = '';
 
-	Bookings_Filters();
+	String searchTerm = '';
 
 	//now
 	final now = DateTime.now();
@@ -52,6 +53,10 @@ class Bookings_Filters {
 					map['before'] = lastDayOfMonth;
 					break;
 			}
+		}
+
+		if ( ! searchTerm.isEmpty ) {
+			map['search'] = searchTerm;
 		}
 
 		return map;

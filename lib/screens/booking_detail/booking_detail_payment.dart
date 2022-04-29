@@ -31,7 +31,10 @@ class BookingDetailPayment extends StatelessWidget {
 			child: Row(
 				children: [
 					Expanded(
-						child: Text(payment.amount.toString() + ' ' + payment.currency,),
+						child: Text(
+							payment.amount.toString() + ' ' + payment.currency,
+							style: TextStyle(fontWeight: FontWeight.bold),
+						),
 					),
 					Expanded(
 						child: Text(payment.status,),

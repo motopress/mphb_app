@@ -7,16 +7,23 @@ import 'package:mphb_app/models/enum/booking_status.dart';
 
 class BookingListItem extends StatefulWidget {
 
-	final Booking booking;
-	final PagingController pagingController;
-	final int index;
-
 	const BookingListItem({
 		required this.pagingController,
 		required this.index,
 		required this.booking,
-		Key? key
+		required this.deleteBookingCallback,
+		Key? key,
 	}) : super(key: key);
+
+	final Booking booking;
+	final PagingController pagingController;
+	final int index;
+	final Function(int) deleteBookingCallback;
+
+	void onDelete() {
+
+		deleteBookingCallback( index );
+	}
 
 	@override
 	_BookingListItemState createState() => _BookingListItemState( booking: this.booking );
@@ -33,9 +40,10 @@ class _BookingListItemState extends State<BookingListItem> {
 
 	void _showBookingDetails(BuildContext context) async {
 
-		final Booking newBooking = await Navigator.push(
-			context,
-			MaterialPageRoute(builder: (context) => BookingDetailScreen( booking: booking )),
+		final Booking newBooking = await Navigator.push(context,
+			MaterialPageRoute(builder: (context) => BookingDetailScreen(
+				booking: booking, onDelete: widget.onDelete
+			)),
 		);
 
 		/*

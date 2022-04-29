@@ -59,7 +59,8 @@ class PaymentDetailGateway extends StatelessWidget {
 										payment.transaction_id,
 									),
 									IconButton(
-										icon: const Icon(Icons.content_copy, size: 14),
+										icon: const Icon(Icons.content_copy),
+										iconSize: 14,
 										tooltip: 'Copy',
 										onPressed: () {
 											Clipboard.setData(
