@@ -58,13 +58,14 @@ class _CharacterSearchInputSliverState
                     _controller.clear();
                     onChanged('');
                   }
+                  FocusScope.of(context).unfocus();
                 },
                 icon: Icon(Icons.clear),
                 iconSize: 14
               ),
               border: OutlineInputBorder(
                 borderRadius: const BorderRadius.all(
-                  const Radius.circular(12.0), 
+                  const Radius.circular(25.0), 
                 ),
                 borderSide: BorderSide(
                   width: 0, 
@@ -73,7 +74,7 @@ class _CharacterSearchInputSliverState
               ),
               hintText: 'search...',
               hintStyle: TextStyle(fontSize: 14, ),
-              fillColor: const Color(0xFFE6E7E9),
+              fillColor: const Color(0xFFE8E9EA),
               filled: true,
               isDense: true,
               contentPadding: EdgeInsets.all(0),

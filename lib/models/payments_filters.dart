@@ -5,9 +5,10 @@ import 'package:mphb_app/models/enum/payment_status.dart';
 class Payments_Filters {
 
     final List<String> post_status = <String>[];
+
     String date_range = '';
 
-	Payments_Filters();
+	String searchTerm = '';
 
 	//now
 	final now = DateTime.now();
@@ -57,6 +58,10 @@ class Payments_Filters {
 					map['before'] = lastDayOfMonth;
 					break;
 			}
+		}
+
+		if ( ! searchTerm.isEmpty ) {
+			map['search'] = searchTerm;
 		}
 
 		return map;

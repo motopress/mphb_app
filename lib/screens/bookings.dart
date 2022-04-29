@@ -157,28 +157,32 @@ class _BookingsListViewState extends State<BookingsPage> {
 						() => _pagingController.refresh(),
 					),
 					child: CustomScrollView(
+						controller: ScrollController(),
 						slivers: <Widget>[
 							CharacterSearchInputSliver(
 								onChanged: _updateSearchTerm,
 							),
-							PagedSliverList<int, Booking>(
-								pagingController: _pagingController,
-								builderDelegate: PagedChildBuilderDelegate<Booking>(
-									itemBuilder: (context, item, index) => BookingListItem(
-										pagingController: _pagingController,
-										index: index,
-										booking: item,
-										key: ObjectKey(item),
-										deleteBookingCallback: deleteBookingCallback,
+							SliverPadding(
+								padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+								sliver: PagedSliverList<int, Booking>(
+									pagingController: _pagingController,
+									builderDelegate: PagedChildBuilderDelegate<Booking>(
+										itemBuilder: (context, item, index) => BookingListItem(
+											pagingController: _pagingController,
+											index: index,
+											booking: item,
+											key: ObjectKey(item),
+											deleteBookingCallback: deleteBookingCallback,
+										),
+										noItemsFoundIndicatorBuilder: (context) =>
+											Center( child: Text('Nothing Found') ),
+
+										firstPageErrorIndicatorBuilder: (context) =>
+											Center( child: Text(_pagingController.error.toString()) ),
+
+										newPageErrorIndicatorBuilder: (context) =>
+											Center( child: Text(_pagingController.error.toString()) ),
 									),
-									noItemsFoundIndicatorBuilder: (context) =>
-										Center( child: Text('Nothing Found') ),
-
-									firstPageErrorIndicatorBuilder: (context) =>
-										Center( child: Text(_pagingController.error.toString()) ),
-
-									newPageErrorIndicatorBuilder: (context) =>
-										Center( child: Text(_pagingController.error.toString()) ),
 								),
 							),
 						],

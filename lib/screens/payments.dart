@@ -5,6 +5,7 @@ import 'package:mphb_app/controller/payments_controller.dart';
 import 'package:mphb_app/models/payment.dart';
 import 'package:mphb_app/models/payments_filters.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:mphb_app/screens/bookings/character_search_input_sliver.dart';
 
 class PaymentsPage extends StatefulWidget {
   @override
@@ -54,6 +55,11 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 			_pagingController.error = error;
 			print(error);
 		}
+	}
+
+	void _updateSearchTerm( String searchTerm ) {
+		_payments_filters.searchTerm = searchTerm;
+		_pagingController.refresh();
 	}
 
 	@override
@@ -124,27 +130,35 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 					onRefresh: () => Future.sync(
 						() => _pagingController.refresh(),
 					),
-					child: PagedListView<int, Payment>(
-						padding: EdgeInsets.all(20.0),
-						pagingController: _pagingController,
-						scrollController: ScrollController(),
-						physics: const AlwaysScrollableScrollPhysics(),
-						builderDelegate: PagedChildBuilderDelegate<Payment>(
-							itemBuilder: (context, item, index) => PaymentListItem(
-								pagingController: _pagingController,
-								index: index,
-								payment: item,
+					child: CustomScrollView(
+						controller: ScrollController(),
+						slivers: <Widget>[
+							CharacterSearchInputSliver(
+								onChanged: _updateSearchTerm,
 							),
+							SliverPadding(
+								padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+								sliver: PagedSliverList<int, Payment>(
+									pagingController: _pagingController,
+									builderDelegate: PagedChildBuilderDelegate<Payment>(
+										itemBuilder: (context, item, index) => PaymentListItem(
+											pagingController: _pagingController,
+											index: index,
+											payment: item,
+											key: ObjectKey(item),
+										),
+										noItemsFoundIndicatorBuilder: (context) =>
+											Center( child: Text('Nothing Found') ),
 
-							noItemsFoundIndicatorBuilder: (context) =>
-								Center( child: Text('Nothing Found') ),
+										firstPageErrorIndicatorBuilder: (context) =>
+											Center( child: Text(_pagingController.error.toString()) ),
 
-							firstPageErrorIndicatorBuilder: (context) =>
-								Center( child: Text(_pagingController.error.toString()) ),
-							
-							newPageErrorIndicatorBuilder: (context) =>
-								Center( child: Text(_pagingController.error.toString()) ),
-						),
+										newPageErrorIndicatorBuilder: (context) =>
+											Center( child: Text(_pagingController.error.toString()) ),
+									),
+								),
+							),
+						],
 					),
 				),
 			),
