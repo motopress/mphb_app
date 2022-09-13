@@ -16,13 +16,13 @@ class BookingListItem extends StatefulWidget {
 	}) : super(key: key);
 
 	final Booking booking;
-	final PagingController pagingController;
+	final PagingController? pagingController;
 	final int index;
-	final Function(int) deleteBookingCallback;
+	final Function(int)? deleteBookingCallback;
 
 	void onDelete() {
 
-		deleteBookingCallback( index );
+		deleteBookingCallback?.call( index );
 	}
 
 	@override
@@ -51,7 +51,7 @@ class _BookingListItemState extends State<BookingListItem> {
 		 */
 		if ( widget.booking.status != newBooking.status ) {
 			widget.booking.status = newBooking.status;
-			widget.pagingController.notifyListeners();
+			widget.pagingController?.notifyListeners();
 		}
 	}
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mphb_app/screens/calendar.dart';
 import 'package:mphb_app/screens/bookings.dart';
 import 'package:mphb_app/screens/payments.dart';
 import 'package:mphb_app/screens/settings.dart';
@@ -18,6 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
 	int _selectedIndex = 0;
 
 	static final List<Widget> _widgetOptions = [
+		CalendarPage(),
 		BookingsPage(),
 		PaymentsPage(),
 		SettingsPage(),
@@ -39,6 +41,10 @@ class _MyHomePageState extends State<MyHomePage> {
 				selectedFontSize: 12,
 				unselectedFontSize: 12,
 				items: const <BottomNavigationBarItem>[
+					BottomNavigationBarItem(
+						icon: Icon(Icons.event),
+						label: 'Calendar',
+					),
 					BottomNavigationBarItem(
 						icon: Icon(Icons.event),
 						label: 'Bookings',

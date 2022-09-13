@@ -115,4 +115,39 @@ class BookingsController extends BasicController{
 
 	}
 
+	/*
+	 * https://domain.com/wp-json/mphb/v1/bookings
+	 */
+	Future<List<Booking>> wpGetUpcomingBookings( int offset, int limit, Map filters ) async {
+
+		final headers = super.getHeaders();
+
+		final queryParameters = <String, String> {
+			'per_page': limit.toString(),
+			'offset': offset.toString()
+		};
+
+		final uri = super.getUriHttps( _queryEndpoint, {
+			   ...queryParameters,
+			   ...filters,
+			}
+		);
+
+		print( Uri.decodeFull(uri.toString()) );
+		final response = await http.get(
+			uri,
+			headers: headers
+		);
+
+		if ( response.statusCode == HttpStatus.OK ) {
+
+			return compute( BookingsController_parseBookings, response.body );
+
+		} else {
+
+			throw Exception('Request failed with status: ${response.statusCode}.');
+		}
+
+	}
+
 }
