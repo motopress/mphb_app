@@ -4,9 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:mphb_app/controller/bookings_controller.dart';
 import 'package:mphb_app/models/booking.dart';
-import 'package:mphb_app/screens/bookings/booking_list_item.dart';
-import 'package:mphb_app/screens/bookings/bookings_filter.dart';
-import 'package:mphb_app/models/bookings_filters.dart';
+import 'package:mphb_app/screens/calendar/booking_list_item.dart';
+import 'package:mphb_app/screens/calendar/calendar_filter.dart';
+import 'package:mphb_app/models/calendar_filters.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -35,7 +35,9 @@ class _TableEventsState extends State<CalendarPage> {
 	LinkedHashMap? kEvents;
 
 	late final BookingsController _bookingsController;
-	late Bookings_Filters _bookings_filters;
+	late Calendar_Filters _calendar_filters;
+
+	Map<DateTimeRange, List<Booking>> _dataProvider = {};
 
 	@override
 	void initState() {
@@ -51,48 +53,78 @@ class _TableEventsState extends State<CalendarPage> {
 		_selectedEvents = ValueNotifier( [] );
 
 		_bookingsController = new BookingsController();
-		_bookings_filters = new Bookings_Filters();
+		_calendar_filters = new Calendar_Filters();
 
 		_getData();
 	}
 
-	void _getData() async {
+	void _getData( {bool forceUpdate = false} ) async {
 
 		setState(() {
 			_loading = true;
 		});
 
-		//print('focusedDay: ' + _focusedDay.toString());
-
 		DateTimeRange visibleRange = _getVisibleRange( _calendarFormat, _focusedDay );
 
 		String start = new DateFormat("yyyy-MM-dd").format( visibleRange.start );
-		String end = new DateFormat("yyyy-MM-dd").format( visibleRange.end );
+		String end   = new DateFormat("yyyy-MM-dd").format( visibleRange.end );
 
 		//print(start);
 		//print(end);
 
+		List<Booking> bookings = [];
+
+		if ( _dataProvider.containsKey( visibleRange ) && ! forceUpdate ) {
+
+			bookings = _dataProvider[ visibleRange ] ?? [];
+
+		} else {
+
+			Map<String, dynamic>filters = _calendar_filters.toMap();
+
+			filters['filter[meta_key]'] = 'mphb_check_in_date';
+			filters['filter[orderby]'] = 'meta_value';
+			filters['filter[meta_type]'] = 'DATE';
+
+			filters['filter[meta_query][1][key]'] = 'mphb_check_in_date';
+			filters['filter[meta_query][1][compare]'] = 'BETWEEN';
+			filters['filter[meta_query][1][type]'] = 'DATE';
+			filters['filter[meta_query][1][value]'] = '$start,$end'; //'2022-07-01,2022-12-31'
+
+			/*
+			* TODO: limit, https://developer.wordpress.org/rest-api/using-the-rest-api/pagination/
+			*/
+			int offset = 0;
+			int limit = 100;
+
+			List<Booking> _bookings = [];
+
+			try {
+
+				await Future.doWhile( () async {
+					
+					_bookings = await _bookingsController.wpGetAllBookings( offset, limit, filters);
+
+					bookings.addAll( _bookings );
+					offset += _bookings.length;
+
+					return _bookings.length == limit;
+				});
+
+				_dataProvider[ visibleRange ] = bookings;
+
+			} catch (error) {
+
+				print(error);
+				ScaffoldMessenger.of(context).clearSnackBars();
+				ScaffoldMessenger.of(context).showSnackBar(
+					SnackBar(content: Text(error.toString()))
+				);
+			}
+		}
+
 		Map<DateTime, List<Booking>> kEventSource = {};
 		kEvents?.clear();
-
-		Map<String, dynamic>filters = {};
-
-		filters['filter[meta_key]'] = 'mphb_check_in_date';
-		filters['filter[orderby]'] = 'meta_value';
-		filters['filter[meta_type]'] = 'DATE';
-
-		filters['filter[meta_query][key]'] = '_mphb_sync_id';
-		filters['filter[meta_query][compare]'] = 'NOT EXISTS';
-
-		filters['filter[meta_query][key]'] = 'mphb_check_in_date';
-		filters['filter[meta_query][compare]'] = 'BETWEEN';
-		filters['filter[meta_query][type]'] = 'DATE';
-		filters['filter[meta_query][value]'] = '$start,$end'; //'2022-07-01,2022-12-31'
-
-		/*
-		* TODO: limit, https://developer.wordpress.org/rest-api/using-the-rest-api/pagination/
-		*/
-		final bookings = await _bookingsController.wpGetUpcomingBookings(0, 100, filters);
 
 		bookings.forEach((element) {
 
@@ -116,11 +148,6 @@ class _TableEventsState extends State<CalendarPage> {
 		setState(() {
 			_loading = false;
 		});
-
-		/*setState(() {
-			_selectedEvents.value = _getEventsForDay( _selectedDay! );
-		});*/
-
 	}
 
 	List<Booking> _getEventsForDay(DateTime day) {
@@ -173,6 +200,32 @@ class _TableEventsState extends State<CalendarPage> {
 	}
 
 	void createBookingCallback( Booking booking ) {
+		//TODO
+	}
+
+	void deleteBookingCallback( int index ) {
+
+		Booking booking;
+
+		//update list & calendar
+		booking = _selectedEvents.value.removeAt( index );
+		_selectedEvents.notifyListeners();
+
+		//update dataProvider
+		DateTimeRange visibleRange = _getVisibleRange( _calendarFormat, _focusedDay );
+
+		if ( (booking is Booking) && _dataProvider.containsKey( visibleRange ) ) {
+
+			List<Booking> bookings = _dataProvider[ visibleRange ] ?? [];
+			bookings.removeWhere((item) => item.id == booking.id);
+		}
+
+		setState(() {});
+	}
+
+	void updateBookingCallback( int index ) {
+
+		_selectedEvents.notifyListeners();
 	}
 
 	@override
@@ -220,7 +273,7 @@ class _TableEventsState extends State<CalendarPage> {
 								_selectedDay = null;
 								_selectedEvents.value = [];
 							});
-							_getData();
+							_getData( forceUpdate: true );
 						},
 					),
 					Stack(
@@ -232,21 +285,25 @@ class _TableEventsState extends State<CalendarPage> {
 								onPressed: () async {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
-											return BookingsFilter(
-												bookings_filters: _bookings_filters );
+											return CalendarFilter(
+												calendar_filters: _calendar_filters );
 										},
-									)).then((bookings_filters) {
+									)).then((calendar_filters) {
 
-										if ( bookings_filters != null ) {
+										if ( calendar_filters != null ) {
 											setState(() {
-												_bookings_filters = bookings_filters;
+												_calendar_filters = calendar_filters;
+												_selectedDay = null;
+												_selectedEvents.value = [];
 											});
-											//_pagingController.refresh();
+											
+											_dataProvider.clear();
+											_getData();
 										}
 									});
 								},
 							),
-							if ( ! _bookings_filters.isEmpty() )
+							if ( ! _calendar_filters.isEmpty() )
 								IgnorePointer(
 									child: Center(
 										child: Container(
@@ -298,13 +355,10 @@ class _TableEventsState extends State<CalendarPage> {
 									return Positioned(
 										right: 8,
 										top: 8,
-										child: _buildEventsMarker(date, events),
+										child: _buildEventsMarker(date, _focusedDay, events),
 									);
 								}
 							},
-							headerTitleBuilder: (context, date) {
-
-							}
 						),
 					),
 					const SizedBox(height: 8.0),
@@ -320,11 +374,11 @@ class _TableEventsState extends State<CalendarPage> {
 								itemBuilder: (context, index) {
 
 									return BookingListItem(
-										pagingController: null,
 										index: index,
 										booking: value[index],
 										key: ObjectKey(value[index]),
-										deleteBookingCallback: null,
+										deleteBookingCallback: deleteBookingCallback,
+										updateBookingCallback: updateBookingCallback,
 									);
 								},
 							);
@@ -429,12 +483,14 @@ class _TableEventsState extends State<CalendarPage> {
 
 }
  
-Widget _buildEventsMarker(DateTime date, List events) {
+Widget _buildEventsMarker(DateTime date, DateTime focusedDay, List events) {
 	return Container(
 		decoration: BoxDecoration(
 			shape: BoxShape.rectangle,
 			borderRadius: BorderRadius.circular(10),
-			color: DateTime.now().isBefore( date ) ? Colors.black : Colors.black.withOpacity(0.5),
+			color: 
+				focusedDay.month != date.month ? Colors.black.withOpacity(0.25) :
+					DateTime.now().isBefore( date ) ? Colors.black : Colors.black.withOpacity(0.5),
 		),
 		width: 16.0,
 		height: 16.0,

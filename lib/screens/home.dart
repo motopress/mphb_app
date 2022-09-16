@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazy_load_indexed_stack/lazy_load_indexed_stack.dart';
 import 'package:mphb_app/screens/calendar.dart';
 import 'package:mphb_app/screens/bookings.dart';
 import 'package:mphb_app/screens/payments.dart';
@@ -28,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
 	@override
 	Widget build(BuildContext context) {
 		return Scaffold(
-			body: IndexedStack(
+			body: LazyLoadIndexedStack(
 				sizing: StackFit.expand,
 				children: _widgetOptions,
 				index: _selectedIndex,

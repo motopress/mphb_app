@@ -26,6 +26,48 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 	String _adults = '1';
 	String _children = '0';
 
+	final checkInController = TextEditingController();
+	final checkOutController = TextEditingController();
+
+	void _showDateRangePicker() async {
+
+		final DateTimeRange? dateRange = await showDateRangePicker(
+			context: context,
+			firstDate: DateTime( DateTime.now().year - 10 ),
+			lastDate: DateTime( DateTime.now().year + 10, 12, 31 ),
+			currentDate: DateTime.parse( _checkInDate ),
+		);
+
+		if (dateRange != null) {
+
+			setState(() {
+				_checkInDate = DateFormat('yyyy-MM-dd').format( dateRange.start );
+				_checkOutDate = DateFormat('yyyy-MM-dd').format( dateRange.end );
+			});
+
+			checkInController.text = _checkInDate;
+			checkOutController.text = _checkOutDate;
+		}
+	}
+
+	@override
+	void initState() {
+
+		super.initState();
+
+		checkInController.text = _checkInDate;
+		checkOutController.text = _checkOutDate;
+	}
+
+	@override
+	void dispose() {
+
+		checkInController.dispose();
+		checkOutController.dispose();
+
+		super.dispose();
+	}
+
 	@override
 	Widget build(BuildContext context) {
 
@@ -37,7 +79,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 						children: [
 							Expanded(
 								child: TextFormField(
-									initialValue: _checkInDate,
+									controller: checkInController,
 									keyboardType: TextInputType.numberWithOptions(signed: true),
 									decoration: const InputDecoration(
 										isDense: true,
@@ -62,7 +104,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 							SizedBox(width: 10),
 							Expanded(
 								child: TextFormField(
-									initialValue: _checkOutDate,
+									controller: checkOutController,
 									keyboardType: TextInputType.numberWithOptions(signed: true),
 									decoration: const InputDecoration(
 										isDense: true,
@@ -83,6 +125,10 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 										});
 									},
 								),
+							),
+							IconButton(
+								icon: const Icon(Icons.date_range),
+								onPressed: _showDateRangePicker,
 							),
 						],
 					),

@@ -9,17 +9,17 @@ import 'package:mphb_app/models/enum/booking_status.dart';
 class BookingListItem extends StatefulWidget {
 
 	const BookingListItem({
-		required this.pagingController,
 		required this.index,
 		required this.booking,
 		required this.deleteBookingCallback,
+		required this.updateBookingCallback,
 		Key? key,
 	}) : super(key: key);
 
 	final Booking booking;
-	final PagingController? pagingController;
 	final int index;
 	final Function(int)? deleteBookingCallback;
+	final Function(int)? updateBookingCallback;
 
 	void onDelete() {
 
@@ -52,7 +52,7 @@ class _BookingListItemState extends State<BookingListItem> {
 		 */
 		if ( widget.booking.status != newBooking.status ) {
 			widget.booking.status = newBooking.status;
-			widget.pagingController?.notifyListeners();
+			widget.updateBookingCallback?.call( widget.index );
 		}
 	}
 
@@ -60,7 +60,7 @@ class _BookingListItemState extends State<BookingListItem> {
 	Widget build(BuildContext context) {
 
 		return Container(
-			decoration: BoxDecoration(
+				decoration: BoxDecoration(
 				color: Colors.white,
 				borderRadius: BorderRadius.all(
 					Radius.circular(6)
@@ -167,21 +167,6 @@ class _BookingListItemState extends State<BookingListItem> {
 												fontSize: 12,
 											),
 										),
-										Padding(
-											padding: EdgeInsets.only(right: 3.0, left: 8.0),
-											child: Icon(
-												Icons.event_available,
-												size: 12,
-												color: Colors.indigo.shade100
-											)
-										),
-										Text(
-											DateFormat('yyyy-MM-dd').format(
-												DateTime.parse(booking.date_created) ),
-											style: TextStyle(
-												fontSize: 12,
-											),
-										),
 
 										if ( booking.imported == true )
 											Row(
@@ -222,6 +207,44 @@ class _BookingListItemState extends State<BookingListItem> {
 													),
 												]
 											),
+
+										if ( booking.reserved_accommodations.length > 0 &&
+												booking.getAccommodationByID(
+													booking.reserved_accommodations[0].accommodation ) != null ) ...[
+											
+											Padding(
+												padding: EdgeInsets.only(right: 3.0, left: 8.0),
+												child: Icon(
+													Icons.bed,
+													size: 12,
+													color: Colors.indigo.shade100
+												)
+											),
+											Flexible(
+												child: Text(
+													booking.getAccommodationByID(
+														booking.reserved_accommodations[0].accommodation )?.title ?? '',
+													style: TextStyle(fontSize: 12,),
+													overflow: TextOverflow.ellipsis,
+												),
+											),
+
+											if ( booking.reserved_accommodations.length > 1 )
+												Padding(
+													padding: EdgeInsets.only(left: 3.0),
+													child: Container(
+														padding: EdgeInsets.all(3.0),
+														decoration: BoxDecoration(
+															shape: BoxShape.circle,
+															color: Colors.indigo.shade50,
+														),
+														child: Text(
+															'+${booking.reserved_accommodations.length - 1}',
+															style: TextStyle(fontSize: 10,),
+														),
+													),
+												),
+										]
 									]
 								),
 							),

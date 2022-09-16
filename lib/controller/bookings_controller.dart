@@ -118,13 +118,14 @@ class BookingsController extends BasicController{
 	/*
 	 * https://domain.com/wp-json/mphb/v1/bookings
 	 */
-	Future<List<Booking>> wpGetUpcomingBookings( int offset, int limit, Map filters ) async {
+	Future<List<Booking>> wpGetAllBookings( int offset, int limit, Map filters ) async {
 
 		final headers = super.getHeaders();
 
 		final queryParameters = <String, String> {
 			'per_page': limit.toString(),
-			'offset': offset.toString()
+			'offset': offset.toString(),
+			'_embed' : 'accommodation'
 		};
 
 		final uri = super.getUriHttps( _queryEndpoint, {
