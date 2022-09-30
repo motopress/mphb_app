@@ -51,6 +51,9 @@ _Note: You will need a WordPress website and the Hotel Booking plugin from MotoP
 
 ## Build and Release
 
+### Prepare
+1. Update version name and build number in `pubspec.yaml`.
+
 ### Build and Release for iOS
 
 1. Run `flutter build ipa` to produce a build archive.
