@@ -92,7 +92,6 @@ class _CreateBookingCompletePageState extends State<CreateBookingCompletePage> {
 			widget.createBookingCallback( bookingObj );
 
 		} catch (error) {
-			print(error);
 
 			setState(() {
 				_state = '';

@@ -37,7 +37,6 @@ class _PaymentListItemState extends State<PaymentListItem> {
 			context,
 			MaterialPageRoute(builder: (context) => PaymentDetailScreen( payment: payment )),
 		);
-		//print(newPayment);
 
 		if ( widget.payment.status != newPayment.status ) {
 			widget.payment.status = newPayment.status;

@@ -62,7 +62,6 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
 			bookingFuture = null;
 
-			print(error);
 			ScaffoldMessenger.of(context).showSnackBar(
 				SnackBar(content: Text(error.toString()))
 			);
@@ -86,7 +85,6 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
 		} catch (error) {
 
-			print(error);
 			ScaffoldMessenger.of(context).showSnackBar(
 				SnackBar(content: Text(error.toString()))
 			);
@@ -122,7 +120,6 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
 						} catch (error) {
 
-							print(error);
 							ScaffoldMessenger.of(context).showSnackBar(
 								SnackBar(content: Text(error.toString()))
 							);

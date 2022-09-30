@@ -69,9 +69,6 @@ class _TableEventsState extends State<CalendarPage> {
 		String start = new DateFormat("yyyy-MM-dd").format( visibleRange.start );
 		String end   = new DateFormat("yyyy-MM-dd").format( visibleRange.end );
 
-		//print(start);
-		//print(end);
-
 		List<Booking> bookings = [];
 
 		if ( _dataProvider.containsKey( visibleRange ) && ! forceUpdate ) {
@@ -115,7 +112,6 @@ class _TableEventsState extends State<CalendarPage> {
 
 			} catch (error) {
 
-				print(error);
 				ScaffoldMessenger.of(context).clearSnackBars();
 				ScaffoldMessenger.of(context).showSnackBar(
 					SnackBar(content: Text(error.toString()))

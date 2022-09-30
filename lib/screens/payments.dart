@@ -52,8 +52,8 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 				_pagingController.appendPage(newItems, nextPageKey);
 			}
 		} catch (error) {
+
 			_pagingController.error = error;
-			print(error);
 		}
 	}
 

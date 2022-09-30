@@ -51,8 +51,8 @@ class _BookingsListViewState extends State<BookingsPage> {
 				_pagingController.appendPage(newItems, nextPageKey);
 			}
 		} catch (error) {
+
 			_pagingController.error = error;
-			print(error);
 		}
 	}
 

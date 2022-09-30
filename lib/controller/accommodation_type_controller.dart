@@ -25,7 +25,7 @@ class AccommodationTypeController extends BasicController{
 
 		final uri = super.getUriHttps( queryEndpoint, queryParameters);
 
-		print( Uri.decodeFull(uri.toString()) );
+		//print( Uri.decodeFull(uri.toString()) );
 		final response = await http.get(
 			uri,
 			headers: headers,

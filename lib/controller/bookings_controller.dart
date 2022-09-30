@@ -41,7 +41,7 @@ class BookingsController extends BasicController{
 			}
 		);
 
-		print( Uri.decodeFull(uri.toString()) );
+		//print( Uri.decodeFull(uri.toString()) );
 		final response = await http.get(
 			uri,
 			headers: headers
@@ -67,7 +67,7 @@ class BookingsController extends BasicController{
 			}
 		);
 
-		print( Uri.decodeFull(uri.toString()) );
+		//print( Uri.decodeFull(uri.toString()) );
 		final response = await http.get(
 			uri,
 			headers: headers
@@ -95,7 +95,7 @@ class BookingsController extends BasicController{
 
 		final uri = super.getUriHttps( _queryEndpoint );
 
-		print( Uri.decodeFull(uri.toString()) );
+		//print( Uri.decodeFull(uri.toString()) );
 		final response = await http.post(
 			uri,
 			headers: headers,
@@ -134,7 +134,7 @@ class BookingsController extends BasicController{
 			}
 		);
 
-		print( Uri.decodeFull(uri.toString()) );
+		//print( Uri.decodeFull(uri.toString()) );
 		final response = await http.get(
 			uri,
 			headers: headers

@@ -62,7 +62,6 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 
 
 		} catch (error) {
-			print(error);
 
 			setState(() {
 				_state = '';
