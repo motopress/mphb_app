@@ -9,7 +9,7 @@ class BookingDate extends StatelessWidget {
 	BookingDate(
 		this.date,
 		{
-			this.fontSize = 20,
+			this.fontSize = 24,
 			Key? key
 		}
 	) : super(key: key);
@@ -35,7 +35,7 @@ class BookingDate extends StatelessWidget {
 						Text(
 							DateFormat('M').format( _datetime ),
 							style: TextStyle(
-								fontSize: fontSize * 0.45,
+								fontSize: fontSize * 0.65,
 								fontWeight: FontWeight.bold,
 								height: 1
 							),
@@ -43,7 +43,7 @@ class BookingDate extends StatelessWidget {
 						Text(
 							DateFormat('yy').format( _datetime ),
 							style: TextStyle(
-								fontSize: fontSize * 0.45,
+								fontSize: fontSize * 0.35,
 								height: 1
 							),
 						),

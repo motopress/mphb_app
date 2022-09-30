@@ -43,22 +43,22 @@ class Accommodation_Type {
 
 		return Accommodation_Type(
 
-			id: json['id'],
-			title: json['title'],
-			description: json['description'],
-			excerpt: json['excerpt'],
-			adults: json['adults'],
-			children: json['children'],
-			total_capacity: json['total_capacity'],
-			bed_type: json['bed_type'],
-			size: json['size'],
-			view: json['view'],
-			services: json['services'],
-			categories: json['categories'],
-			tags: json['tags'],
-			amenities: json['amenities'],
-			attributes: json['attributes'],
-			images: json['images'],
+			id: json['id'] ?? 0,
+			title: json['title'] ?? '',
+			description: json['description'] ?? '',
+			excerpt: json['excerpt'] ?? '',
+			adults: json['adults'] ?? 0,
+			children: json['children'] ?? 0,
+			total_capacity: json['total_capacity'] ?? 0,
+			bed_type: json['bed_type'] ?? '',
+			size: json['size'] ?? 0,
+			view: json['view'] ?? '',
+			services: json['services'] ?? [],
+			categories: json['categories'] ?? [],
+			tags: json['tags'] ?? [],
+			amenities: json['amenities'] ?? [],
+			attributes: json['attributes'] ?? [],
+			images: json['images'] ?? [],
 		);
 	}
 

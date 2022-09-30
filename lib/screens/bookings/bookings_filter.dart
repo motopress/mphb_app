@@ -92,12 +92,6 @@ class _BookingsFilterState extends State<BookingsFilter> {
 		}
 	}
 
-	void close() {
-		Navigator.of(context).pop(
-			bookings_filters
-		);
-	}
-
 	void reset() {
 		setState(() {
 			bookings_filters = new Bookings_Filters();
@@ -107,80 +101,74 @@ class _BookingsFilterState extends State<BookingsFilter> {
 	@override
 	Widget build(BuildContext context) {
 
-		return Scaffold(
-			backgroundColor: Colors.white,
-			appBar: AppBar(
-				title: const Text('Filters'),
-				actions: <Widget>[
-					Padding(
-						padding: EdgeInsets.all(10.0),
-						child: TextButton(
-							onPressed: reset,
-							child: const Text('Reset'),
-							style: TextButton.styleFrom(
-								primary: Colors.black,
+		return WillPopScope(
+			child: Scaffold(
+				backgroundColor: const Color(0xFFF4F5F8),
+				appBar: AppBar(
+					title: const Text('Filters'),
+					actions: <Widget>[
+						Padding(
+							padding: EdgeInsets.all(10.0),
+							child: TextButton(
+								onPressed: reset,
+								child: const Text('Reset'),
+								style: TextButton.styleFrom(
+									primary: Colors.black,
+								),
 							),
 						),
-					),
-				],
-			),
-			body: SingleChildScrollView(
-				child: Container(
-					padding: const EdgeInsets.all(20.0),
-					child: Column(
-						mainAxisAlignment: MainAxisAlignment.start,
-						crossAxisAlignment: CrossAxisAlignment.start,
-						children: <Widget>[
+					],
+				),
+				body: SingleChildScrollView(
+					child: Container(
+						padding: const EdgeInsets.all(20.0),
+						child: Column(
+							mainAxisAlignment: MainAxisAlignment.start,
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: <Widget>[
 
-							Container(
-								margin: const EdgeInsets.only(top: 0.0),
-								child: Column(
-									crossAxisAlignment: CrossAxisAlignment.start,
-									children: [
-										Padding(
-											padding: const EdgeInsets.only(bottom: 10.0),
-											child: Text('Booking Status:'),
-										),
-										Wrap(
-											children: bookingStatusesFilter.toList(),
-										),
-										SizedBox(height: 10),
-									],
+								Container(
+									margin: const EdgeInsets.only(top: 0.0),
+									child: Column(
+										crossAxisAlignment: CrossAxisAlignment.start,
+										children: [
+											Padding(
+												padding: const EdgeInsets.only(bottom: 10.0),
+												child: Text('Booking Status:'),
+											),
+											Wrap(
+												children: bookingStatusesFilter.toList(),
+											),
+											SizedBox(height: 10),
+										],
+									),
 								),
-							),
-							Container(
-								margin: const EdgeInsets.only(top: 20.0),
-								child: Column(
-									crossAxisAlignment: CrossAxisAlignment.start,
-									children: [
-										Padding(
-											padding: const EdgeInsets.only(bottom: 10.0),
-											child: Text('Date Range:'),
-										),
-										Wrap(
-											children: bookingDateRangeFilter.toList(),
-										),
-										SizedBox(height: 10),
-									],
+								Container(
+									margin: const EdgeInsets.only(top: 20.0),
+									child: Column(
+										crossAxisAlignment: CrossAxisAlignment.start,
+										children: [
+											Padding(
+												padding: const EdgeInsets.only(bottom: 10.0),
+												child: Text('Date Created:'),
+											),
+											Wrap(
+												children: bookingDateRangeFilter.toList(),
+											),
+											SizedBox(height: 10),
+										],
+									),
 								),
-							),
-						],
+							],
+						),
 					),
 				),
 			),
-
-			persistentFooterButtons: [
-				ElevatedButton(
-					style: ElevatedButton.styleFrom(
-						minimumSize: Size(double.infinity, 50),
-						padding: EdgeInsets.all(10),
-					),
-					onPressed: close,
-					child: const Text('Apply'),
-				),
-			],
+			onWillPop: () async {
+				Navigator.pop(context, bookings_filters);
+				return false;
+			}
 		);
-
 	}
 
 }

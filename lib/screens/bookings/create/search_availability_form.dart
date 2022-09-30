@@ -33,9 +33,21 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 
 		final DateTimeRange? dateRange = await showDateRangePicker(
 			context: context,
-			firstDate: DateTime( DateTime.now().year - 10 ),
+			initialEntryMode: DatePickerEntryMode.calendarOnly,
+			firstDate: DateTime.now(),
 			lastDate: DateTime( DateTime.now().year + 10, 12, 31 ),
 			currentDate: DateTime.parse( _checkInDate ),
+
+			builder: (BuildContext context, Widget? child) {
+				return Theme(
+					data: ThemeData.light().copyWith(
+						colorScheme: ColorScheme.fromSwatch().copyWith(
+							primary: Colors.indigo,
+						),
+					),
+					child: child!,
+				);
+			}
 		);
 
 		if (dateRange != null) {
@@ -86,7 +98,6 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 										hintText: '1970-12-31',
 										labelText: 'Check-in',
 										floatingLabelBehavior: FloatingLabelBehavior.always,
-										border: OutlineInputBorder(),
 									),
 									validator: (value) {
 										if (value == null || value.isEmpty) {
@@ -111,7 +122,6 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 										hintText: '1970-12-31',
 										labelText: 'Check-out',
 										floatingLabelBehavior: FloatingLabelBehavior.always,
-										border: OutlineInputBorder(),
 									),
 									validator: (value) {
 										if (value == null || value.isEmpty) {
@@ -126,9 +136,16 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 									},
 								),
 							),
-							IconButton(
-								icon: const Icon(Icons.date_range),
-								onPressed: _showDateRangePicker,
+							Container(
+								decoration: BoxDecoration(
+									border: Border.all(color: Colors.indigo.shade100),
+									shape: BoxShape.circle,
+								),
+								child: IconButton(
+									icon: const Icon(Icons.date_range_outlined),
+									onPressed: _showDateRangePicker,
+									color: Colors.indigo.shade900,
+								),
 							),
 						],
 					),
@@ -140,7 +157,6 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 									decoration: const InputDecoration(
 										isDense: true,
 										labelText: 'Adults',
-										border: OutlineInputBorder(),
 									),
 									value: _adults,
 
@@ -166,7 +182,6 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 									decoration: const InputDecoration(
 										isDense: true,
 										labelText: 'Children',
-										border: OutlineInputBorder(),
 									),
 									value: _children,
 									items: List<String>.generate(
@@ -187,11 +202,11 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 							),
 						],
 					),
-					SizedBox(height: 10),
+					SizedBox(height: 20),
 					Row(
 						children: [
 							Expanded(
-								child: ElevatedButton(
+								child: OutlinedButton(
 									onPressed: () {
 
 										//remove focus from fields

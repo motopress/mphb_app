@@ -1,12 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class Calendar_Filters {
 
 	static const SHOW_IMPORTED_DEFAULT = true;
 
-    final List<String> post_status = <String>[];
+    List<String> post_status;
 
-    bool show_imported = SHOW_IMPORTED_DEFAULT;
+    bool show_imported;
+
+	Calendar_Filters():
+		post_status = [],
+		show_imported = SHOW_IMPORTED_DEFAULT;
 
 	Map<String, String> toMap() {
 
@@ -29,6 +33,24 @@ class Calendar_Filters {
 		return (
 			post_status.length == 0 &&
 			show_imported == SHOW_IMPORTED_DEFAULT
+		);
+	}
+
+	Calendar_Filters clone() {
+
+		Calendar_Filters clone = new Calendar_Filters();
+
+		clone.post_status = []..addAll( post_status );
+		clone.show_imported = show_imported;
+
+		return clone;
+	}
+
+	bool equals( Calendar_Filters obj ) {
+
+		return (
+			show_imported == obj.show_imported &&
+			listEquals( post_status, obj.post_status )
 		);
 	}
 

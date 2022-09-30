@@ -47,7 +47,7 @@ class BookingDetailDates extends StatelessWidget {
 										color: Colors.indigo.shade100
 									)
 								),
-								BookingDate( booking.check_in_date, fontSize: 24 ),
+								BookingDate( booking.check_in_date ),
 							]
 						),
 					),
@@ -75,7 +75,7 @@ class BookingDetailDates extends StatelessWidget {
 										color: Colors.indigo.shade100
 									)
 								),
-								BookingDate( booking.check_out_date, fontSize: 24 ),
+								BookingDate( booking.check_out_date ),
 							]
 						),
 					),

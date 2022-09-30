@@ -79,6 +79,7 @@ _Note: You will need a WordPress website and the Hotel Booking plugin from MotoP
 ## Resources
 1. https://docs.flutter.dev/get-started/install
 1. https://fonts.google.com/icons
+1. https://api.flutter.dev/flutter/material/Colors-class.html
 1. https://motopress.github.io/hotel-booking-rest-api/
 
 ## Contributions

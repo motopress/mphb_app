@@ -195,7 +195,7 @@ class _BookingListItemState extends State<BookingListItem> {
 														)
 													),
 													Text(
-														'Imported',
+														'External',
 														style: TextStyle(
 															fontSize: 12,
 														),

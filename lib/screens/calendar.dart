@@ -234,6 +234,12 @@ class _TableEventsState extends State<CalendarPage> {
 		return Scaffold(
 			appBar: AppBar(
 				title: Text('Calendar'),
+				shape: Border(
+					bottom: BorderSide(
+						color: const Color(0xFFF4F5F8),
+						width: 1
+					)
+				),
 				actions: <Widget>[
 					
 					if ( _loading == true )
@@ -286,11 +292,12 @@ class _TableEventsState extends State<CalendarPage> {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
 											return CalendarFilter(
-												calendar_filters: _calendar_filters );
+												calendar_filters: _calendar_filters.clone()
+											);
 										},
 									)).then((calendar_filters) {
 
-										if ( calendar_filters != null ) {
+										if ( ! calendar_filters.equals(_calendar_filters) ) {
 											setState(() {
 												_calendar_filters = calendar_filters;
 												_selectedDay = null;
@@ -328,64 +335,105 @@ class _TableEventsState extends State<CalendarPage> {
 				],
 			),
 			body: SingleChildScrollView(
-			child: Column(
-				children: [
-					TableCalendar<Booking>(
-						firstDay: _firstDay,
-						lastDay: _lastDay,
-						focusedDay: _focusedDay,
-						selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-						calendarFormat: _calendarFormat,
-						rangeSelectionMode: _rangeSelectionMode,
-						eventLoader: _getEventsForDay,
-						startingDayOfWeek: startingDayOfWeek,
-						availableGestures: AvailableGestures.none,
-						sixWeekMonthsEnforced: sixWeekMonthsEnforced,
-						calendarStyle: CalendarStyle(
-							outsideDaysVisible: true,
-						),
-						onDaySelected: _onDaySelected,
-						onFormatChanged: _onFormatChanged,
-						onPageChanged: _onPageChanged,
-						onHeaderTapped: _onHeaderTapped,
-						calendarBuilders: CalendarBuilders(
+				child: Column(
+					children: [
+						Container(
+							decoration: BoxDecoration(
+								gradient: LinearGradient(
+									begin: Alignment.topCenter,
+									end: FractionalOffset.bottomCenter,
+									colors: [Colors.white, Color(0xFFF4F5F8)],
+									stops: [0, 1],
+								),
+							),
+							//https://github.com/aleksanderwozniak/table_calendar
+							child: TableCalendar<Booking>(
+								firstDay: _firstDay,
+								lastDay: _lastDay,
+								focusedDay: _focusedDay,
+								selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+								calendarFormat: _calendarFormat,
+								rangeSelectionMode: _rangeSelectionMode,
+								eventLoader: _getEventsForDay,
+								startingDayOfWeek: startingDayOfWeek,
+								availableGestures: AvailableGestures.horizontalSwipe,
+								sixWeekMonthsEnforced: sixWeekMonthsEnforced,
+								daysOfWeekHeight: 50.0,
+								calendarStyle: CalendarStyle(
+									defaultTextStyle: TextStyle(color: Colors.black),
+									weekendTextStyle: TextStyle(color: Colors.black),
+									todayTextStyle: TextStyle(color: Colors.black),
+									cellMargin: EdgeInsets.all(5.0),
+									selectedDecoration: BoxDecoration(
+										color: Colors.indigo,
+										shape: BoxShape.circle,
+									),
+									todayDecoration: BoxDecoration(
+										color: Colors.white,
+										border: Border.all(color: Colors.indigo),
+										shape: BoxShape.circle,
+									),
+									defaultDecoration: BoxDecoration(
+										color: Colors.white,
+										shape: BoxShape.circle,
+										border: Border.all(color: Colors.indigo.shade50),
+									),
+									weekendDecoration: BoxDecoration(
+										color: Colors.white,
+										shape: BoxShape.circle,
+										border: Border.all(color: Colors.indigo.shade50),
+									),
+								),
+								headerStyle: HeaderStyle(
+									formatButtonDecoration: BoxDecoration(
+										border: Border.fromBorderSide(BorderSide(color: Colors.indigo.shade50),),
+										borderRadius: BorderRadius.all(Radius.circular(12.0)),
+									),
+									headerPadding: EdgeInsets.only(top: 16.0),
+								),
+								onDaySelected: _onDaySelected,
+								onFormatChanged: _onFormatChanged,
+								onPageChanged: _onPageChanged,
+								onHeaderTapped: _onHeaderTapped,
+								calendarBuilders: CalendarBuilders(
 
-							markerBuilder: (context, date, events) {
-								if (events.isNotEmpty) {
-									return Positioned(
-										right: 8,
-										top: 8,
-										child: _buildEventsMarker(date, _focusedDay, events),
-									);
-								}
+									markerBuilder: (context, date, events) {
+										if (events.isNotEmpty) {
+											return Positioned(
+												right: 4,
+												top: 4,
+												child: _buildEventsMarker(date, _focusedDay, events),
+											);
+										}
+									},
+								),
+							),
+						),
+						const SizedBox(height: 16.0),
+						ValueListenableBuilder<List<Booking>>(
+							valueListenable: _selectedEvents,
+							builder: (context, value, _) {
+
+								return ListView.builder(
+									physics: const NeverScrollableScrollPhysics(),
+									shrinkWrap: true,
+									padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+									itemCount: value.length,
+									itemBuilder: (context, index) {
+
+										return BookingListItem(
+											index: index,
+											booking: value[index],
+											key: ObjectKey(value[index]),
+											deleteBookingCallback: deleteBookingCallback,
+											updateBookingCallback: updateBookingCallback,
+										);
+									},
+								);
 							},
 						),
-					),
-					const SizedBox(height: 8.0),
-					ValueListenableBuilder<List<Booking>>(
-						valueListenable: _selectedEvents,
-						builder: (context, value, _) {
-
-							return ListView.builder(
-								scrollDirection: Axis.vertical,
-								shrinkWrap: true,
-								padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-								itemCount: value.length,
-								itemBuilder: (context, index) {
-
-									return BookingListItem(
-										index: index,
-										booking: value[index],
-										key: ObjectKey(value[index]),
-										deleteBookingCallback: deleteBookingCallback,
-										updateBookingCallback: updateBookingCallback,
-									);
-								},
-							);
-						},
-					),
-				],
-			),
+					],
+				),
 			),
 		);
 	}
@@ -489,8 +537,8 @@ Widget _buildEventsMarker(DateTime date, DateTime focusedDay, List events) {
 			shape: BoxShape.rectangle,
 			borderRadius: BorderRadius.circular(10),
 			color: 
-				focusedDay.month != date.month ? Colors.black.withOpacity(0.25) :
-					DateTime.now().isBefore( date ) ? Colors.black : Colors.black.withOpacity(0.5),
+				focusedDay.month != date.month ? Colors.grey.shade600 :
+					DateTime.now().isBefore( date ) ? Colors.indigo : Colors.black,
 		),
 		width: 16.0,
 		height: 16.0,
