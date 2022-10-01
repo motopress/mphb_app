@@ -3,6 +3,7 @@ import 'package:mphb_app/screens/form.dart';
 import 'package:mphb_app/screens/home.dart';
 import 'package:mphb_app/local_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
 
@@ -24,6 +25,13 @@ class MyApp extends StatelessWidget {
 	Widget build(BuildContext context) {
 		return MaterialApp(
 			debugShowCheckedModeBanner: false,
+			localizationsDelegates: [
+				GlobalMaterialLocalizations.delegate,
+			],
+			supportedLocales: [
+				Locale('en', 'US'),
+				Locale('en', 'GB'),
+			],
 			theme: ThemeData(
 				primarySwatch: Colors.indigo,
 				scaffoldBackgroundColor: const Color(0xFFF4F5F8),

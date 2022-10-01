@@ -33,6 +33,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 
 		final DateTimeRange? dateRange = await showDateRangePicker(
 			context: context,
+			locale: const Locale('en', 'GB'),
 			initialEntryMode: DatePickerEntryMode.calendarOnly,
 			firstDate: DateTime.now(),
 			lastDate: DateTime( DateTime.now().year + 10, 12, 31 ),
@@ -136,15 +137,16 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 									},
 								),
 							),
+							SizedBox(width: 10),
 							Container(
 								decoration: BoxDecoration(
-									border: Border.all(color: Colors.indigo.shade100),
+									border: Border.all(color: Colors.grey.shade100),
 									shape: BoxShape.circle,
 								),
 								child: IconButton(
 									icon: const Icon(Icons.date_range_outlined),
 									onPressed: _showDateRangePicker,
-									color: Colors.indigo.shade900,
+									color: Colors.black,
 								),
 							),
 						],
