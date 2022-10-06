@@ -3,6 +3,7 @@ import 'package:mphb_app/screens/form.dart';
 import 'package:mphb_app/screens/home.dart';
 import 'package:mphb_app/local_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
 
@@ -24,10 +25,16 @@ class MyApp extends StatelessWidget {
 	Widget build(BuildContext context) {
 		return MaterialApp(
 			debugShowCheckedModeBanner: false,
-			title: 'Flutter Demo',
+			localizationsDelegates: [
+				GlobalMaterialLocalizations.delegate,
+			],
+			supportedLocales: [
+				Locale('en', 'US'),
+				Locale('en', 'GB'),
+			],
 			theme: ThemeData(
 				primarySwatch: Colors.indigo,
-				scaffoldBackgroundColor: const Color(0xFFF3F4F6),
+				scaffoldBackgroundColor: const Color(0xFFF4F5F8),
 				visualDensity: VisualDensity.adaptivePlatformDensity,
 				appBarTheme: AppBarTheme(
 					backgroundColor: Colors.white,
@@ -36,15 +43,21 @@ class MyApp extends StatelessWidget {
 				),
 				elevatedButtonTheme: ElevatedButtonThemeData(
 					style: ElevatedButton.styleFrom(
-						primary: Colors.indigo.shade900,
+						primary: Colors.indigo.shade600,
 					)
+				),
+				chipTheme: ChipTheme.of(context).copyWith(
+					backgroundColor: Colors.white,
+					selectedColor: Colors.indigo.shade100,
+					secondarySelectedColor: Colors.indigo.shade100,
+					secondaryLabelStyle: TextStyle(color: Colors.black),
 				),
 
 			),
 			initialRoute: LocalStorage().hasData() ? '/home' : '/login',
 			routes: {
-				'/home': (context) => const MyHomePage(),
-				'/login': (context) => const MyCustomForm(),
+				'/home': (context) => const HomePage(),
+				'/login': (context) => const LoginForm(),
 			},
 		);
 	}

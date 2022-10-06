@@ -37,7 +37,6 @@ class _PaymentListItemState extends State<PaymentListItem> {
 			context,
 			MaterialPageRoute(builder: (context) => PaymentDetailScreen( payment: payment )),
 		);
-		//print(newPayment);
 
 		if ( widget.payment.status != newPayment.status ) {
 			widget.payment.status = newPayment.status;
@@ -81,20 +80,13 @@ class _PaymentListItemState extends State<PaymentListItem> {
 											Padding(
 												padding: EdgeInsets.only(right: 10.0),
 												child: Row(
-													//crossAxisAlignment: CrossAxisAlignment.baseline,
-													//textBaseline: TextBaseline.ideographic,
 													children: [
-														Padding(
-															padding: EdgeInsets.only(right: 8.0),
-															child: Icon(
-																Icons.money,
-																size: 12,
-																color: Colors.indigo.shade100
-															)
-														),
 														Text(
 															payment.amount.toString(),
-															style: TextStyle(fontWeight: FontWeight.bold),
+															style: TextStyle(
+																fontWeight: FontWeight.bold, fontSize: 24,
+																height: 1,
+															),
 														),
 														Padding(
 															padding: EdgeInsets.only(left: 8.0),
@@ -125,7 +117,7 @@ class _PaymentListItemState extends State<PaymentListItem> {
 										]
 									),
 									Container(
-										padding: EdgeInsets.only(top: 15.0),
+										padding: EdgeInsets.only(top: 10.0),
 										child: Row(
 											children: [
 												Padding(
@@ -178,7 +170,7 @@ class _PaymentListItemState extends State<PaymentListItem> {
 							),
 							Flexible(
 								child: Container(
-									padding: EdgeInsets.only(top: 6.0, bottom: 6.0, left: 6.0, right: 6.0),
+									padding: EdgeInsets.only(top: 4.0, bottom: 4.0, left: 6.0, right: 6.0),
 									decoration: ShapeDecoration(
 										shape: RoundedRectangleBorder(
 											borderRadius: BorderRadius.all(

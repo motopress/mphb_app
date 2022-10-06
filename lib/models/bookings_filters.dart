@@ -1,34 +1,19 @@
-import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mphb_app/models/enum/date_range.dart';
+import 'package:mphb_app/utils/date_utils.dart';
 
 class Bookings_Filters {
 
-    final List<String> post_status = <String>[];
+    List<String> post_status;
 
-    String date_range = '';
+    String date_range;
 
-	String searchTerm = '';
+	String searchTerm;
 
-	//now
-	final now = DateTime.now();
-
-	DateTime getDate(DateTime d) => DateTime(d.year, d.month, d.day);
-
-	//today
-	String get todayStart => getDate(now).toIso8601String();
-	String get todayEnd => getDate(now).add(
-		Duration(hours: 23, minutes: 59, seconds: 59 )).toIso8601String();
-
-	//this week
-	String get firstDayOfWeek => getDate(now.subtract(
-		Duration(days: now.weekday - 1))).toIso8601String();
-	String get lastDayOfWeek => getDate(now.
-		add(Duration(days: DateTime.daysPerWeek - now.weekday))).
-			add(Duration(hours: 23, minutes: 59, seconds: 59 )).toIso8601String();
-
-	//this month
-	String get firstDayOfMonth => DateTime(now.year, now.month, 1).toIso8601String();
-	String get lastDayOfMonth => DateTime(now.year, now.month + 1, 1, 0, 0, -1).toIso8601String();
+	Bookings_Filters():
+		post_status = [],
+		date_range = '',
+		searchTerm = '';
 
 	Map<String, String> toMap() {
 
@@ -41,16 +26,16 @@ class Bookings_Filters {
 		if ( ! date_range.isEmpty ) {
 			switch (date_range) {
 				case DateRangeEnum.TODAY:
-					map['after'] = todayStart;
-					map['before'] = todayEnd;
+					map['after'] = DateUtils.todayStart;
+					map['before'] = DateUtils.todayEnd;
 					break;
 				case DateRangeEnum.THIS_WEEK:
-					map['after'] = firstDayOfWeek;
-					map['before'] = lastDayOfWeek;
+					map['after'] = DateUtils.firstDayOfWeek;
+					map['before'] = DateUtils.lastDayOfWeek;
 					break;
 				case DateRangeEnum.THIS_MONTH:
-					map['after'] = firstDayOfMonth;
-					map['before'] = lastDayOfMonth;
+					map['after'] = DateUtils.firstDayOfMonth;
+					map['before'] = DateUtils.lastDayOfMonth;
 					break;
 			}
 		}
@@ -69,5 +54,26 @@ class Bookings_Filters {
 			date_range.isEmpty
 		);
 	}
+
+	Bookings_Filters clone() {
+
+		Bookings_Filters clone = new Bookings_Filters();
+
+		clone.post_status = []..addAll( post_status );
+		clone.date_range = date_range;
+		clone.searchTerm = searchTerm;
+
+		return clone;
+	}
+
+	bool equals( Bookings_Filters obj ) {
+
+		return (
+			date_range == obj.date_range &&
+			searchTerm == obj.searchTerm &&
+			listEquals( post_status, obj.post_status )
+		);
+	}
+
 
 }

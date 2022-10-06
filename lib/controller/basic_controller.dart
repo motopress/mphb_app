@@ -25,7 +25,7 @@ class BasicController {
 		return finalPath;
 	}
 
-	Uri getUriHttps( [ String pathSegment = '', Map<String, String>? queryParameters ] ) {
+	Uri getUriHttps( [ String pathSegment = '', Map<String, dynamic>? queryParameters ] ) {
 
 		Uri uriHttps = Uri.https(
 			getAuthority(),

@@ -88,12 +88,6 @@ class _PaymentsFilterState extends State<PaymentsFilter> {
 		}
 	}
 
-	void close() {
-		Navigator.of(context).pop(
-			payments_filters
-		);
-	}
-
 	void reset() {
 		setState(() {
 			payments_filters = new Payments_Filters();
@@ -103,80 +97,74 @@ class _PaymentsFilterState extends State<PaymentsFilter> {
 	@override
 	Widget build(BuildContext context) {
 
-		return Scaffold(
-			backgroundColor: Colors.white,
-			appBar: AppBar(
-				title: const Text('Filters'),
-				actions: <Widget>[
-					Padding(
-						padding: EdgeInsets.all(10.0),
-						child: TextButton(
-							onPressed: reset,
-							child: const Text('Reset'),
-							style: TextButton.styleFrom(
-								primary: Colors.black,
+		return WillPopScope(
+			child: Scaffold(
+				backgroundColor: const Color(0xFFF4F5F8),
+				appBar: AppBar(
+					title: const Text('Filters'),
+					actions: <Widget>[
+						Padding(
+							padding: EdgeInsets.all(10.0),
+							child: TextButton(
+								onPressed: reset,
+								child: const Text('Reset'),
+								style: TextButton.styleFrom(
+									primary: Colors.black,
+								),
 							),
 						),
-					),
-				],
-			),
-			body: SingleChildScrollView(
-				child: Container(
-					padding: const EdgeInsets.all(20.0),
-					child: Column(
-						mainAxisAlignment: MainAxisAlignment.start,
-						crossAxisAlignment: CrossAxisAlignment.start,
-						children: <Widget>[
+					],
+				),
+				body: SingleChildScrollView(
+					child: Container(
+						padding: const EdgeInsets.all(20.0),
+						child: Column(
+							mainAxisAlignment: MainAxisAlignment.start,
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: <Widget>[
 
-							Container(
-								margin: const EdgeInsets.only(top: 0.0),
-								child: Column(
-									crossAxisAlignment: CrossAxisAlignment.start,
-									children: [
-										Padding(
-											padding: const EdgeInsets.only(bottom: 10.0),
-											child: Text('Payment Status:'),
-										),
-										Wrap(
-											children: paymentStatusesFilter.toList(),
-										),
-										SizedBox(height: 10),
-									],
+								Container(
+									margin: const EdgeInsets.only(top: 0.0),
+									child: Column(
+										crossAxisAlignment: CrossAxisAlignment.start,
+										children: [
+											Padding(
+												padding: const EdgeInsets.only(bottom: 10.0),
+												child: Text('Payment Status:'),
+											),
+											Wrap(
+												children: paymentStatusesFilter.toList(),
+											),
+											SizedBox(height: 10),
+										],
+									),
 								),
-							),
-							Container(
-								margin: const EdgeInsets.only(top: 20.0),
-								child: Column(
-									crossAxisAlignment: CrossAxisAlignment.start,
-									children: [
-										Padding(
-											padding: const EdgeInsets.only(bottom: 10.0),
-											child: Text('Date Range:'),
-										),
-										Wrap(
-											children: paymentDateRangeFilter.toList(),
-										),
-										SizedBox(height: 10),
-									],
+								Container(
+									margin: const EdgeInsets.only(top: 20.0),
+									child: Column(
+										crossAxisAlignment: CrossAxisAlignment.start,
+										children: [
+											Padding(
+												padding: const EdgeInsets.only(bottom: 10.0),
+												child: Text('Date Created:'),
+											),
+											Wrap(
+												children: paymentDateRangeFilter.toList(),
+											),
+											SizedBox(height: 10),
+										],
+									),
 								),
-							),
-						],
+							],
+						),
 					),
 				),
 			),
-
-			persistentFooterButtons: [
-				ElevatedButton(
-					style: ElevatedButton.styleFrom(
-						minimumSize: Size(double.infinity, 50),
-						padding: EdgeInsets.all(10),
-					),
-					onPressed: close,
-					child: const Text('Apply'),
-				),
-			],
+			onWillPop: () async {
+				Navigator.pop(context, payments_filters);
+				return false;
+			}
 		);
-
 	}
 
 }

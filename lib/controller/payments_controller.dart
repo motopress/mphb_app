@@ -40,7 +40,7 @@ class PaymentsController extends BasicController{
 			}
 		);
 
-		print( Uri.decodeFull(uri.toString()) );
+		//print( Uri.decodeFull(uri.toString()) );
 		final response = await http.get(
 			uri,
 			headers: headers

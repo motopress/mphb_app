@@ -15,7 +15,7 @@ class BookingsPage extends StatefulWidget {
 
 class _BookingsListViewState extends State<BookingsPage> {
 
-	static const _pageSize = 10;
+	static const _pageSize = 15;
 
 	final PagingController<int, Booking> _pagingController =
 		PagingController(firstPageKey: 0);
@@ -51,8 +51,8 @@ class _BookingsListViewState extends State<BookingsPage> {
 				_pagingController.appendPage(newItems, nextPageKey);
 			}
 		} catch (error) {
+
 			_pagingController.error = error;
-			print(error);
 		}
 	}
 
@@ -80,6 +80,12 @@ class _BookingsListViewState extends State<BookingsPage> {
 
 			appBar: AppBar(
 				title: Text('Bookings'),
+				shape: Border(
+					bottom: BorderSide(
+						color: const Color(0xFFF4F5F8),
+						width: 1
+					)
+				),
 				actions: <Widget>[
 					IconButton(
 						icon: const Icon(Icons.add_circle_outline),
@@ -113,11 +119,12 @@ class _BookingsListViewState extends State<BookingsPage> {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
 											return BookingsFilter(
-												bookings_filters: _bookings_filters );
+												bookings_filters: _bookings_filters.clone()
+											);
 										},
 									)).then((bookings_filters) {
 
-										if ( bookings_filters != null ) {
+										if ( ! bookings_filters.equals(_bookings_filters) ) {
 											setState(() {
 												_bookings_filters = bookings_filters;
 											});

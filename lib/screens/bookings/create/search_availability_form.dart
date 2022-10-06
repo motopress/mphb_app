@@ -26,6 +26,61 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 	String _adults = '1';
 	String _children = '0';
 
+	final checkInController = TextEditingController();
+	final checkOutController = TextEditingController();
+
+	void _showDateRangePicker() async {
+
+		final DateTimeRange? dateRange = await showDateRangePicker(
+			context: context,
+			locale: const Locale('en', 'GB'),
+			initialEntryMode: DatePickerEntryMode.calendarOnly,
+			firstDate: DateTime.now(),
+			lastDate: DateTime( DateTime.now().year + 10, 12, 31 ),
+			currentDate: DateTime.parse( _checkInDate ),
+
+			builder: (BuildContext context, Widget? child) {
+				return Theme(
+					data: ThemeData.light().copyWith(
+						colorScheme: ColorScheme.fromSwatch().copyWith(
+							primary: Colors.indigo,
+						),
+					),
+					child: child!,
+				);
+			}
+		);
+
+		if (dateRange != null) {
+
+			setState(() {
+				_checkInDate = DateFormat('yyyy-MM-dd').format( dateRange.start );
+				_checkOutDate = DateFormat('yyyy-MM-dd').format( dateRange.end );
+			});
+
+			checkInController.text = _checkInDate;
+			checkOutController.text = _checkOutDate;
+		}
+	}
+
+	@override
+	void initState() {
+
+		super.initState();
+
+		checkInController.text = _checkInDate;
+		checkOutController.text = _checkOutDate;
+	}
+
+	@override
+	void dispose() {
+
+		checkInController.dispose();
+		checkOutController.dispose();
+
+		super.dispose();
+	}
+
 	@override
 	Widget build(BuildContext context) {
 
@@ -37,14 +92,13 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 						children: [
 							Expanded(
 								child: TextFormField(
-									initialValue: _checkInDate,
+									controller: checkInController,
 									keyboardType: TextInputType.numberWithOptions(signed: true),
 									decoration: const InputDecoration(
 										isDense: true,
 										hintText: '1970-12-31',
 										labelText: 'Check-in',
 										floatingLabelBehavior: FloatingLabelBehavior.always,
-										border: OutlineInputBorder(),
 									),
 									validator: (value) {
 										if (value == null || value.isEmpty) {
@@ -62,14 +116,13 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 							SizedBox(width: 10),
 							Expanded(
 								child: TextFormField(
-									initialValue: _checkOutDate,
+									controller: checkOutController,
 									keyboardType: TextInputType.numberWithOptions(signed: true),
 									decoration: const InputDecoration(
 										isDense: true,
 										hintText: '1970-12-31',
 										labelText: 'Check-out',
 										floatingLabelBehavior: FloatingLabelBehavior.always,
-										border: OutlineInputBorder(),
 									),
 									validator: (value) {
 										if (value == null || value.isEmpty) {
@@ -84,6 +137,18 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 									},
 								),
 							),
+							SizedBox(width: 10),
+							Container(
+								decoration: BoxDecoration(
+									border: Border.all(color: Colors.grey.shade100),
+									shape: BoxShape.circle,
+								),
+								child: IconButton(
+									icon: const Icon(Icons.date_range_outlined),
+									onPressed: _showDateRangePicker,
+									color: Colors.black,
+								),
+							),
 						],
 					),
 					SizedBox(height: 10),
@@ -94,7 +159,6 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 									decoration: const InputDecoration(
 										isDense: true,
 										labelText: 'Adults',
-										border: OutlineInputBorder(),
 									),
 									value: _adults,
 
@@ -120,7 +184,6 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 									decoration: const InputDecoration(
 										isDense: true,
 										labelText: 'Children',
-										border: OutlineInputBorder(),
 									),
 									value: _children,
 									items: List<String>.generate(
@@ -141,11 +204,11 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 							),
 						],
 					),
-					SizedBox(height: 10),
+					SizedBox(height: 20),
 					Row(
 						children: [
 							Expanded(
-								child: ElevatedButton(
+								child: OutlinedButton(
 									onPressed: () {
 
 										//remove focus from fields

@@ -53,7 +53,6 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 
 			paymentFuture = null;
 
-			print(error);
 			ScaffoldMessenger.of(context).showSnackBar(
 				SnackBar(content: Text(error.toString()))
 			);
@@ -77,7 +76,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 				switch ( action ) {
 
 					case 'delete':
-						print('Delete payment!');
+						//print('Delete payment!');
 						break;
 
 					default:
@@ -92,7 +91,6 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 
 						} catch (error) {
 
-							print(error);
 							ScaffoldMessenger.of(context).showSnackBar(
 								SnackBar(
 									content: Text(error.toString())

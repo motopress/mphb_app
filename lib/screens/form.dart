@@ -7,15 +7,15 @@ import 'package:mphb_app/models/form_model.dart';
 import 'package:mphb_app/screens/scanner.dart';
 import 'package:mphb_app/local_storage.dart';
 
-class MyCustomForm extends StatefulWidget {
+class LoginForm extends StatefulWidget {
 
-	const MyCustomForm({Key? key}) : super(key: key);
+	const LoginForm({Key? key}) : super(key: key);
 
 	@override
-	_MyCustomFormState createState() => _MyCustomFormState();
+	_LoginFormState createState() => _LoginFormState();
 }
 
-class _MyCustomFormState extends State<MyCustomForm> {
+class _LoginFormState extends State<LoginForm> {
 
 	final _formKey = GlobalKey<FormState>();
 	

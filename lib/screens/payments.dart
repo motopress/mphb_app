@@ -14,7 +14,7 @@ class PaymentsPage extends StatefulWidget {
 
 class _PaymentsListViewState extends State<PaymentsPage> {
 
-	static const _pageSize = 10;
+	static const _pageSize = 15;
 
 	final PagingController<int, Payment> _pagingController =
 		PagingController(firstPageKey: 0);
@@ -52,8 +52,8 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 				_pagingController.appendPage(newItems, nextPageKey);
 			}
 		} catch (error) {
+
 			_pagingController.error = error;
-			print(error);
 		}
 	}
 
@@ -69,6 +69,12 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 
 			appBar: AppBar(
 				title: Text('Payments'),
+				shape: Border(
+					bottom: BorderSide(
+						color: const Color(0xFFF4F5F8),
+						width: 1
+					)
+				),
 				actions: <Widget>[
 					IconButton(
 						icon: const Icon(Icons.sync),
@@ -87,11 +93,12 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
 											return PaymentsFilter(
-												payments_filters: _payments_filters );
+												payments_filters: _payments_filters.clone()
+											);
 										},
 									)).then((payments_filters) {
 
-										if ( payments_filters != null ) {
+										if ( ! payments_filters.equals(_payments_filters) ) {
 											setState(() {
 												_payments_filters = payments_filters;
 											});

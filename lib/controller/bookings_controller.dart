@@ -41,7 +41,7 @@ class BookingsController extends BasicController{
 			}
 		);
 
-		print( Uri.decodeFull(uri.toString()) );
+		//print( Uri.decodeFull(uri.toString()) );
 		final response = await http.get(
 			uri,
 			headers: headers
@@ -67,7 +67,7 @@ class BookingsController extends BasicController{
 			}
 		);
 
-		print( Uri.decodeFull(uri.toString()) );
+		//print( Uri.decodeFull(uri.toString()) );
 		final response = await http.get(
 			uri,
 			headers: headers
@@ -95,7 +95,7 @@ class BookingsController extends BasicController{
 
 		final uri = super.getUriHttps( _queryEndpoint );
 
-		print( Uri.decodeFull(uri.toString()) );
+		//print( Uri.decodeFull(uri.toString()) );
 		final response = await http.post(
 			uri,
 			headers: headers,
@@ -107,6 +107,42 @@ class BookingsController extends BasicController{
 			Booking booking = Booking.fromJson(jsonDecode(response.body));
 
 			return booking;
+
+		} else {
+
+			throw Exception('Request failed with status: ${response.statusCode}.');
+		}
+
+	}
+
+	/*
+	 * https://domain.com/wp-json/mphb/v1/bookings
+	 */
+	Future<List<Booking>> wpGetAllBookings( int offset, int limit, Map filters ) async {
+
+		final headers = super.getHeaders();
+
+		final queryParameters = <String, String> {
+			'per_page': limit.toString(),
+			'offset': offset.toString(),
+			'_embed' : 'accommodation'
+		};
+
+		final uri = super.getUriHttps( _queryEndpoint, {
+			   ...queryParameters,
+			   ...filters,
+			}
+		);
+
+		//print( Uri.decodeFull(uri.toString()) );
+		final response = await http.get(
+			uri,
+			headers: headers
+		);
+
+		if ( response.statusCode == HttpStatus.OK ) {
+
+			return compute( BookingsController_parseBookings, response.body );
 
 		} else {
 

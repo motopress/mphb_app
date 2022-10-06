@@ -94,8 +94,6 @@ class _SingleAccommodationState extends State<SingleAccommodation> {
 			ScaffoldMessenger.of(context).showSnackBar(
 				SnackBar(content: Text(error.toString()))
 			);
-
-			print(error);
 		}
 	}
 
