@@ -3,6 +3,7 @@ import 'package:mphb_app/models/reserved_accommodation.dart';
 import 'package:mphb_app/models/reserved_service.dart';
 import 'package:mphb_app/models/service.dart';
 import 'package:mphb_app/models/booking.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookingDetailServices extends StatelessWidget {
 
@@ -35,14 +36,14 @@ class BookingDetailServices extends StatelessWidget {
 				},
 				defaultVerticalAlignment: TableCellVerticalAlignment.middle,
 				children: reserved_accommodation.services.map(
-					(item) => buildTableRow(item, booking)
+					(item) => buildTableRow(context, item, booking)
 				).toList(),
 			),
 		);
 
 	}
 
-	TableRow buildTableRow(Reserved_Service reserved_service, Booking booking) {
+	TableRow buildTableRow(BuildContext context, Reserved_Service reserved_service, Booking booking) {
 
 		return TableRow(
 			key: ValueKey(reserved_service.id),
@@ -62,7 +63,7 @@ class BookingDetailServices extends StatelessWidget {
 						padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
 						child: Text(
 							reserved_service.adults != null ?
-								'x ' + reserved_service.adults.toString() + ' guest(s)' : '',
+								'x ' + reserved_service.adults.toString() + ' ' + AppLocalizations.of(context).guestsText : '',
 							style: TextStyle(fontStyle: FontStyle.italic),
 						),
 					),
@@ -72,11 +73,11 @@ class BookingDetailServices extends StatelessWidget {
 						padding: const EdgeInsets.only(left: 10.0, top: 10.0, bottom: 10.0),
 						child: Text(
 							reserved_service.quantity != null ?
-								'x ' + reserved_service.quantity.toString() + ' time(s)' :
+								'x ' + reserved_service.quantity.toString() + ' '+ AppLocalizations.of(context).timesText :
 									(
 										booking.getServiceByID(
 											reserved_service.id)?.periodicity['typeof'] == 'once' ?
-												'Once' : 'Daily'
+												AppLocalizations.of(context).onceText : AppLocalizations.of(context).dailyText
 									),
 							style: TextStyle(fontStyle: FontStyle.italic),
 						),

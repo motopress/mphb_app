@@ -8,6 +8,7 @@ import 'package:mphb_app/screens/calendar/booking_list_item.dart';
 import 'package:mphb_app/screens/calendar/calendar_filter.dart';
 import 'package:mphb_app/models/calendar_filters.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CalendarPage extends StatefulWidget {
 	@override
@@ -99,7 +100,7 @@ class _TableEventsState extends State<CalendarPage> {
 			try {
 
 				await Future.doWhile( () async {
-					
+
 					_bookings = await _bookingsController.wpGetAllBookings( offset, limit, filters);
 
 					bookings.addAll( _bookings );
@@ -229,7 +230,7 @@ class _TableEventsState extends State<CalendarPage> {
 
 		return Scaffold(
 			appBar: AppBar(
-				title: Text('Calendar'),
+				title: Text(AppLocalizations.of(context).calendarLabelText),
 				shape: Border(
 					bottom: BorderSide(
 						color: const Color(0xFFF4F5F8),
@@ -237,7 +238,7 @@ class _TableEventsState extends State<CalendarPage> {
 					)
 				),
 				actions: <Widget>[
-					
+
 					if ( _loading == true )
 						Center(
 							child: Padding(
@@ -255,7 +256,7 @@ class _TableEventsState extends State<CalendarPage> {
 					// endif
 					IconButton(
 						icon: const Icon(Icons.add_circle_outline),
-						tooltip: 'New Booking',
+						tooltip: AppLocalizations.of(context).newBookingTooltipText,
 						onPressed: () async {
 							await Navigator.push(context, MaterialPageRoute (
 								builder: (BuildContext context) {
@@ -269,7 +270,7 @@ class _TableEventsState extends State<CalendarPage> {
 					),
 					IconButton(
 						icon: const Icon(Icons.sync),
-						tooltip: 'Refresh',
+						tooltip: AppLocalizations.of(context).refreshTootlipText,
 						onPressed: () {
 							setState(() {
 								_selectedDay = null;
@@ -283,7 +284,7 @@ class _TableEventsState extends State<CalendarPage> {
 						children: <Widget>[
 							IconButton(
 								icon: const Icon(Icons.filter_list),
-								tooltip: 'Filter',
+								tooltip: AppLocalizations.of(context).filterTootlipText,
 								onPressed: () async {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
@@ -299,7 +300,7 @@ class _TableEventsState extends State<CalendarPage> {
 												_selectedDay = null;
 												_selectedEvents.value = [];
 											});
-											
+
 											_dataProvider.clear();
 											_getData();
 										}
@@ -530,13 +531,13 @@ class _TableEventsState extends State<CalendarPage> {
 	}
 
 }
- 
+
 Widget _buildEventsMarker(DateTime date, DateTime focusedDay, List events) {
 	return Container(
 		decoration: BoxDecoration(
 			shape: BoxShape.rectangle,
 			borderRadius: BorderRadius.circular(10),
-			color: 
+			color:
 				focusedDay.month != date.month ? Colors.grey.shade600 :
 					DateUtils.dateOnly( DateTime.now() ).isBefore( date ) ? Colors.indigo : Colors.black,
 		),

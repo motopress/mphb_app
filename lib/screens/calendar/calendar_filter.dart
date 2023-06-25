@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/models/calendar_filters.dart';
 import 'package:mphb_app/models/enum/booking_status.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CalendarFilter extends StatefulWidget {
 
@@ -25,18 +26,20 @@ class _CalendarFilterState extends State<CalendarFilter> {
 
 	Calendar_Filters calendar_filters;
 
-	final List _bookingStatusesOptions = [
-		const {'label': 'Confirmed', 'value': BookingStatusEnum.CONFIRMED},
-		const {'label': 'Cancelled', 'value': BookingStatusEnum.CANCELLED},
-		const {'label': 'Abandoned', 'value': BookingStatusEnum.ABANDONED},
-		const {'label': 'Pending Admin', 'value': BookingStatusEnum.PENDING},
-		const {'label': 'Pending User', 'value': BookingStatusEnum.PENDING_USER},
-		const {'label': 'Pending Payment', 'value': BookingStatusEnum.PENDING_PAYMENT},
-	];
+	static List _bookingStatusesOptions(BuildContext context) {
+    return [
+      {'label': AppLocalizations.of(context).bookingConfirmedOptionText, 'value': BookingStatusEnum.CONFIRMED},
+      {'label': AppLocalizations.of(context).bookingCanceledOptionText, 'value': BookingStatusEnum.CANCELLED},
+      {'label': AppLocalizations.of(context).bookingAbandonedOptionText, 'value': BookingStatusEnum.ABANDONED},
+      {'label': AppLocalizations.of(context).bookingPendingAdminOptionText, 'value': BookingStatusEnum.PENDING},
+      {'label': AppLocalizations.of(context).bookingPendingUserOptionText, 'value': BookingStatusEnum.PENDING_USER},
+      {'label': AppLocalizations.of(context).bookingPendingPaymentOptionText, 'value': BookingStatusEnum.PENDING_PAYMENT},
+    ];
+  }
 
 	Iterable<Widget> get bookingStatusesFilter sync* {
 
-		for (final status in _bookingStatusesOptions) {
+		for (final status in _bookingStatusesOptions(context)) {
 			yield Padding(
 				padding: const EdgeInsets.all(4.0),
 				child: FilterChip(
@@ -74,13 +77,13 @@ class _CalendarFilterState extends State<CalendarFilter> {
 			child: Scaffold(
 				backgroundColor: const Color(0xFFF4F5F8),
 				appBar: AppBar(
-					title: const Text('Filters'),
+					title: Text(AppLocalizations.of(context).filtersTitleText),
 					actions: <Widget>[
 						Padding(
 							padding: EdgeInsets.all(10.0),
 							child: TextButton(
 								onPressed: reset,
-								child: const Text('Reset'),
+								child: Text(AppLocalizations.of(context).resetButtonText),
 								style: TextButton.styleFrom(
 									primary: Colors.black,
 								),
@@ -103,7 +106,7 @@ class _CalendarFilterState extends State<CalendarFilter> {
 										children: [
 											Padding(
 												padding: const EdgeInsets.only(bottom: 10.0),
-												child: Text('Booking Status:'),
+												child: Text(AppLocalizations.of(context).bookingStatusLabelText + ':'),
 											),
 											Wrap(
 												children: bookingStatusesFilter.toList(),
@@ -115,7 +118,7 @@ class _CalendarFilterState extends State<CalendarFilter> {
 								Container(
 									margin: const EdgeInsets.only(top: 20.0),
 									child: SwitchListTile(
-										title: const Text('Display external bookings'),
+										title: Text(AppLocalizations.of(context).displayExternalBookingsLabelText),
 										value: calendar_filters.show_imported,
 										onChanged: (bool value) {
 											setState(() {

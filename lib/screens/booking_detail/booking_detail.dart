@@ -11,6 +11,8 @@ import 'package:mphb_app/screens/booking_detail/booking_detail_payment.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_ical.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_note.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_internal_notes.dart';
+import 'package:sprintf/sprintf.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookingDetailScreen extends StatefulWidget {
 
@@ -73,11 +75,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 	void deleteBooking( Booking booking ) async {
 
 		try {
-			
+
 			Booking deletedBooking = await _bookingController.wpDeleteBooking(booking.id);
 
 			ScaffoldMessenger.of(context).showSnackBar(
-				SnackBar(content: Text('Booking ${deletedBooking.id} deleted.'))
+				SnackBar(content: Text(sprintf(AppLocalizations.of(context).bookingDeletedMessage, [deletedBooking.id])))
 			);
 
 			Navigator.maybePop(context);
@@ -136,11 +138,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 		return WillPopScope(
 			child: Scaffold(
 				appBar: AppBar(
-					title: Text( 'Booking #$bookingID' ),
+					title: Text( AppLocalizations.of(context).bookingLabelText + ' #$bookingID' ),
 					actions: <Widget>[
 						IconButton(
 							icon: const Icon(Icons.sync),
-							tooltip: 'Refresh',
+							tooltip: AppLocalizations.of(context).refreshTootlipText,
 							onPressed: () {
 								setState(() {
 									_bookingFuture = _getBooking( bookingID );
@@ -172,7 +174,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
 									return IconButton(
 										icon: const Icon(Icons.more_vert),
-										tooltip: 'Actions',
+										tooltip: AppLocalizations.of(context).actionsTooltipText,
 										onPressed: () => _showModalBottomSheet( context, booking ),
 									);
 								}
@@ -187,7 +189,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
 						if (snapshot.hasError) {
 
-							return new Center(child: Text('Error: ${snapshot.error}') );
+							return new Center(child: Text(AppLocalizations.of(context).errorText + ': ${snapshot.error}') );
 
 						} else {
 
@@ -214,7 +216,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 												// customer
 												if ( booking.imported == false )
 													BookingDetailCustomer( customer: booking.customer ),
-												
+
 												if ( booking.imported == true )
 													BookingDetailIcal( booking: booking ),
 
@@ -224,7 +226,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 													child: Column(
 														crossAxisAlignment: CrossAxisAlignment.start,
 														children: [
-															Text('Reservation'),
+															Text(AppLocalizations.of(context).reservationText),
 															for (
 																	var reserved_accommodation
 																	in booking.reserved_accommodations
@@ -251,7 +253,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														child: Column(
 															crossAxisAlignment: CrossAxisAlignment.start,
 															children: [
-																Text('Payments'),
+																Text(AppLocalizations.of(context).paymentsLabelText),
 																for ( var payment in booking.payments )
 																	BookingDetailPayment( payment: payment ),
 															],
@@ -264,7 +266,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														child: Column(
 															crossAxisAlignment: CrossAxisAlignment.start,
 															children: [
-																Text('Customer Note'),
+																Text(AppLocalizations.of(context).customerNoteText),
 																BookingDetailNote( booking: booking ),
 															],
 														),
@@ -276,7 +278,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														child: Column(
 															crossAxisAlignment: CrossAxisAlignment.start,
 															children: [
-																Text('Internal Notes'),
+																Text(AppLocalizations.of(context).internalNotesText),
 																BookingDetailInternalNotes( booking: booking ),
 															],
 														),

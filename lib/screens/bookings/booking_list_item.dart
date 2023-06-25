@@ -5,6 +5,7 @@ import 'package:mphb_app/screens/common/booking_date.dart';
 import 'package:mphb_app/models/booking.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mphb_app/models/enum/booking_status.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookingListItem extends StatefulWidget {
 
@@ -195,7 +196,7 @@ class _BookingListItemState extends State<BookingListItem> {
 														)
 													),
 													Text(
-														'External',
+														AppLocalizations.of(context).externalText,
 														style: TextStyle(
 															fontSize: 12,
 														),

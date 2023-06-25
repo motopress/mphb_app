@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/models/payment.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaymentDetailBooking extends StatelessWidget {
 
@@ -41,7 +42,7 @@ class PaymentDetailBooking extends StatelessWidget {
 								Padding (
 									padding: EdgeInsets.only(top: 5.0),
 									child: Text(
-										'Booking',
+										AppLocalizations.of(context).bookingLabelText,
 										style: TextStyle(fontSize: 12),
 									),
 								),

@@ -6,9 +6,9 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:mphb_app/models/form_model.dart';
 import 'package:mphb_app/screens/scanner.dart';
 import 'package:mphb_app/local_storage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginForm extends StatefulWidget {
-
 	const LoginForm({Key? key}) : super(key: key);
 
 	@override
@@ -16,9 +16,8 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-
 	final _formKey = GlobalKey<FormState>();
-	
+
 	final model = FormModel();
 
 	final domainController = TextEditingController();
@@ -32,10 +31,6 @@ class _LoginFormState extends State<LoginForm> {
 		buildNumber: 'Unknown',
 		buildSignature: 'Unknown',
 	);
-
-	String _textInstructions =
-		'Navigate to Accommodation \u{2192} Settings \u{2192} Advanced to generate API keys and scan QR code. '
-		'Or enter your data in the form below.';
 
 	@override
 	void initState() {
@@ -51,49 +46,42 @@ class _LoginFormState extends State<LoginForm> {
 	}
 
 	void qr_code_scanner() async {
-
 		/*
 		 * Web issue
 		 * https://github.com/juliuscanute/qr_code_scanner/issues/441
-		 */												
+		 */
 
 		await Navigator.push(
 			context,
 			MaterialPageRoute(builder: (context) => Scanner()),
 		).then((formModel) {
-
-			if ( formModel.isEmpty ) {
-
+			if (formModel.isEmpty) {
 				ScaffoldMessenger.of(context).clearSnackBars();
-				ScaffoldMessenger.of(context).showSnackBar(
-					SnackBar(
-						backgroundColor: Colors.red,
-						content: Text( 'QR code is not valid.' ),
-					)
-				);
+				ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+					backgroundColor: Colors.red,
+					content: Text(AppLocalizations.of(context).invalidQRCodeMessage),
+				));
 			}
 
 			domainController.text = formModel.domain;
 			keyController.text = formModel.consumer_key;
 			secretController.text = formModel.consumer_secret;
 		});
-
 	}
 
-	void login () {
+	void login() {
 		// Validate returns true if the form is valid, or false otherwise.
 		if (_formKey.currentState!.validate()) {
-
 			_formKey.currentState!.save();
 
 			// trim slash
-			if ( model.domain.endsWith('/') ) {
+			if (model.domain.endsWith('/')) {
 				model.domain = model.domain.substring(0, model.domain.length - 1);
 			}
 
 			/*
 			 * https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/
-			 * 
+			 *
 			 * 1. All routes should be built onto this route, the wp-json portion can be changed,
 			 *    but in general, it is advised to keep it the same.
 			 * 2. On sites without pretty permalinks, the route is instead added to the URL as the
@@ -101,29 +89,23 @@ class _LoginFormState extends State<LoginForm> {
 			 *    http://example.com/?rest_route=/wp/v2/posts/123
 			 */
 
-			 //TODO: make it better
-			if ( model.domain.endsWith( '/wp-json/mphb/v1' ) ) {
-
+			//TODO: make it better
+			if (model.domain.endsWith('/wp-json/mphb/v1')) {
 				LocalStorage().domain = model.domain;
-
 			} else {
-
 				LocalStorage().domain = model.domain + '/wp-json/mphb/v1';
 			}
-
 
 			//TODO: use secure storage
 			LocalStorage().consumer_key = model.consumer_key;
 			LocalStorage().consumer_secret = model.consumer_secret;
-			
+
 			Navigator.pushReplacementNamed(context, '/home');
 		}
 	}
 
 	@override
 	Widget build(BuildContext context) {
-
-
 		final ColorScheme colorScheme = Theme.of(context).colorScheme;
 		final TextTheme textTheme = Theme.of(context).textTheme;
 		final bodyTextStyle = textTheme.bodyText2!.apply(
@@ -134,42 +116,33 @@ class _LoginFormState extends State<LoginForm> {
 			body: Center(
 				child: SingleChildScrollView(
 					child: Container(
-
 						padding: const EdgeInsets.only(
-							left: 20.0, right: 20.0, top: 30.0, bottom: 30.0),
+								left: 20.0, right: 20.0, top: 30.0, bottom: 30.0),
 						child: Column(
-
-							crossAxisAlignment: CrossAxisAlignment.center,
-							mainAxisAlignment: MainAxisAlignment.center,
-
-							children: <Widget>[
-								Container(
-									padding: EdgeInsets.only(
-										left: 20.0, right: 20.0, top: 30.0, bottom: 30.0),
-
-									decoration: BoxDecoration(
-										color: Colors.white,
-										borderRadius: BorderRadius.all(
-											Radius.circular(6)
+								crossAxisAlignment: CrossAxisAlignment.center,
+								mainAxisAlignment: MainAxisAlignment.center,
+								children: <Widget>[
+									Container(
+										padding: EdgeInsets.only(
+												left: 20.0, right: 20.0, top: 30.0, bottom: 30.0),
+										decoration: BoxDecoration(
+											color: Colors.white,
+											borderRadius: BorderRadius.all(Radius.circular(6)),
+											boxShadow: [
+												BoxShadow(
+													color: Colors.grey.withOpacity(0.15),
+													spreadRadius: 4,
+													blurRadius: 16,
+													offset: Offset(0, 10),
+												),
+											],
 										),
-										boxShadow: [
-											BoxShadow(
-												color: Colors.grey.withOpacity(0.15),
-												spreadRadius: 4,
-												blurRadius: 16,
-												offset: Offset(0, 10),
-											),
-										],
-									),
-
-									child: Column(
-										children: [
-
+										child: Column(children: [
 											ElevatedButton.icon(
 												onPressed: () => qr_code_scanner(),
 												icon: Icon(Icons.qr_code_scanner),
 												label: Text(
-													"Scan QR Code",
+													AppLocalizations.of(context).scanQRCodeButtonText,
 													style: const TextStyle(fontSize: 16),
 												),
 												style: ElevatedButton.styleFrom(
@@ -178,30 +151,28 @@ class _LoginFormState extends State<LoginForm> {
 													minimumSize: Size(double.infinity, 0),
 												),
 											),
-
 											SizedBox(height: 20.0),
-
 											Text(
-												_textInstructions,
+												// _textInstructions,
+												AppLocalizations.of(context).textInstructions,
 												style: const TextStyle(fontSize: 12),
 												textAlign: TextAlign.center,
 											),
 											SizedBox(height: 15.0),
-
 											Form(
 												key: _formKey,
 												child: Column(
 													children: [
 														TextFormField(
 															controller: domainController,
-															decoration: const InputDecoration(
+															decoration: InputDecoration(
 																hintText: 'https://mywebsite.com',
-																labelText: 'Domain',
+																labelText: AppLocalizations.of(context).domainLabelText,
 																border: OutlineInputBorder(),
 															),
 															validator: (value) {
 																if (value == null || value.isEmpty) {
-																	return 'Please enter Domain';
+																	return AppLocalizations.of(context).domainValidatorMessage;
 																}
 																return null;
 															},
@@ -212,14 +183,14 @@ class _LoginFormState extends State<LoginForm> {
 														SizedBox(height: 10),
 														TextFormField(
 															controller: keyController,
-															decoration: const InputDecoration(
+															decoration: InputDecoration(
 																hintText: 'ck_xxxxxxxxxx',
-																labelText: 'Key',
+																labelText: AppLocalizations.of(context).keyLabelText,
 																border: OutlineInputBorder(),
 															),
 															validator: (value) {
 																if (value == null || value.isEmpty) {
-																	return 'Please enter Key';
+																	return AppLocalizations.of(context).keyValidatorMessage;
 																}
 																return null;
 															},
@@ -230,15 +201,15 @@ class _LoginFormState extends State<LoginForm> {
 														SizedBox(height: 10),
 														TextFormField(
 															controller: secretController,
-															decoration: const InputDecoration(
+															decoration: InputDecoration(
 																hintText: 'cs_xxxxxxxxxx',
-																labelText: 'Secret',
+																labelText: AppLocalizations.of(context).secretLabelText,
 																border: OutlineInputBorder(),
 															),
 															obscureText: true,
 															validator: (value) {
 																if (value == null || value.isEmpty) {
-																	return 'Please enter Secret';
+																	return AppLocalizations.of(context).secretValidatorMessage;
 																}
 																return null;
 															},
@@ -253,55 +224,55 @@ class _LoginFormState extends State<LoginForm> {
 																padding: EdgeInsets.all(15),
 															),
 															onPressed: login,
-															child: const Text(
-																'Submit',
+															child: Text(
+																AppLocalizations.of(context).submitButtonText,
 															),
 														),
 													],
 												),
 											),
-										]
+										]),
 									),
-								),
-
+								SizedBox(height: 25.0),
 								SizedBox(height: 25.0),
 
 
-								SelectableText.rich(
-									TextSpan(
-										children: [
-											TextSpan(
-												style: bodyTextStyle,
-												text: '${_packageInfo.appName} application by ',
-											),
-											TextSpan(
-												text: 'MotoPress',
-												style: bodyTextStyle.copyWith(
-													color: colorScheme.primary,
-												),
-												recognizer: TapGestureRecognizer()
-													..onTap = () async {
-														final url = 'https://motopress.com';
-														if (await canLaunch(url)) {
-															await launch(
-																url,
-																forceSafariVC: false,
-															);
-														}
-													},
-											),
-										],
-									),
-								),
+									SizedBox(height: 25.0),
 
-								SizedBox(height: 5.0),
-								Text(
-									'Version: ${_packageInfo.version} build ${_packageInfo.buildNumber}',
-									style: const TextStyle(fontSize: 11),
-									textAlign: TextAlign.center,
-								),
-							]
-						),
+
+									SelectableText.rich(
+										TextSpan(
+											children: [
+												TextSpan(
+													style: bodyTextStyle,
+													text: '${_packageInfo.appName} application by ',
+												),
+												TextSpan(
+													text: 'MotoPress',
+													style: bodyTextStyle.copyWith(
+														color: colorScheme.primary,
+													),
+													recognizer: TapGestureRecognizer()
+														..onTap = () async {
+															final url = 'https://motopress.com';
+															if (await canLaunch(url)) {
+																await launch(
+																	url,
+																	forceSafariVC: false,
+																);
+															}
+														},
+												),
+											],
+										),
+									),
+									SizedBox(height: 5.0),
+									Text(
+										'Version: ${_packageInfo.version} build ${_packageInfo.buildNumber}',
+										style: const TextStyle(fontSize: 11),
+										textAlign: TextAlign.center,
+									),
+								]),
 					),
 				),
 			),

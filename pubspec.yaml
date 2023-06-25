@@ -47,6 +47,7 @@ dependencies:
   rxdart: ^0.27.3
   table_calendar: ^3.0.7
   lazy_load_indexed_stack: ^0.1.4
+  sprintf: ^7.0.0
 
 dev_dependencies:
   flutter_test:
@@ -100,6 +101,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  generate: true
 
 flutter_icons:
   image_path_android: "assets/icons/icon.png"

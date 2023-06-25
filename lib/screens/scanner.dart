@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:mphb_app/models/form_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Scanner extends StatefulWidget {
 	@override
@@ -44,7 +45,7 @@ class _ScannerState extends State<Scanner> {
 
 		return Scaffold(
 			appBar: AppBar(
-				title: Text("Scan a code"),
+				title: Text(AppLocalizations.of(context).scanQRCodeButtonText),
 			),
 			body: QRView(
 				key: qrKey,
@@ -80,7 +81,7 @@ class _ScannerState extends State<Scanner> {
 
 			try {
 
-				formModel = FormModel.fromRawData(rawData ?? '');				
+				formModel = FormModel.fromRawData(rawData ?? '');
 
 			} on Exception catch (e) {}
 

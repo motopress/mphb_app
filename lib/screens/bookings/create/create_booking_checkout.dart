@@ -3,6 +3,7 @@ import 'package:mphb_app/models/create_booking.dart';
 import 'package:mphb_app/models/accommodation.dart';
 import 'package:mphb_app/models/reserved_accommodation.dart';
 import 'package:mphb_app/screens/bookings/create/single_accommodation.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateBookingCheckoutPage extends StatefulWidget {
 
@@ -31,7 +32,7 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 	void initState() {
 
 		super.initState();
-		
+
 		//reset
 		booking.reset();
 	}
@@ -65,10 +66,10 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 							mainAxisAlignment: MainAxisAlignment.start,
 							crossAxisAlignment: CrossAxisAlignment.start,
 							children: [
-								Text('Customer Information'),
+								Text(AppLocalizations.of(context).customerInformationText),
 								TextField(
-									decoration: const InputDecoration(
-										labelText: 'First Name',
+									decoration: InputDecoration(
+										labelText: AppLocalizations.of(context).firstnameLabelText,
 									),
 									keyboardType: TextInputType.name,
 									textCapitalization: TextCapitalization.sentences,
@@ -77,8 +78,8 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 									},
 								),
 								TextField(
-									decoration: const InputDecoration(
-										labelText: 'Last Name',
+									decoration: InputDecoration(
+										labelText: AppLocalizations.of(context).lastnameLabelText,
 									),
 									keyboardType: TextInputType.name,
 									textCapitalization: TextCapitalization.words,
@@ -87,8 +88,8 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 									},
 								),
 								TextField(
-									decoration: const InputDecoration(
-										labelText: 'Email',
+									decoration: InputDecoration(
+										labelText: AppLocalizations.of(context).emailLabelText,
 									),
 									keyboardType: TextInputType.emailAddress,
 									onChanged: (text) {
@@ -96,8 +97,8 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 									},
 								),
 								TextField(
-									decoration: const InputDecoration(
-										labelText: 'Phone',
+									decoration: InputDecoration(
+										labelText: AppLocalizations.of(context).phoneLabelText,
 									),
 									keyboardType: TextInputType.numberWithOptions(signed: true),
 									onChanged: (text) {

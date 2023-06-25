@@ -4,9 +4,9 @@ import 'package:mphb_app/screens/home.dart';
 import 'package:mphb_app/local_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
-
 	// Required for async calls in `main`
 	WidgetsFlutterBinding.ensureInitialized();
 
@@ -20,17 +20,19 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
 	@override
 	Widget build(BuildContext context) {
 		return MaterialApp(
 			debugShowCheckedModeBanner: false,
 			localizationsDelegates: [
+				AppLocalizations.delegate,
 				GlobalMaterialLocalizations.delegate,
+				GlobalWidgetsLocalizations.delegate,
+				GlobalCupertinoLocalizations.delegate,
 			],
 			supportedLocales: [
-				Locale('en', 'US'),
-				Locale('en', 'GB'),
+				Locale('en'), // English
+				Locale('fr'), // French
 			],
 			theme: ThemeData(
 				primarySwatch: Colors.indigo,
@@ -42,17 +44,15 @@ class MyApp extends StatelessWidget {
 					elevation: 0,
 				),
 				elevatedButtonTheme: ElevatedButtonThemeData(
-					style: ElevatedButton.styleFrom(
-						primary: Colors.indigo.shade600,
-					)
-				),
+						style: ElevatedButton.styleFrom(
+					primary: Colors.indigo.shade600,
+				)),
 				chipTheme: ChipTheme.of(context).copyWith(
 					backgroundColor: Colors.white,
 					selectedColor: Colors.indigo.shade100,
 					secondarySelectedColor: Colors.indigo.shade100,
 					secondaryLabelStyle: TextStyle(color: Colors.black),
 				),
-
 			),
 			initialRoute: LocalStorage().hasData() ? '/home' : '/login',
 			routes: {
@@ -62,5 +62,3 @@ class MyApp extends StatelessWidget {
 		);
 	}
 }
-
-

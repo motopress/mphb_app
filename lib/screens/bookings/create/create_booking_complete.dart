@@ -5,6 +5,8 @@ import 'package:mphb_app/models/accommodation.dart';
 import 'package:mphb_app/models/reserved_accommodation.dart';
 import 'package:mphb_app/models/booking.dart';
 import 'package:mphb_app/screens/bookings/create/single_accommodation.dart';
+import 'package:sprintf/sprintf.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateBookingCompletePage extends StatefulWidget {
 
@@ -84,9 +86,9 @@ class _CreateBookingCompletePageState extends State<CreateBookingCompletePage> {
 			final bookingObj = await _bookingsController.wpCreateBooking( params );
 
 			setState(() {_state = 'complete';});
-			
+
 			ScaffoldMessenger.of(context).showSnackBar(
-				SnackBar(content: Text('Booking ${bookingObj.id} created.'))
+				SnackBar(content: Text(sprintf(AppLocalizations.of(context).bookingCreatedMessage, [bookingObj.id])))
 			);
 
 			widget.createBookingCallback( bookingObj );

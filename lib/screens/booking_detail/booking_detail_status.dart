@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mphb_app/models/booking.dart';
 import 'package:mphb_app/models/enum/booking_status.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookingDetailStatus extends StatelessWidget {
 
@@ -21,7 +22,7 @@ class BookingDetailStatus extends StatelessWidget {
 						crossAxisAlignment: CrossAxisAlignment.start,
 						children: [
 							Text(
-								'Booking #' + booking.id.toString(),
+								AppLocalizations.of(context).bookingLabelText + ' #' + booking.id.toString(),
 								style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 							),
 							Padding (
