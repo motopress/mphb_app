@@ -96,5 +96,8 @@
   "paymentSetToPendingButtonText": "Définir en tant que: en attente",
   "paymentSetToFailedButtonText": "Définir en tant que: échoué",
   "paymentSetToRefundedButtonText": "Définir en tant que: remboursé",
-  "paymentText": "Paiement"
+  "paymentText": "Paiement",
+  "calendarFormatMonth": "Mois",
+  "calendarFormatTwoWeeks": "2 semaines",
+  "calendarFormatWeek": "Semaine"
 }

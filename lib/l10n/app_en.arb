@@ -96,5 +96,8 @@
   "paymentSetToPendingButtonText": "Set to Pending",
   "paymentSetToFailedButtonText": "Set to Failed",
   "paymentSetToRefundedButtonText": "Set to Refunded",
-  "paymentText": "Payment"
+  "paymentText": "Payment",
+  "calendarFormatMonth": "Month",
+  "calendarFormatTwoWeeks": "2 weeks",
+  "calendarFormatWeek": "Week"
 }

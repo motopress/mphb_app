@@ -348,6 +348,7 @@ class _TableEventsState extends State<CalendarPage> {
 
 								//https://github.com/aleksanderwozniak/table_calendar
 								child: TableCalendar<Booking>(
+									locale: Localizations.localeOf(context).toString(),
 									firstDay: _firstDay,
 									lastDay: _lastDay,
 									focusedDay: _focusedDay,
@@ -407,6 +408,11 @@ class _TableEventsState extends State<CalendarPage> {
 											}
 										},
 									),
+									availableCalendarFormats: {
+										CalendarFormat.month: AppLocalizations.of(context).calendarFormatMonth,
+										CalendarFormat.twoWeeks: AppLocalizations.of(context).calendarFormatTwoWeeks,
+										CalendarFormat.week: AppLocalizations.of(context).calendarFormatWeek,
+									},
 								),
 							),
 							const SizedBox(height: 16.0),

@@ -33,6 +33,10 @@ class MyApp extends StatelessWidget {
 			supportedLocales: [
 				Locale('en'), // English
 				Locale('fr'), // French
+				Locale('de'), // German
+				Locale('es'), // Spanish
+				Locale('it'), // Italian
+				Locale('uk'), // Ukrainian
 			],
 			theme: ThemeData(
 				primarySwatch: Colors.indigo,

@@ -34,7 +34,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 
 		final DateTimeRange? dateRange = await showDateRangePicker(
 			context: context,
-			locale: const Locale('en', 'GB'),
+			//locale: const Locale('en', 'GB'),
 			initialEntryMode: DatePickerEntryMode.calendarOnly,
 			firstDate: DateTime.now(),
 			lastDate: DateTime( DateTime.now().year + 10, 12, 31 ),
