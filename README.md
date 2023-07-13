@@ -53,6 +53,7 @@ _Note: You will need a WordPress website and the Hotel Booking plugin from MotoP
 
 ### Prepare
 1. Update version name and build number in `pubspec.yaml`.
+1. Update l10n `flutter gen-l10n`.
 
 ### Build and Release for iOS
 
