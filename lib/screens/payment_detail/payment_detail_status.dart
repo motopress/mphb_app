@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mphb_app/models/payment.dart';
 import 'package:mphb_app/models/enum/payment_status.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaymentDetailStatus extends StatelessWidget {
 
@@ -21,7 +22,7 @@ class PaymentDetailStatus extends StatelessWidget {
 						crossAxisAlignment: CrossAxisAlignment.start,
 						children: [
 							Text(
-								'Payment #' + payment.id.toString(),
+								AppLocalizations.of(context).paymentText + ' #' + payment.id.toString(),
 								style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 							),
 							Padding (

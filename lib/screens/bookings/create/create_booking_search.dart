@@ -4,6 +4,7 @@ import 'package:mphb_app/controller/bookings_controller.dart';
 import 'package:mphb_app/models/accommodation_availability.dart';
 import 'package:mphb_app/models/accommodation.dart';
 import 'package:mphb_app/models/create_booking.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateBookingSearchPage extends StatefulWidget {
 
@@ -81,10 +82,10 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 				if ( _accommodations.length > 0 ) {
 					return buildAccommodations.toList();
 				} else {
-					return [Center(child:Text('Nothing found'))];
+					return [Center(child:Text(AppLocalizations.of(context).nothingFoundText))];
 				}
 				break;
-			
+
 			case 'waiting':
 				return [CircularProgressIndicator()];
 				break;
@@ -105,7 +106,7 @@ class _CreateBookingSearchPageState extends State<CreateBookingSearchPage> {
 				title: Text(accommodation_availability.title +
 					' (' + accommodation_availability.accommodations.length.toString() + ')'),
 				subtitle: Text(
-					'Base price: ' + accommodation_availability.base_price.toStringAsFixed(2),
+					AppLocalizations.of(context).basePriceText + ': ' + accommodation_availability.base_price.toStringAsFixed(2),
 					style: const TextStyle(fontSize: 11),
 				),
 				children: [

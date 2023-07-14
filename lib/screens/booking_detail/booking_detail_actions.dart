@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/models/booking.dart';
 import 'package:mphb_app/models/enum/booking_status.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookingDetailActions extends StatelessWidget {
 
@@ -15,35 +16,35 @@ class BookingDetailActions extends StatelessWidget {
 			children: [
 				ListTile(
 					leading: Icon(Icons.done),
-					title: Text('Set to Confirmed'),
+					title: Text(AppLocalizations.of(context).bookingSetToConfirmedButtonText),
 					onTap: () {
 						Navigator.pop(context, BookingStatusEnum.CONFIRMED);
 					},
 				),
 				ListTile(
 					leading: Icon(Icons.block),
-					title: Text('Set to Cancelled'),
+					title: Text(AppLocalizations.of(context).bookingSetToCanceledButtonText),
 					onTap: () {
 						Navigator.pop(context, BookingStatusEnum.CANCELLED);
 					},
 				),
 				ListTile(
 					leading: Icon(Icons.hourglass_empty),
-					title: Text('Set to Pending Admin'),
+					title: Text(AppLocalizations.of(context).bookingSetToPendingAdminButtonText),
 					onTap: () {
 						Navigator.pop(context, BookingStatusEnum.PENDING);
 					},
 				),
 				ListTile(
 					leading: Icon(Icons.mail_outline),
-					title: Text('Set to Pending User Confirmation'),
+					title: Text(AppLocalizations.of(context).bookingSetToPendingUserConfirmationButtonText),
 					onTap: () {
 						Navigator.pop(context, BookingStatusEnum.PENDING_USER);
 					},
 				),
 				ListTile(
 					leading: Icon(Icons.payment),
-					title: Text('Set to Pending Payment'),
+					title: Text(AppLocalizations.of(context).bookingSetToPendingPaymentButtonText),
 					onTap: () {
 						Navigator.pop(context, BookingStatusEnum.PENDING_PAYMENT);
 					},
@@ -51,7 +52,7 @@ class BookingDetailActions extends StatelessWidget {
 				Divider(),
 				ListTile(
 					leading: Icon(Icons.delete),
-					title: Text('Delete'),
+					title: Text(AppLocalizations.of(context).deleteButtonText),
 					onTap: () {
 						Navigator.pop(context, 'delete');
 					},

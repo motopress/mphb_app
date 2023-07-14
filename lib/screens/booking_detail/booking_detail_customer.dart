@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mphb_app/models/customer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookingDetailCustomer extends StatelessWidget {
 
@@ -63,7 +64,7 @@ class BookingDetailCustomer extends StatelessWidget {
 
 							if ( (customer.first_name  + customer.last_name).isEmpty )
 								Text(
-									'not set',
+									AppLocalizations.of(context).notSetLabelText,
 									style: TextStyle(fontStyle: FontStyle.italic),
 								),
 							//endif
@@ -106,10 +107,10 @@ class BookingDetailCustomer extends StatelessWidget {
 
 													final snackBar = SnackBar(
 														content: Text(
-															'${customer.email} copied'
+															'${customer.email} ' + AppLocalizations.of(context).copiedLabelText
 														)
 													);
-													
+
 													ScaffoldMessenger.of(context).
 														clearSnackBars();
 													ScaffoldMessenger.of(context).
@@ -161,7 +162,7 @@ class BookingDetailCustomer extends StatelessWidget {
 									IconButton(
 										icon: const Icon(Icons.content_copy),
 										iconSize: 14,
-										tooltip: 'Copy',
+										tooltip: AppLocalizations.of(context).copyTooltipText,
 										onPressed: () {
 											Clipboard.setData(
 												ClipboardData(text: customer.phone))
@@ -169,7 +170,7 @@ class BookingDetailCustomer extends StatelessWidget {
 
 													final snackBar = SnackBar(
 														content: Text(
-															'${customer.phone} copied'
+															'${customer.phone} ' + AppLocalizations.of(context).copiedLabelText
 														)
 													);
 

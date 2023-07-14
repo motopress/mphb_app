@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchAvailabilityForm extends StatefulWidget {
 
@@ -33,7 +34,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 
 		final DateTimeRange? dateRange = await showDateRangePicker(
 			context: context,
-			locale: const Locale('en', 'GB'),
+			//locale: const Locale('en', 'GB'),
 			initialEntryMode: DatePickerEntryMode.calendarOnly,
 			firstDate: DateTime.now(),
 			lastDate: DateTime( DateTime.now().year + 10, 12, 31 ),
@@ -94,15 +95,15 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 								child: TextFormField(
 									controller: checkInController,
 									keyboardType: TextInputType.numberWithOptions(signed: true),
-									decoration: const InputDecoration(
+									decoration: InputDecoration(
 										isDense: true,
 										hintText: '1970-12-31',
-										labelText: 'Check-in',
+										labelText: AppLocalizations.of(context).checkInLabelText,
 										floatingLabelBehavior: FloatingLabelBehavior.always,
 									),
 									validator: (value) {
 										if (value == null || value.isEmpty) {
-											return 'Please enter date';
+											return AppLocalizations.of(context).dateValidatorMessage;
 										}
 										return null;
 									},
@@ -118,15 +119,15 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 								child: TextFormField(
 									controller: checkOutController,
 									keyboardType: TextInputType.numberWithOptions(signed: true),
-									decoration: const InputDecoration(
+									decoration: InputDecoration(
 										isDense: true,
 										hintText: '1970-12-31',
-										labelText: 'Check-out',
+										labelText: AppLocalizations.of(context).checkOutLabelText,
 										floatingLabelBehavior: FloatingLabelBehavior.always,
 									),
 									validator: (value) {
 										if (value == null || value.isEmpty) {
-											return 'Please enter date';
+											return AppLocalizations.of(context).dateValidatorMessage;
 										}
 										return null;
 									},
@@ -156,9 +157,9 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 						children: [
 							Expanded(
 								child: DropdownButtonFormField<String>(
-									decoration: const InputDecoration(
+									decoration: InputDecoration(
 										isDense: true,
-										labelText: 'Adults',
+										labelText: AppLocalizations.of(context).adultsLabelText,
 									),
 									value: _adults,
 
@@ -181,9 +182,9 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 							SizedBox(width: 10),
 							Expanded(
 								child: DropdownButtonFormField<String>(
-									decoration: const InputDecoration(
+									decoration: InputDecoration(
 										isDense: true,
-										labelText: 'Children',
+										labelText: AppLocalizations.of(context).childrenLabelText,
 									),
 									value: _children,
 									items: List<String>.generate(
@@ -228,7 +229,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 											widget.callback( params );
 										}
 									},
-									child: const Text('Search',),
+									child: Text(AppLocalizations.of(context).searchButtonText),
 								),
 							),
 						]

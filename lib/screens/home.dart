@@ -4,9 +4,10 @@ import 'package:mphb_app/screens/calendar.dart';
 import 'package:mphb_app/screens/bookings.dart';
 import 'package:mphb_app/screens/payments.dart';
 import 'package:mphb_app/screens/settings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
-  
+
 	const HomePage({Key? key}) : super(key: key);
 
 	@override
@@ -46,26 +47,26 @@ class _HomePageState extends State<HomePage> {
 					showUnselectedLabels: false,
 					unselectedFontSize: 0.0, //fix for Failed assertion error.
 					selectedFontSize: 0.0,
-					items: const <BottomNavigationBarItem>[
+					items: <BottomNavigationBarItem>[
 						BottomNavigationBarItem(
 							icon: Icon(Icons.event_outlined),
 							activeIcon: Icon(Icons.event),
-							label: 'Calendar',
+							label: AppLocalizations.of(context).calendarLabelText,
 						),
 						BottomNavigationBarItem(
 							icon: Icon(Icons.source_outlined),
 							activeIcon: Icon(Icons.source),
-							label: 'Bookings',
+							label: AppLocalizations.of(context).bookingsLabelText,
 						),
 						BottomNavigationBarItem(
 							icon: Icon(Icons.payments_outlined),
 							activeIcon: Icon(Icons.payments),
-							label: 'Payments',
+							label: AppLocalizations.of(context).paymentsLabelText,
 						),
 						BottomNavigationBarItem(
 							icon: Icon(Icons.manage_accounts_outlined),
 							activeIcon: Icon(Icons.manage_accounts),
-							label: 'Settings',
+							label: AppLocalizations.of(context).settingsLabelText,
 						),
 					],
 					currentIndex: _selectedIndex,

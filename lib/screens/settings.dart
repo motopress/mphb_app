@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/local_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPage extends StatefulWidget {
 
@@ -38,13 +39,13 @@ class _SettingsPageState extends State<SettingsPage> {
 
 		// set up the buttons
 		Widget cancelButton = TextButton(
-			child: Text("Cancel"),
+			child: Text(AppLocalizations.of(context).cancelButttonText),
 			onPressed:  () {
 				Navigator.of(context).pop(); // dismiss dialog
 			},
 		);
 		Widget continueButton = TextButton(
-			child: Text("Log out"),
+			child: Text(AppLocalizations.of(context).logoutButtonText),
 			onPressed:  () {
 				LocalStorage().clear();
 				Navigator.pushNamedAndRemoveUntil(context, '/login', (_) => false);
@@ -53,7 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
 		// set up the AlertDialog
 		AlertDialog alert = AlertDialog(
-			title: Text("Are you sure you want to log out?"),
+			title: Text(AppLocalizations.of(context).confirmLogoutMessage),
 			actions: [
 				cancelButton,
 				continueButton,
@@ -74,7 +75,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
 		return Scaffold(
 			appBar: AppBar(
-				title: const Text('Settings'),
+				title: Text(AppLocalizations.of(context).settingsLabelText),
 				shape: Border(
 					bottom: BorderSide(
 						color: const Color(0xFFF4F5F8),
@@ -95,7 +96,7 @@ class _SettingsPageState extends State<SettingsPage> {
 							),
 							SizedBox(height: 10.0),
 							Text(
-								'Consumer key ending in: ' +
+								AppLocalizations.of(context).consumerKeyEndingInLabelText + ': ' +
 								LocalStorage().consumer_key.substring(
 									LocalStorage().consumer_key.length - 7),
 							),
@@ -110,7 +111,7 @@ class _SettingsPageState extends State<SettingsPage> {
 								onPressed: () {
 									_showAlertDialog(context);
 								},
-								child: Text("Log out"),
+								child: Text(AppLocalizations.of(context).logoutButtonText),
 							),
 						]
 					),

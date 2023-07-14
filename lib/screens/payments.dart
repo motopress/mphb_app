@@ -6,6 +6,7 @@ import 'package:mphb_app/models/payment.dart';
 import 'package:mphb_app/models/payments_filters.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mphb_app/screens/bookings/character_search_input_sliver.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaymentsPage extends StatefulWidget {
   @override
@@ -68,7 +69,7 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 		return Scaffold(
 
 			appBar: AppBar(
-				title: Text('Payments'),
+				title: Text(AppLocalizations.of(context).paymentsLabelText),
 				shape: Border(
 					bottom: BorderSide(
 						color: const Color(0xFFF4F5F8),
@@ -78,7 +79,7 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 				actions: <Widget>[
 					IconButton(
 						icon: const Icon(Icons.sync),
-						tooltip: 'Refresh',
+						tooltip: AppLocalizations.of(context).refreshTootlipText,
 						onPressed: () {
 							_pagingController.refresh();
 						},
@@ -88,7 +89,7 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 						children: <Widget>[
 							IconButton(
 								icon: const Icon(Icons.filter_list),
-								tooltip: 'Filter',
+								tooltip: AppLocalizations.of(context).filterTootlipText,
 								onPressed: () async {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
@@ -155,7 +156,7 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 											key: ObjectKey(item),
 										),
 										noItemsFoundIndicatorBuilder: (context) =>
-											Center( child: Text('Nothing Found') ),
+											Center( child: Text(AppLocalizations.of(context).nothingFoundText) ),
 
 										firstPageErrorIndicatorBuilder: (context) =>
 											Center( child: Text(_pagingController.error.toString()) ),

@@ -7,6 +7,7 @@ import 'package:mphb_app/screens/payment_detail/payment_detail_booking.dart';
 import 'package:mphb_app/screens/payment_detail/payment_detail_gateway.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_customer.dart';
 import 'package:mphb_app/screens/payment_detail/payment_detail_actions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaymentDetailScreen extends StatefulWidget {
 
@@ -109,11 +110,11 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 		return WillPopScope(
 			child: Scaffold(
 				appBar: AppBar(
-					title: Text( 'Payment #$paymentID' ),
+					title: Text(AppLocalizations.of(context).paymentText + ' #$paymentID'),
 					actions: <Widget>[
 						IconButton(
 							icon: const Icon(Icons.sync),
-							tooltip: 'Refresh',
+							tooltip: AppLocalizations.of(context).refreshTootlipText,
 							onPressed: () {
 								setState(() {
 									_paymentFuture = _getPayment( paymentID );
@@ -145,7 +146,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 
 									return IconButton(
 										icon: const Icon(Icons.more_vert),
-										tooltip: 'Actions',
+										tooltip: AppLocalizations.of(context).actionsTooltipText,
 										onPressed: () => _showModalBottomSheet( context, payment ),
 									);
 								}
@@ -160,7 +161,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
 
 						if (snapshot.hasError) {
 
-							return new Text('Error: ${snapshot.error}');
+							return new Text(AppLocalizations.of(context).errorText + ': ${snapshot.error}');
 						} else {
 
 							Payment payment = snapshot.data;
