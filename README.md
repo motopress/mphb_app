@@ -22,6 +22,8 @@ _Note: You will need a WordPress website and the Hotel Booking plugin from MotoP
 
 ## Development
 1. Navigate to `/mphb_app/` dirrectory.
+1. Run `flutter clean`.
+1. Run `flutter gen-l10n`.
 1. Run `flutter run -d web-server --web-port 9999` in the command-line tool to start a web server[^1].
 1. Wait for dependencies, cache and application setup.
 1. Navigate to `http://localhost:9999/` in your browser.
