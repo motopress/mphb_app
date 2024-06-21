@@ -1,3 +1,5 @@
+import 'package:html_unescape/html_unescape_small.dart';
+
 class Service {
 
     final int id;
@@ -17,9 +19,12 @@ class Service {
 	});
 
 	factory Service.fromJson(Map<String, dynamic> json) {
+
+		var unescape = HtmlUnescape();
+
 		return Service(
 			id: json['id'],
-			title: json['title'],
+			title: unescape.convert( json['title'] ?? '' ),
 			description: json['description'],
 			price: json['price'],
 			periodicity: json['periodicity'],

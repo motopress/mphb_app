@@ -1,3 +1,5 @@
+import 'package:html_unescape/html_unescape_small.dart';
+
 class Accommodation_Type {
 
 	final int id;
@@ -41,10 +43,12 @@ class Accommodation_Type {
 
 	factory Accommodation_Type.fromJson(Map<String, dynamic> json) {
 
+		var unescape = HtmlUnescape();
+
 		return Accommodation_Type(
 
 			id: json['id'] ?? 0,
-			title: json['title'] ?? '',
+			title: unescape.convert( json['title'] ?? '' ),
 			description: json['description'] ?? '',
 			excerpt: json['excerpt'] ?? '',
 			adults: json['adults'] ?? 0,
