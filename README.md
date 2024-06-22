@@ -60,7 +60,8 @@ _Note: You will need a WordPress website and the Hotel Booking plugin from MotoP
 ### Build and Release for iOS
 
 1. Run `flutter build ipa` to produce a build archive.
-1. Open `[project]/build/ios/archive/MyApp.xcarchive` in Xcode.
+1. [Command PhaseScriptExecution failed with a nonzero exit code](https://stackoverflow.com/a/76190449) issue fix.
+1. Open `[project]/build/ios/archive/Runner.xcarchive` in Xcode.
 1. Distribute app to App Store.
 
 [more](https://docs.flutter.dev/deployment/ios)
