@@ -2,7 +2,7 @@ class BookingInternalNote {
 
     final String note;
     final String date_utc;
-    final String user;
+    final int user;
 
 	BookingInternalNote({
 		required this.note,
@@ -14,7 +14,7 @@ class BookingInternalNote {
 		return BookingInternalNote(
 			note: json['note'] as String,
 			date_utc: json['date_utc'] as String,
-			user: json['user'] as String,
+			user: json['user'] is int ? json['user'] : int.tryParse( json['user'] ),
 		);
 	}
 

@@ -1,3 +1,5 @@
+import 'package:html_unescape/html_unescape_small.dart';
+
 class Rate {
 
     final int id;
@@ -15,9 +17,12 @@ class Rate {
 	});
 
 	factory Rate.fromJson(Map<String, dynamic> json) {
+
+		var unescape = HtmlUnescape();
+
 		return Rate(
 			id: json['id'] as int,
-			title: json['title'] as String,
+			title: unescape.convert( json['title'] ?? '' ),
 			description: json['description'] as String,
 			accommodation_type_id: json['accommodation_type_id'] as int,
 			season_prices: json['season_prices'] as List,
