@@ -142,6 +142,10 @@ class _TableEventsState extends State<CalendarPage> {
 			hashCode: getHashCode,
 		)..addAll(kEventSource);
 
+		if (_selectedDay != null) {
+			_selectedEvents.value = _getEventsForDay(_selectedDay!);
+		}
+
 		setState(() {
 			_loading = false;
 		});
@@ -197,7 +201,7 @@ class _TableEventsState extends State<CalendarPage> {
 	}
 
 	void createBookingCallback( Booking booking ) {
-		//TODO
+		_getData( forceUpdate: true );
 	}
 
 	void deleteBookingCallback( int index ) {
@@ -294,7 +298,8 @@ class _TableEventsState extends State<CalendarPage> {
 										},
 									)).then((calendar_filters) {
 
-										if ( ! calendar_filters.equals(_calendar_filters) ) {
+										if ( calendar_filters != null &&
+											! calendar_filters.equals(_calendar_filters) ) {
 											setState(() {
 												_calendar_filters = calendar_filters;
 												_selectedDay = null;

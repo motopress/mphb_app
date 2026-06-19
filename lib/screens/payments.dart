@@ -99,7 +99,8 @@ class _PaymentsListViewState extends State<PaymentsPage> {
 										},
 									)).then((payments_filters) {
 
-										if ( ! payments_filters.equals(_payments_filters) ) {
+										if ( payments_filters != null &&
+											! payments_filters.equals(_payments_filters) ) {
 											setState(() {
 												_payments_filters = payments_filters;
 											});

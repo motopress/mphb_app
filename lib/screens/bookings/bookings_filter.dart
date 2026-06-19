@@ -103,7 +103,7 @@ class _BookingsFilterState extends State<BookingsFilter> {
                   onPressed: reset,
                   child: Text(AppLocalizations.of(context).resetButtonText),
                   style: TextButton.styleFrom(
-                    primary: Colors.black,
+                    foregroundColor: Colors.black,
                   ),
                 ),
               ),

@@ -28,6 +28,10 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 
 	late Create_Booking booking;
 
+	void _dispatchBookingUpdate() {
+		booking.dispatch(context);
+	}
+
 	@override
 	void initState() {
 
@@ -75,6 +79,7 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 									textCapitalization: TextCapitalization.sentences,
 									onChanged: (text) {
 										booking.customer.first_name = text.trim();
+										_dispatchBookingUpdate();
 									},
 								),
 								TextField(
@@ -85,6 +90,7 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 									textCapitalization: TextCapitalization.words,
 									onChanged: (text) {
 										booking.customer.last_name = text.trim();
+										_dispatchBookingUpdate();
 									},
 								),
 								TextField(
@@ -94,6 +100,7 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 									keyboardType: TextInputType.emailAddress,
 									onChanged: (text) {
 										booking.customer.email = text.trim();
+										_dispatchBookingUpdate();
 									},
 								),
 								TextField(
@@ -103,6 +110,7 @@ class _CreateBookingCheckoutPageState extends State<CreateBookingCheckoutPage> {
 									keyboardType: TextInputType.numberWithOptions(signed: true),
 									onChanged: (text) {
 										booking.customer.phone = text.trim();
+										_dispatchBookingUpdate();
 									},
 								),
 							]

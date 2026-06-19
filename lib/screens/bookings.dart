@@ -125,7 +125,8 @@ class _BookingsListViewState extends State<BookingsPage> {
 										},
 									)).then((bookings_filters) {
 
-										if ( ! bookings_filters.equals(_bookings_filters) ) {
+										if ( bookings_filters != null &&
+											! bookings_filters.equals(_bookings_filters) ) {
 											setState(() {
 												_bookings_filters = bookings_filters;
 											});

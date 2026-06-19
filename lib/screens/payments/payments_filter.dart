@@ -114,7 +114,7 @@ class _PaymentsFilterState extends State<PaymentsFilter> {
 								onPressed: reset,
 								child: Text(AppLocalizations.of(context).resetButtonText),
 								style: TextButton.styleFrom(
-									primary: Colors.black,
+									foregroundColor: Colors.black,
 								),
 							),
 						),

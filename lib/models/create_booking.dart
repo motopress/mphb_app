@@ -27,4 +27,16 @@ class Create_Booking extends Notification {
 		reserved_accommodations = [];
 	}
 
+	bool hasCustomerInfo() {
+		return customer.first_name.trim().isNotEmpty &&
+			customer.last_name.trim().isNotEmpty &&
+			customer.email.trim().isNotEmpty &&
+			customer.email.contains('@') &&
+			customer.phone.trim().isNotEmpty;
+	}
+
+	bool isReadyForSubmit() {
+		return reserved_accommodations.isNotEmpty && hasCustomerInfo();
+	}
+
 }

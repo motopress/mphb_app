@@ -85,7 +85,7 @@ class _CalendarFilterState extends State<CalendarFilter> {
 								onPressed: reset,
 								child: Text(AppLocalizations.of(context).resetButtonText),
 								style: TextButton.styleFrom(
-									primary: Colors.black,
+									foregroundColor: Colors.black,
 								),
 							),
 						),

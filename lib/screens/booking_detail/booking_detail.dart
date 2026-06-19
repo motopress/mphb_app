@@ -93,6 +93,31 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 		}
 	}
 
+	void confirmDeleteBooking( Booking booking ) async {
+		final confirmed = await showDialog<bool>(
+			context: context,
+			builder: (context) {
+				return AlertDialog(
+					content: Text('Delete booking #${booking.id}?'),
+					actions: [
+						TextButton(
+							child: Text(AppLocalizations.of(context).cancelButttonText),
+							onPressed: () => Navigator.pop(context, false),
+						),
+						TextButton(
+							child: Text(AppLocalizations.of(context).deleteButtonText),
+							onPressed: () => Navigator.pop(context, true),
+						),
+					],
+				);
+			},
+		);
+
+		if (confirmed == true) {
+			deleteBooking( booking );
+		}
+	}
+
 	_showModalBottomSheet ( BuildContext context, Booking booking ) {
 
 		showModalBottomSheet(
@@ -108,7 +133,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 				switch ( action ) {
 
 					case 'delete':
-						deleteBooking( booking );
+						confirmDeleteBooking( booking );
 						break;
 
 					default:

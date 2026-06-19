@@ -117,7 +117,7 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 					if ( _booking.state == Create_Booking.CHECKOUT )
 						ElevatedButton(
 							child: Text(AppLocalizations.of(context).bookNowButtonText),
-							onPressed: _booking.reserved_accommodations.isEmpty ? null : () {
+							onPressed: ! _booking.isReadyForSubmit() ? null : () {
 								_navigatorKey.currentState!.pushNamed(
 									'create_booking/complete',
 								);
