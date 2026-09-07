@@ -4,7 +4,7 @@ import 'package:mphb_app/screens/calendar.dart';
 import 'package:mphb_app/screens/bookings.dart';
 import 'package:mphb_app/screens/payments.dart';
 import 'package:mphb_app/screens/settings.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -51,22 +51,22 @@ class _HomePageState extends State<HomePage> {
 						BottomNavigationBarItem(
 							icon: Icon(Icons.event_outlined),
 							activeIcon: Icon(Icons.event),
-							label: AppLocalizations.of(context).calendarLabelText,
+							label: AppLocalizations.of(context)!.calendarLabelText,
 						),
 						BottomNavigationBarItem(
 							icon: Icon(Icons.source_outlined),
 							activeIcon: Icon(Icons.source),
-							label: AppLocalizations.of(context).bookingsLabelText,
+							label: AppLocalizations.of(context)!.bookingsLabelText,
 						),
 						BottomNavigationBarItem(
 							icon: Icon(Icons.payments_outlined),
 							activeIcon: Icon(Icons.payments),
-							label: AppLocalizations.of(context).paymentsLabelText,
+							label: AppLocalizations.of(context)!.paymentsLabelText,
 						),
 						BottomNavigationBarItem(
 							icon: Icon(Icons.manage_accounts_outlined),
 							activeIcon: Icon(Icons.manage_accounts),
-							label: AppLocalizations.of(context).settingsLabelText,
+							label: AppLocalizations.of(context)!.settingsLabelText,
 						),
 					],
 					currentIndex: _selectedIndex,

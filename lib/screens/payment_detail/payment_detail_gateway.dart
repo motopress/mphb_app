@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mphb_app/models/payment.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class PaymentDetailGateway extends StatelessWidget {
 
@@ -62,14 +62,14 @@ class PaymentDetailGateway extends StatelessWidget {
 									IconButton(
 										icon: const Icon(Icons.content_copy),
 										iconSize: 14,
-										tooltip: AppLocalizations.of(context).copyTooltipText,
+										tooltip: AppLocalizations.of(context)!.copyTooltipText,
 										onPressed: () {
 											Clipboard.setData(
 												ClipboardData(text: payment.transaction_id))
 												.then((_) {
 													final snackBar = SnackBar(
 														content: Text(
-															'${payment.transaction_id} ' + AppLocalizations.of(context).copiedLabelText
+															'${payment.transaction_id} ' + AppLocalizations.of(context)!.copiedLabelText
 														)
 													);
 

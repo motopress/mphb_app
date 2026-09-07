@@ -4,7 +4,7 @@ import 'package:mphb_app/models/accommodation.dart';
 import 'package:mphb_app/models/accommodation_type.dart';
 import 'package:mphb_app/models/reserved_accommodation.dart';
 import 'package:mphb_app/models/booking.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class BookingDetailAccommodation extends StatelessWidget {
 
@@ -113,7 +113,7 @@ class BookingDetailAccommodation extends StatelessWidget {
 											style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 										),
 										Text(
-											AppLocalizations.of(context).adultsLabelText,
+											AppLocalizations.of(context)!.adultsLabelText,
 											style: TextStyle(fontSize: 11),
 										),
 									]
@@ -130,7 +130,7 @@ class BookingDetailAccommodation extends StatelessWidget {
 												style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 											),
 											Text(
-												AppLocalizations.of(context).childrenLabelText,
+												AppLocalizations.of(context)!.childrenLabelText,
 												style: TextStyle(fontSize: 11),
 											),
 										]
@@ -151,7 +151,7 @@ class BookingDetailAccommodation extends StatelessWidget {
 									tilePadding: EdgeInsets.zero,
 									childrenPadding: EdgeInsets.zero,
 									title: Text(
-										AppLocalizations.of(context).rateLabelText + ': ' + (booking.getRateByID(
+										AppLocalizations.of(context)!.rateLabelText + ': ' + (booking.getRateByID(
 											reserved_accommodation.rate )?.title ??
 												reserved_accommodation.rate.toString() ),
 										style: DefaultTextStyle.of(context).style
@@ -181,7 +181,7 @@ class BookingDetailAccommodation extends StatelessWidget {
 									tilePadding: EdgeInsets.zero,
 									childrenPadding: EdgeInsets.zero,
 									title: Text(
-										AppLocalizations.of(context).servicesLabelText + ' (' + reserved_accommodation.services.length.toString() + ')',
+										AppLocalizations.of(context)!.servicesLabelText + ' (' + reserved_accommodation.services.length.toString() + ')',
 										style: DefaultTextStyle.of(context).style
 									),
 									children: List.generate(1,(index){

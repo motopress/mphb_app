@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class SearchAvailabilityForm extends StatefulWidget {
 
@@ -98,12 +98,12 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 									decoration: InputDecoration(
 										isDense: true,
 										hintText: '1970-12-31',
-										labelText: AppLocalizations.of(context).checkInLabelText,
+										labelText: AppLocalizations.of(context)!.checkInLabelText,
 										floatingLabelBehavior: FloatingLabelBehavior.always,
 									),
 									validator: (value) {
 										if (value == null || value.isEmpty) {
-											return AppLocalizations.of(context).dateValidatorMessage;
+											return AppLocalizations.of(context)!.dateValidatorMessage;
 										}
 										return null;
 									},
@@ -122,12 +122,12 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 									decoration: InputDecoration(
 										isDense: true,
 										hintText: '1970-12-31',
-										labelText: AppLocalizations.of(context).checkOutLabelText,
+										labelText: AppLocalizations.of(context)!.checkOutLabelText,
 										floatingLabelBehavior: FloatingLabelBehavior.always,
 									),
 									validator: (value) {
 										if (value == null || value.isEmpty) {
-											return AppLocalizations.of(context).dateValidatorMessage;
+											return AppLocalizations.of(context)!.dateValidatorMessage;
 										}
 										return null;
 									},
@@ -159,7 +159,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 								child: DropdownButtonFormField<String>(
 									decoration: InputDecoration(
 										isDense: true,
-										labelText: AppLocalizations.of(context).adultsLabelText,
+										labelText: AppLocalizations.of(context)!.adultsLabelText,
 									),
 									value: _adults,
 
@@ -184,7 +184,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 								child: DropdownButtonFormField<String>(
 									decoration: InputDecoration(
 										isDense: true,
-										labelText: AppLocalizations.of(context).childrenLabelText,
+										labelText: AppLocalizations.of(context)!.childrenLabelText,
 									),
 									value: _children,
 									items: List<String>.generate(
@@ -229,7 +229,7 @@ class _SearchAvailabilityFormState extends State<SearchAvailabilityForm> {
 											widget.callback( params );
 										}
 									},
-									child: Text(AppLocalizations.of(context).searchButtonText),
+									child: Text(AppLocalizations.of(context)!.searchButtonText),
 								),
 							),
 						]

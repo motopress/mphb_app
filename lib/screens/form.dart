@@ -7,7 +7,7 @@ import 'package:mphb_app/controller/basic_controller.dart';
 import 'package:mphb_app/models/form_model.dart';
 import 'package:mphb_app/screens/scanner.dart';
 import 'package:mphb_app/local_storage.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class LoginForm extends StatefulWidget {
 	const LoginForm({Key? key}) : super(key: key);
@@ -70,7 +70,7 @@ class _LoginFormState extends State<LoginForm> {
 				ScaffoldMessenger.of(context).clearSnackBars();
 				ScaffoldMessenger.of(context).showSnackBar(SnackBar(
 					backgroundColor: Colors.red,
-					content: Text(AppLocalizations.of(context).invalidQRCodeMessage),
+					content: Text(AppLocalizations.of(context)!.invalidQRCodeMessage),
 				));
 			}
 
@@ -169,7 +169,7 @@ class _LoginFormState extends State<LoginForm> {
 												onPressed: () => qr_code_scanner(),
 												icon: Icon(Icons.qr_code_scanner),
 												label: Text(
-													AppLocalizations.of(context).scanQRCodeButtonText,
+													AppLocalizations.of(context)!.scanQRCodeButtonText,
 													style: const TextStyle(fontSize: 16),
 												),
 												style: ElevatedButton.styleFrom(
@@ -181,7 +181,7 @@ class _LoginFormState extends State<LoginForm> {
 											SizedBox(height: 20.0),
 											Text(
 												// _textInstructions,
-												AppLocalizations.of(context).textInstructions,
+												AppLocalizations.of(context)!.textInstructions,
 												style: const TextStyle(fontSize: 12),
 												textAlign: TextAlign.center,
 											),
@@ -194,12 +194,12 @@ class _LoginFormState extends State<LoginForm> {
 															controller: domainController,
 															decoration: InputDecoration(
 																hintText: 'https://mywebsite.com',
-																labelText: AppLocalizations.of(context).domainLabelText,
+																labelText: AppLocalizations.of(context)!.domainLabelText,
 																border: OutlineInputBorder(),
 															),
 															validator: (value) {
 																if (value == null || value.isEmpty) {
-																	return AppLocalizations.of(context).domainValidatorMessage;
+																	return AppLocalizations.of(context)!.domainValidatorMessage;
 																}
 																final uri = Uri.tryParse(value);
 																if (uri == null || uri.scheme != 'https' || uri.host.isEmpty) {
@@ -216,12 +216,12 @@ class _LoginFormState extends State<LoginForm> {
 															controller: keyController,
 															decoration: InputDecoration(
 																hintText: 'ck_xxxxxxxxxx',
-																labelText: AppLocalizations.of(context).keyLabelText,
+																labelText: AppLocalizations.of(context)!.keyLabelText,
 																border: OutlineInputBorder(),
 															),
 															validator: (value) {
 																if (value == null || value.isEmpty) {
-																	return AppLocalizations.of(context).keyValidatorMessage;
+																	return AppLocalizations.of(context)!.keyValidatorMessage;
 																}
 																return null;
 															},
@@ -234,13 +234,13 @@ class _LoginFormState extends State<LoginForm> {
 															controller: secretController,
 															decoration: InputDecoration(
 																hintText: 'cs_xxxxxxxxxx',
-																labelText: AppLocalizations.of(context).secretLabelText,
+																labelText: AppLocalizations.of(context)!.secretLabelText,
 																border: OutlineInputBorder(),
 															),
 															obscureText: true,
 															validator: (value) {
 																if (value == null || value.isEmpty) {
-																	return AppLocalizations.of(context).secretValidatorMessage;
+																	return AppLocalizations.of(context)!.secretValidatorMessage;
 																}
 																return null;
 															},
@@ -262,7 +262,7 @@ class _LoginFormState extends State<LoginForm> {
 																	child: CircularProgressIndicator(strokeWidth: 2),
 																)
 																: Text(
-																	AppLocalizations.of(context).submitButtonText,
+																	AppLocalizations.of(context)!.submitButtonText,
 																),
 														),
 													],

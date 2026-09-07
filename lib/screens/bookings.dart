@@ -7,7 +7,7 @@ import 'package:mphb_app/models/bookings_filters.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking.dart';
 import 'package:mphb_app/screens/bookings/character_search_input_sliver.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class BookingsPage extends StatefulWidget {
   @override
@@ -80,7 +80,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 		return Scaffold(
 
 			appBar: AppBar(
-				title: Text(AppLocalizations.of(context).bookingsLabelText),
+				title: Text(AppLocalizations.of(context)!.bookingsLabelText),
 				shape: Border(
 					bottom: BorderSide(
 						color: const Color(0xFFF4F5F8),
@@ -90,7 +90,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 				actions: <Widget>[
 					IconButton(
 						icon: const Icon(Icons.add_circle_outline),
-						tooltip: AppLocalizations.of(context).newBookingTooltipText,
+						tooltip: AppLocalizations.of(context)!.newBookingTooltipText,
 						onPressed: () async {
 							await Navigator.push(context, MaterialPageRoute (
 								builder: (BuildContext context) {
@@ -104,7 +104,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 					),
 					IconButton(
 						icon: const Icon(Icons.sync),
-						tooltip: AppLocalizations.of(context).refreshTootlipText,
+						tooltip: AppLocalizations.of(context)!.refreshTootlipText,
 						onPressed: () {
 
 							_pagingController.refresh();
@@ -115,7 +115,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 						children: <Widget>[
 							IconButton(
 								icon: const Icon(Icons.filter_list),
-								tooltip: AppLocalizations.of(context).filterTootlipText,
+								tooltip: AppLocalizations.of(context)!.filterTootlipText,
 								onPressed: () async {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
@@ -184,7 +184,7 @@ class _BookingsListViewState extends State<BookingsPage> {
 											deleteBookingCallback: deleteBookingCallback,
 										),
 										noItemsFoundIndicatorBuilder: (context) =>
-											Center( child: Text(AppLocalizations.of(context).nothingFoundText) ),
+											Center( child: Text(AppLocalizations.of(context)!.nothingFoundText) ),
 
 										firstPageErrorIndicatorBuilder: (context) =>
 											Center( child: Text(_pagingController.error.toString()) ),

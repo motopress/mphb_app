@@ -3,7 +3,7 @@ import 'package:mphb_app/screens/form.dart';
 import 'package:mphb_app/screens/home.dart';
 import 'package:mphb_app/local_storage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 void main() async {
 	// Required for async calls in `main`

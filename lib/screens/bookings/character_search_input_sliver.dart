@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class CharacterSearchInputSliver extends StatefulWidget {
 	const CharacterSearchInputSliver({
@@ -73,7 +73,7 @@ class _CharacterSearchInputSliverState
 									style: BorderStyle.none,
 								),
 							),
-							hintText: AppLocalizations.of(context).searchHintText,
+							hintText: AppLocalizations.of(context)!.searchHintText,
 							hintStyle: TextStyle(fontSize: 14, ),
 							fillColor: const Color(0xFFE8E9EA),
 							filled: true,

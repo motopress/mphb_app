@@ -12,7 +12,7 @@ import 'package:mphb_app/screens/booking_detail/booking_detail_ical.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_note.dart';
 import 'package:mphb_app/screens/booking_detail/booking_detail_internal_notes.dart';
 import 'package:sprintf/sprintf.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class BookingDetailScreen extends StatefulWidget {
 
@@ -79,7 +79,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 			Booking deletedBooking = await _bookingController.wpDeleteBooking(booking.id);
 
 			ScaffoldMessenger.of(context).showSnackBar(
-				SnackBar(content: Text(sprintf(AppLocalizations.of(context).bookingDeletedMessage, [deletedBooking.id])))
+				SnackBar(content: Text(sprintf(AppLocalizations.of(context)!.bookingDeletedMessage, [deletedBooking.id])))
 			);
 
 			Navigator.maybePop(context);
@@ -101,11 +101,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 					content: Text('Delete booking #${booking.id}?'),
 					actions: [
 						TextButton(
-							child: Text(AppLocalizations.of(context).cancelButttonText),
+							child: Text(AppLocalizations.of(context)!.cancelButttonText),
 							onPressed: () => Navigator.pop(context, false),
 						),
 						TextButton(
-							child: Text(AppLocalizations.of(context).deleteButtonText),
+							child: Text(AppLocalizations.of(context)!.deleteButtonText),
 							onPressed: () => Navigator.pop(context, true),
 						),
 					],
@@ -163,11 +163,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 		return WillPopScope(
 			child: Scaffold(
 				appBar: AppBar(
-					title: Text( AppLocalizations.of(context).bookingLabelText + ' #$bookingID' ),
+					title: Text( AppLocalizations.of(context)!.bookingLabelText + ' #$bookingID' ),
 					actions: <Widget>[
 						IconButton(
 							icon: const Icon(Icons.sync),
-							tooltip: AppLocalizations.of(context).refreshTootlipText,
+							tooltip: AppLocalizations.of(context)!.refreshTootlipText,
 							onPressed: () {
 								setState(() {
 									_bookingFuture = _getBooking( bookingID );
@@ -199,7 +199,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
 									return IconButton(
 										icon: const Icon(Icons.more_vert),
-										tooltip: AppLocalizations.of(context).actionsTooltipText,
+										tooltip: AppLocalizations.of(context)!.actionsTooltipText,
 										onPressed: () => _showModalBottomSheet( context, booking ),
 									);
 								}
@@ -214,7 +214,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
 						if (snapshot.hasError) {
 
-							return new Center(child: Text(AppLocalizations.of(context).errorText + ': ${snapshot.error}') );
+							return new Center(child: Text(AppLocalizations.of(context)!.errorText + ': ${snapshot.error}') );
 
 						} else {
 
@@ -251,7 +251,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 													child: Column(
 														crossAxisAlignment: CrossAxisAlignment.start,
 														children: [
-															Text(AppLocalizations.of(context).reservationText),
+															Text(AppLocalizations.of(context)!.reservationText),
 															for (
 																	var reserved_accommodation
 																	in booking.reserved_accommodations
@@ -278,7 +278,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														child: Column(
 															crossAxisAlignment: CrossAxisAlignment.start,
 															children: [
-																Text(AppLocalizations.of(context).paymentsLabelText),
+																Text(AppLocalizations.of(context)!.paymentsLabelText),
 																for ( var payment in booking.payments )
 																	BookingDetailPayment( payment: payment ),
 															],
@@ -291,7 +291,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														child: Column(
 															crossAxisAlignment: CrossAxisAlignment.start,
 															children: [
-																Text(AppLocalizations.of(context).customerNoteText),
+																Text(AppLocalizations.of(context)!.customerNoteText),
 																BookingDetailNote( booking: booking ),
 															],
 														),
@@ -303,7 +303,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 														child: Column(
 															crossAxisAlignment: CrossAxisAlignment.start,
 															children: [
-																Text(AppLocalizations.of(context).internalNotesText),
+																Text(AppLocalizations.of(context)!.internalNotesText),
 																BookingDetailInternalNotes( booking: booking ),
 															],
 														),

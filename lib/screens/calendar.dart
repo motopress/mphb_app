@@ -8,7 +8,7 @@ import 'package:mphb_app/screens/calendar/booking_list_item.dart';
 import 'package:mphb_app/screens/calendar/calendar_filter.dart';
 import 'package:mphb_app/models/calendar_filters.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class CalendarPage extends StatefulWidget {
 	@override
@@ -234,7 +234,7 @@ class _TableEventsState extends State<CalendarPage> {
 
 		return Scaffold(
 			appBar: AppBar(
-				title: Text(AppLocalizations.of(context).calendarLabelText),
+				title: Text(AppLocalizations.of(context)!.calendarLabelText),
 				shape: Border(
 					bottom: BorderSide(
 						color: const Color(0xFFF4F5F8),
@@ -260,7 +260,7 @@ class _TableEventsState extends State<CalendarPage> {
 					// endif
 					IconButton(
 						icon: const Icon(Icons.add_circle_outline),
-						tooltip: AppLocalizations.of(context).newBookingTooltipText,
+						tooltip: AppLocalizations.of(context)!.newBookingTooltipText,
 						onPressed: () async {
 							await Navigator.push(context, MaterialPageRoute (
 								builder: (BuildContext context) {
@@ -274,7 +274,7 @@ class _TableEventsState extends State<CalendarPage> {
 					),
 					IconButton(
 						icon: const Icon(Icons.sync),
-						tooltip: AppLocalizations.of(context).refreshTootlipText,
+						tooltip: AppLocalizations.of(context)!.refreshTootlipText,
 						onPressed: () {
 							setState(() {
 								_selectedDay = null;
@@ -288,7 +288,7 @@ class _TableEventsState extends State<CalendarPage> {
 						children: <Widget>[
 							IconButton(
 								icon: const Icon(Icons.filter_list),
-								tooltip: AppLocalizations.of(context).filterTootlipText,
+								tooltip: AppLocalizations.of(context)!.filterTootlipText,
 								onPressed: () async {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
@@ -414,9 +414,9 @@ class _TableEventsState extends State<CalendarPage> {
 										},
 									),
 									availableCalendarFormats: {
-										CalendarFormat.month: AppLocalizations.of(context).calendarFormatMonth,
-										CalendarFormat.twoWeeks: AppLocalizations.of(context).calendarFormatTwoWeeks,
-										CalendarFormat.week: AppLocalizations.of(context).calendarFormatWeek,
+										CalendarFormat.month: AppLocalizations.of(context)!.calendarFormatMonth,
+										CalendarFormat.twoWeeks: AppLocalizations.of(context)!.calendarFormatTwoWeeks,
+										CalendarFormat.week: AppLocalizations.of(context)!.calendarFormatWeek,
 									},
 								),
 							),
