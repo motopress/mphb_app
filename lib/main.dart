@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
 				Locale('es'), // Spanish
 				Locale('it'), // Italian
 				Locale('uk'), // Ukrainian
+				Locale('pl'), // Polish
 			],
 			theme: ThemeData(
 				primarySwatch: Colors.indigo,

@@ -314,13 +314,13 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get bookingEmailHelpText => 'Introduce una dirección de correo si el huésped debe recibir correos de la reserva.';
+  String get bookingEmailHelpText => 'Introduce una dirección de correo electrónico si el huésped debe recibir los correos de la reserva.';
 
   @override
-  String get invalidCustomerEmailText => 'Introduce una dirección de correo válida.';
+  String get invalidCustomerEmailText => 'Introduce una dirección de correo electrónico válida.';
 
   @override
-  String get bookingStatusConfirmedText => 'Confirmada';
+  String get bookingStatusConfirmedText => 'Confirmado';
 
   @override
   String get bookingStatusPendingText => 'Pendiente';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:collection';
+import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:mphb_app/controller/bookings_controller.dart';
@@ -39,6 +40,8 @@ class _TableEventsState extends State<CalendarPage> {
 	late Calendar_Filters _calendar_filters;
 
 	Map<DateTimeRange, List<Booking>> _dataProvider = {};
+	Timer? _pageChangeDebounce;
+	int _requestGeneration = 0;
 
 	@override
 	void initState() {
@@ -49,7 +52,7 @@ class _TableEventsState extends State<CalendarPage> {
 		_focusedDay = DateUtils.dateOnly( _focusedDay );
 
 		_firstDay = DateTime(_focusedDay.year - 1);
-		_lastDay = DateTime(_focusedDay.year + 1, 12, 31);
+		_lastDay = DateTime(_focusedDay.year + 2, 12, 31);
 
 		_selectedEvents = ValueNotifier( [] );
 
@@ -60,6 +63,8 @@ class _TableEventsState extends State<CalendarPage> {
 	}
 
 	void _getData( {bool forceUpdate = false} ) async {
+		_cancelPageChangeDebounce();
+		final int requestGeneration = ++_requestGeneration;
 
 		setState(() {
 			_loading = true;
@@ -112,12 +117,19 @@ class _TableEventsState extends State<CalendarPage> {
 				_dataProvider[ visibleRange ] = bookings;
 
 			} catch (error) {
+				if ( requestGeneration != _requestGeneration || ! mounted ) {
+					return;
+				}
 
 				ScaffoldMessenger.of(context).clearSnackBars();
 				ScaffoldMessenger.of(context).showSnackBar(
 					SnackBar(content: Text(error.toString()))
 				);
 			}
+		}
+
+		if ( requestGeneration != _requestGeneration || ! mounted ) {
+			return;
 		}
 
 		Map<DateTime, List<Booking>> kEventSource = {};
@@ -151,6 +163,11 @@ class _TableEventsState extends State<CalendarPage> {
 		});
 	}
 
+	void _cancelPageChangeDebounce() {
+		_pageChangeDebounce?.cancel();
+		_pageChangeDebounce = null;
+	}
+
 	List<Booking> _getEventsForDay(DateTime day) {
 
 		return kEvents?[day] ?? [];
@@ -177,6 +194,7 @@ class _TableEventsState extends State<CalendarPage> {
 
 	void _onFormatChanged( CalendarFormat format ) {
 		if (_calendarFormat != format) {
+			_cancelPageChangeDebounce();
 			setState(() {
 				_calendarFormat = format;
 			});
@@ -189,18 +207,36 @@ class _TableEventsState extends State<CalendarPage> {
 		// No need to call `setState()` here
 		_focusedDay = focusedDay;
 
-		_getData();
-	}
-
-	void _onHeaderTapped( DateTime focusedDay ) {
-		setState(() {
-			_focusedDay = DateTime.now();
-			_selectedDay = null;
-			_selectedEvents.value = [];
+		_cancelPageChangeDebounce();
+		_pageChangeDebounce = Timer(const Duration(milliseconds: 300), () {
+			_pageChangeDebounce = null;
+			_getData();
 		});
 	}
 
+	Future<void> _onHeaderTapped( DateTime focusedDay ) async {
+		final DateTime? selectedDate = await showDatePicker(
+			context: context,
+			initialDate: focusedDay,
+			firstDate: _firstDay,
+			lastDate: _lastDay,
+		);
+
+		if ( selectedDate == null || ! mounted ) {
+			return;
+		}
+
+		setState(() {
+			_focusedDay = selectedDate;
+			_selectedDay = null;
+			_selectedEvents.value = [];
+		});
+
+		_getData();
+	}
+
 	void createBookingCallback( Booking booking ) {
+		_cancelPageChangeDebounce();
 		_getData( forceUpdate: true );
 	}
 
@@ -537,6 +573,8 @@ class _TableEventsState extends State<CalendarPage> {
 	@override
 	void dispose() {
 
+		_cancelPageChangeDebounce();
+		_requestGeneration++;
 		_selectedEvents.dispose();
 		super.dispose();
 	}

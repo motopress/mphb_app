@@ -9,10 +9,10 @@ class AppLocalizationsUk extends AppLocalizations {
   AppLocalizationsUk([String locale = 'uk']) : super(locale);
 
   @override
-  String get textInstructions => 'Перейдіть до розміщення → Установки → Розширені, щоб згенерувати ключі API і сканувати QR-код. Або введіть ваші дані у формі нижче.';
+  String get textInstructions => 'Перейдіть до Помешкання → Налаштування → Додатково, щоб згенерувати API ключі та сканувати QR-код. Або введіть ваші дані у формі нижче.';
 
   @override
-  String get scanQRCodeButtonText => 'Scan QR code';
+  String get scanQRCodeButtonText => 'Сканувати QR-код';
 
   @override
   String get invalidQRCodeMessage => 'QR-код не дійсний.';
@@ -36,7 +36,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get secretValidatorMessage => 'Будь ласка, введіть секретний ключ';
 
   @override
-  String get submitButtonText => 'Ввести';
+  String get submitButtonText => 'Надіслати';
 
   @override
   String get calendarLabelText => 'Календар';
@@ -69,7 +69,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get logoutButtonText => 'Вийти з системи';
 
   @override
-  String get confirmLogoutMessage => 'Ви впевнені, що хочете вийти?';
+  String get confirmLogoutMessage => 'Ви справді бажаєте вийти?';
 
   @override
   String get consumerKeyEndingInLabelText => 'Ключ користувача закінчується на';
@@ -90,7 +90,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get bookingSetToConfirmedButtonText => 'Позначити як підтверджене';
 
   @override
-  String get bookingSetToCanceledButtonText => 'Позначити як відмінене';
+  String get bookingSetToCanceledButtonText => 'Позначити як скасоване';
 
   @override
   String get bookingSetToPendingAdminButtonText => 'Позначити як в очікуванні адміністратора';
@@ -314,10 +314,10 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
-  String get bookingEmailHelpText => 'Вкажіть електронну адресу, якщо гість має отримувати листи про бронювання.';
+  String get bookingEmailHelpText => 'Введіть адресу електронної пошти, якщо гість має отримувати листи про бронювання.';
 
   @override
-  String get invalidCustomerEmailText => 'Вкажіть дійсну електронну адресу.';
+  String get invalidCustomerEmailText => 'Введіть дійсну адресу електронної пошти.';
 
   @override
   String get bookingStatusConfirmedText => 'Підтверджено';

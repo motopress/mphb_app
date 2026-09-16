@@ -1,7 +1,7 @@
 {
   "@@locale": "uk",
-  "textInstructions": "Перейдіть до розміщення → Установки → Розширені, щоб згенерувати ключі API і сканувати QR-код. Або введіть ваші дані у формі нижче.",
-  "scanQRCodeButtonText": "Scan QR code",
+  "textInstructions": "Перейдіть до Помешкання → Налаштування → Додатково, щоб згенерувати API ключі та сканувати QR-код. Або введіть ваші дані у формі нижче.",
+  "scanQRCodeButtonText": "Сканувати QR-код",
   "invalidQRCodeMessage": "QR-код не дійсний.",
   "domainLabelText": "Домен",
   "domainValidatorMessage": "Будь ласка, введіть домен",
@@ -9,7 +9,7 @@
   "keyValidatorMessage": "Будь ласка, введіть ключ",
   "secretLabelText": "Секретний ключ",
   "secretValidatorMessage": "Будь ласка, введіть секретний ключ",
-  "submitButtonText": "Ввести",
+  "submitButtonText": "Надіслати",
   "calendarLabelText": "Календар",
   "bookingsLabelText": "Бронювання",
   "paymentsLabelText": "Платежі",
@@ -20,14 +20,14 @@
   "newBookingTooltipText": "Нове бронювання",
   "cancelButttonText": "Скасувати",
   "logoutButtonText": "Вийти з системи",
-  "confirmLogoutMessage": "Ви впевнені, що хочете вийти?",
+  "confirmLogoutMessage": "Ви справді бажаєте вийти?",
   "consumerKeyEndingInLabelText": "Ключ користувача закінчується на",
   "adultsLabelText": "Дорослі",
   "childrenLabelText": "Діти",
   "rateLabelText": "Тариф",
   "servicesLabelText": "Послуги",
   "bookingSetToConfirmedButtonText": "Позначити як підтверджене",
-  "bookingSetToCanceledButtonText": "Позначити як відмінене",
+  "bookingSetToCanceledButtonText": "Позначити як скасоване",
   "bookingSetToPendingAdminButtonText": "Позначити як в очікуванні адміністратора",
   "bookingSetToPendingUserConfirmationButtonText": "Позначити як в очікуванні підтвердження гостем",
   "bookingSetToPendingPaymentButtonText": "Позначити як в очікуванні оплати",
@@ -101,8 +101,16 @@
   "calendarFormatTwoWeeks": "2 тижні",
   "calendarFormatWeek": "Тиждень",
   "optionalFieldLabel": "{label} (необов’язково)",
-  "bookingEmailHelpText": "Вкажіть електронну адресу, якщо гість має отримувати листи про бронювання.",
-  "invalidCustomerEmailText": "Вкажіть дійсну електронну адресу.",
+  "bookingEmailHelpText": "Введіть адресу електронної пошти, якщо гість має отримувати листи про бронювання.",
+  "invalidCustomerEmailText": "Введіть дійсну адресу електронної пошти.",
+  "@optionalFieldLabel": {
+    "description": "Label for an optional customer field when creating a booking.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "bookingStatusConfirmedText": "Підтверджено",
   "bookingStatusPendingText": "В очікуванні"
 }

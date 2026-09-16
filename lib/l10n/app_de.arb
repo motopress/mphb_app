@@ -103,6 +103,14 @@
   "optionalFieldLabel": "{label} (optional)",
   "bookingEmailHelpText": "Geben Sie eine E-Mail-Adresse ein, wenn der Gast Buchungs-E-Mails erhalten soll.",
   "invalidCustomerEmailText": "Geben Sie eine gültige E-Mail-Adresse ein.",
+  "@optionalFieldLabel": {
+    "description": "Label for an optional customer field when creating a booking.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "bookingStatusConfirmedText": "Bestätigt",
   "bookingStatusPendingText": "Ausstehend"
 }

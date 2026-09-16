@@ -310,7 +310,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String optionalFieldLabel(String label) {
-    return '$label (facoltativo)';
+    return '$label (opzionale)';
   }
 
   @override
@@ -320,7 +320,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invalidCustomerEmailText => 'Inserisci un indirizzo email valido.';
 
   @override
-  String get bookingStatusConfirmedText => 'Confermata';
+  String get bookingStatusConfirmedText => 'Confermato';
 
   @override
   String get bookingStatusPendingText => 'In attesa';

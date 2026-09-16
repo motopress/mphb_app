@@ -100,9 +100,17 @@
   "calendarFormatMonth": "Mese",
   "calendarFormatTwoWeeks": "2 settimane",
   "calendarFormatWeek": "Settimana",
-  "optionalFieldLabel": "{label} (facoltativo)",
+  "optionalFieldLabel": "{label} (opzionale)",
   "bookingEmailHelpText": "Inserisci un indirizzo email se l’ospite deve ricevere le email di prenotazione.",
   "invalidCustomerEmailText": "Inserisci un indirizzo email valido.",
-  "bookingStatusConfirmedText": "Confermata",
+  "@optionalFieldLabel": {
+    "description": "Label for an optional customer field when creating a booking.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingStatusConfirmedText": "Confermato",
   "bookingStatusPendingText": "In attesa"
 }

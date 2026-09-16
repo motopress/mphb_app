@@ -101,8 +101,16 @@
   "calendarFormatTwoWeeks": "2 semaines",
   "calendarFormatWeek": "Semaine",
   "optionalFieldLabel": "{label} (facultatif)",
-  "bookingEmailHelpText": "Saisissez une adresse e-mail si le client doit recevoir les e-mails de réservation.",
+  "bookingEmailHelpText": "Saisissez une adresse e-mail si l'invité doit recevoir les e-mails de réservation.",
   "invalidCustomerEmailText": "Saisissez une adresse e-mail valide.",
+  "@optionalFieldLabel": {
+    "description": "Label for an optional customer field when creating a booking.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "bookingStatusConfirmedText": "Confirmée",
   "bookingStatusPendingText": "En attente"
 }

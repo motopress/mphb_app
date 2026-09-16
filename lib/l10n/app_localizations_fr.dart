@@ -314,7 +314,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get bookingEmailHelpText => 'Saisissez une adresse e-mail si le client doit recevoir les e-mails de réservation.';
+  String get bookingEmailHelpText => 'Saisissez une adresse e-mail si l\'invité doit recevoir les e-mails de réservation.';
 
   @override
   String get invalidCustomerEmailText => 'Saisissez une adresse e-mail valide.';
