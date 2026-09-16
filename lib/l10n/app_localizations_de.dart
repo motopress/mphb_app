@@ -307,4 +307,21 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get calendarFormatWeek => 'Woche';
+
+  @override
+  String optionalFieldLabel(String label) {
+    return '$label (optional)';
+  }
+
+  @override
+  String get bookingEmailHelpText => 'Geben Sie eine E-Mail-Adresse ein, wenn der Gast Buchungs-E-Mails erhalten soll.';
+
+  @override
+  String get invalidCustomerEmailText => 'Geben Sie eine gültige E-Mail-Adresse ein.';
+
+  @override
+  String get bookingStatusConfirmedText => 'Bestätigt';
+
+  @override
+  String get bookingStatusPendingText => 'Ausstehend';
 }

@@ -45,7 +45,18 @@ class MyApp extends StatelessWidget {
 				elevatedButtonTheme: ElevatedButtonThemeData(
 						style: ElevatedButton.styleFrom(
 					backgroundColor: Colors.indigo.shade600,
+					foregroundColor: Colors.white,
+					shape: RoundedRectangleBorder(
+						borderRadius: BorderRadius.circular(4),
+					),
 				)),
+				outlinedButtonTheme: OutlinedButtonThemeData(
+					style: OutlinedButton.styleFrom(
+						shape: RoundedRectangleBorder(
+							borderRadius: BorderRadius.circular(4),
+						),
+					),
+				),
 				chipTheme: ChipTheme.of(context).copyWith(
 					backgroundColor: Colors.white,
 					selectedColor: Colors.indigo.shade100,

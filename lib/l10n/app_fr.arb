@@ -99,5 +99,10 @@
   "paymentText": "Paiement",
   "calendarFormatMonth": "Mois",
   "calendarFormatTwoWeeks": "2 semaines",
-  "calendarFormatWeek": "Semaine"
+  "calendarFormatWeek": "Semaine",
+  "optionalFieldLabel": "{label} (facultatif)",
+  "bookingEmailHelpText": "Saisissez une adresse e-mail si le client doit recevoir les e-mails de réservation.",
+  "invalidCustomerEmailText": "Saisissez une adresse e-mail valide.",
+  "bookingStatusConfirmedText": "Confirmée",
+  "bookingStatusPendingText": "En attente"
 }

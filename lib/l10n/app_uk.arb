@@ -99,5 +99,10 @@
   "paymentText": "Платіж",
   "calendarFormatMonth": "Місяць",
   "calendarFormatTwoWeeks": "2 тижні",
-  "calendarFormatWeek": "Тиждень"
+  "calendarFormatWeek": "Тиждень",
+  "optionalFieldLabel": "{label} (необов’язково)",
+  "bookingEmailHelpText": "Вкажіть електронну адресу, якщо гість має отримувати листи про бронювання.",
+  "invalidCustomerEmailText": "Вкажіть дійсну електронну адресу.",
+  "bookingStatusConfirmedText": "Підтверджено",
+  "bookingStatusPendingText": "В очікуванні"
 }

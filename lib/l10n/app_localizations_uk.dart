@@ -307,4 +307,21 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get calendarFormatWeek => 'Тиждень';
+
+  @override
+  String optionalFieldLabel(String label) {
+    return '$label (необов’язково)';
+  }
+
+  @override
+  String get bookingEmailHelpText => 'Вкажіть електронну адресу, якщо гість має отримувати листи про бронювання.';
+
+  @override
+  String get invalidCustomerEmailText => 'Вкажіть дійсну електронну адресу.';
+
+  @override
+  String get bookingStatusConfirmedText => 'Підтверджено';
+
+  @override
+  String get bookingStatusPendingText => 'В очікуванні';
 }

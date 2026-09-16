@@ -99,5 +99,18 @@
   "paymentText": "Payment",
   "calendarFormatMonth": "Month",
   "calendarFormatTwoWeeks": "2 weeks",
-  "calendarFormatWeek": "Week"
+  "calendarFormatWeek": "Week",
+  "optionalFieldLabel": "{label} (optional)",
+  "bookingEmailHelpText": "Enter an email address if the guest should receive booking emails.",
+  "invalidCustomerEmailText": "Enter a valid email address.",
+  "@optionalFieldLabel": {
+    "description": "Label for an optional customer field when creating a booking.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingStatusConfirmedText": "Confirmed",
+  "bookingStatusPendingText": "Pending"
 }

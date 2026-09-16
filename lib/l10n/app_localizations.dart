@@ -702,6 +702,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Week'**
   String get calendarFormatWeek;
+
+  /// Label for an optional customer field when creating a booking.
+  ///
+  /// In en, this message translates to:
+  /// **'{label} (optional)'**
+  String optionalFieldLabel(String label);
+
+  /// No description provided for @bookingEmailHelpText.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an email address if the guest should receive booking emails.'**
+  String get bookingEmailHelpText;
+
+  /// No description provided for @invalidCustomerEmailText.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address.'**
+  String get invalidCustomerEmailText;
+
+  /// No description provided for @bookingStatusConfirmedText.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get bookingStatusConfirmedText;
+
+  /// No description provided for @bookingStatusPendingText.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get bookingStatusPendingText;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

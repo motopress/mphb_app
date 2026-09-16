@@ -150,6 +150,7 @@ class _LoginFormState extends State<LoginForm> {
 								mainAxisAlignment: MainAxisAlignment.center,
 								children: <Widget>[
 									Container(
+										constraints: const BoxConstraints(maxWidth: 600),
 										padding: EdgeInsets.only(
 												left: 20.0, right: 20.0, top: 30.0, bottom: 30.0),
 										decoration: BoxDecoration(
