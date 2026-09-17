@@ -1,10 +1,8 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
-import 'dart:async';
+import 'package:mphb_app/controller/api_exception.dart';
 import 'package:mphb_app/controller/basic_controller.dart';
 import 'package:mphb_app/models/payment.dart';
-import 'package:mphb_app/models/enum/payment_status.dart';
 
 class PaymentController extends BasicController{
 
@@ -15,27 +13,17 @@ class PaymentController extends BasicController{
 	 */
 	Future<Payment> wpGetPayment( int paymentID ) async {
 
-		final headers = super.getHeaders();
-
 		var queryEndpoint = '$_queryEndpoint/${paymentID.toString()}';
 
-		final uri = super.getUriHttps( queryEndpoint );
+		final response = await getRequest( queryEndpoint );
 
-		//print( Uri.decodeFull(uri.toString()) );
-		final response = await http.get(
-			uri,
-			headers: headers,
-		);
-
-		//await Future.delayed(const Duration(milliseconds: 5000));
-
-		if ( response.statusCode == HttpStatus.OK ) {
+		if ( response.statusCode == HttpStatus.ok ) {
 
 			return Payment.fromJson(jsonDecode(response.body));
 
 		} else {
 
-			throw Exception('Request failed with status: ${response.statusCode}.');
+			throw ApiException.fromStatusCode(response.statusCode, response.body);
 		}
 
 	}
@@ -44,17 +32,11 @@ class PaymentController extends BasicController{
 
 		var paymentID = payment.id;
 
-		final headers = super.getHeaders();
-
 		final queryEndpoint = '$_queryEndpoint/${paymentID.toString()}';
 
-		final uri = super.getUriHttps( queryEndpoint );
-
-		//print( Uri.decodeFull(uri.toString()) );
-		final response = await http.post(
-			uri,
-			headers: headers,
-			body: jsonEncode(<String, String>{
+		final response = await postRequest(
+			queryEndpoint,
+			jsonEncode(<String, String>{
 				'status': newStatus,
 			}),
 		);
@@ -71,7 +53,7 @@ class PaymentController extends BasicController{
 
 		} else {
 
-			throw Exception('Request failed with status: ${response.statusCode}.');
+			throw ApiException.fromStatusCode(response.statusCode, response.body);
 		}
 
 	}

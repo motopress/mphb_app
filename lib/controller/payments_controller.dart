@@ -1,8 +1,7 @@
-import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:async';
+import 'package:mphb_app/controller/api_exception.dart';
 import 'package:mphb_app/controller/basic_controller.dart';
 import 'package:mphb_app/models/payment.dart';
 import 'package:mphb_app/models/payments_filters.dart';
@@ -27,32 +26,23 @@ class PaymentsController extends BasicController{
 	 */
 	Future<List<Payment>> wpGetPayments( int offset, int limit, Payments_Filters filters ) async {
 
-		final headers = super.getHeaders();
-
 		final queryParameters = <String, String> {
 			'per_page': limit.toString(),
 			'offset': offset.toString()
 		};
 
-		final uri = super.getUriHttps( _queryEndpoint, {
-			   ...queryParameters,
-			   ...filters.toMap(),
-			}
-		);
+		final response = await getRequest( _queryEndpoint, {
+			...queryParameters,
+			...filters.toMap(),
+		});
 
-		//print( Uri.decodeFull(uri.toString()) );
-		final response = await http.get(
-			uri,
-			headers: headers
-		);
-
-		if ( response.statusCode == HttpStatus.OK ) {
+		if ( response.statusCode == HttpStatus.ok ) {
 
 			return compute( PaymentsController_parsePayments, response.body );
 
 		} else {
 
-			throw Exception('Request failed with status: ${response.statusCode}.');
+			throw ApiException.fromStatusCode(response.statusCode, response.body);
 		}
 
 	}

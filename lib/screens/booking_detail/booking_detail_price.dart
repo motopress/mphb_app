@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mphb_app/models/booking.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class BookingDetailPrice extends StatelessWidget {
 
@@ -48,7 +48,7 @@ class BookingDetailPrice extends StatelessWidget {
 										Padding (
 											padding: EdgeInsets.only(top: 5.0),
 											child: Text(
-												AppLocalizations.of(context).totalLabelText,
+												AppLocalizations.of(context)!.totalLabelText,
 												style: TextStyle(fontSize: 12),
 											),
 										),
@@ -70,7 +70,7 @@ class BookingDetailPrice extends StatelessWidget {
 										Padding (
 											padding: EdgeInsets.only(top: 5.0),
 											child: Text(
-												AppLocalizations.of(context).paidLabelText,
+												AppLocalizations.of(context)!.paidLabelText,
 												style: TextStyle(fontSize: 12),
 											),
 										),
@@ -92,7 +92,7 @@ class BookingDetailPrice extends StatelessWidget {
 										Padding (
 											padding: EdgeInsets.only(top: 5.0),
 											child: Text(
-												AppLocalizations.of(context).toPayLabelText,
+												AppLocalizations.of(context)!.toPayLabelText,
 												style: TextStyle(fontSize: 12),
 											),
 										),
@@ -105,7 +105,7 @@ class BookingDetailPrice extends StatelessWidget {
 						Padding(
 							padding: EdgeInsets.only(top: 20.0),
 							child: Text(
-								AppLocalizations.of(context).couponCodeUsedLabelText + ': ${booking.coupon_code}',
+								AppLocalizations.of(context)!.couponCodeUsedLabelText + ': ${booking.coupon_code}',
 								style: TextStyle(fontSize: 12),
 							),
 						),

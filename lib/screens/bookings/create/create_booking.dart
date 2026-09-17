@@ -4,7 +4,7 @@ import 'package:mphb_app/screens/bookings/create/create_booking_checkout.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking_complete.dart';
 import 'package:mphb_app/models/create_booking.dart';
 import 'package:mphb_app/models/booking.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class CreateBookingPage extends StatefulWidget {
 
@@ -54,7 +54,7 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 			child: Scaffold(
 
 				appBar: AppBar(
-					title: Text(AppLocalizations.of(context).addBookingTitleText),
+					title: Text(AppLocalizations.of(context)!.addBookingTitleText),
 					leading: BackButton(onPressed: _onBackPressed),
 				),
 				body: Navigator(
@@ -89,7 +89,7 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 								break;
 
 							default:
-								throw Exception(AppLocalizations.of(context).invalidRouteText + ': ${settings.name}');
+								throw Exception(AppLocalizations.of(context)!.invalidRouteText + ': ${settings.name}');
 						}
 
 						return MaterialPageRoute<void>(builder: builder, settings: settings);
@@ -100,7 +100,7 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 
 					if ( _booking.state == Create_Booking.INITIAL )
 						ElevatedButton(
-							child: Text(AppLocalizations.of(context).continueButtonText),
+							child: Text(AppLocalizations.of(context)!.continueButtonText),
 							onPressed: _booking.accommodations.isEmpty ? null : () {
 
 								_navigatorKey.currentState!.pushNamed(
@@ -116,8 +116,8 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 
 					if ( _booking.state == Create_Booking.CHECKOUT )
 						ElevatedButton(
-							child: Text(AppLocalizations.of(context).bookNowButtonText),
-							onPressed: _booking.reserved_accommodations.isEmpty ? null : () {
+							child: Text(AppLocalizations.of(context)!.bookNowButtonText),
+							onPressed: ! _booking.isReadyForSubmit() ? null : () {
 								_navigatorKey.currentState!.pushNamed(
 									'create_booking/complete',
 								);
@@ -130,7 +130,7 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 
 					if ( _booking.state == Create_Booking.COMPLETE )
 						OutlinedButton(
-							child: Text(AppLocalizations.of(context).quitButtonText),
+							child: Text(AppLocalizations.of(context)!.quitButtonText),
 							onPressed: _onBackPressed,
 						),
 				],

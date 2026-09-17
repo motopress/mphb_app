@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:collection';
+import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:mphb_app/controller/bookings_controller.dart';
@@ -8,7 +9,7 @@ import 'package:mphb_app/screens/calendar/booking_list_item.dart';
 import 'package:mphb_app/screens/calendar/calendar_filter.dart';
 import 'package:mphb_app/models/calendar_filters.dart';
 import 'package:mphb_app/screens/bookings/create/create_booking.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class CalendarPage extends StatefulWidget {
 	@override
@@ -39,6 +40,8 @@ class _TableEventsState extends State<CalendarPage> {
 	late Calendar_Filters _calendar_filters;
 
 	Map<DateTimeRange, List<Booking>> _dataProvider = {};
+	Timer? _pageChangeDebounce;
+	int _requestGeneration = 0;
 
 	@override
 	void initState() {
@@ -49,7 +52,7 @@ class _TableEventsState extends State<CalendarPage> {
 		_focusedDay = DateUtils.dateOnly( _focusedDay );
 
 		_firstDay = DateTime(_focusedDay.year - 1);
-		_lastDay = DateTime(_focusedDay.year + 1, 12, 31);
+		_lastDay = DateTime(_focusedDay.year + 2, 12, 31);
 
 		_selectedEvents = ValueNotifier( [] );
 
@@ -60,6 +63,8 @@ class _TableEventsState extends State<CalendarPage> {
 	}
 
 	void _getData( {bool forceUpdate = false} ) async {
+		_cancelPageChangeDebounce();
+		final int requestGeneration = ++_requestGeneration;
 
 		setState(() {
 			_loading = true;
@@ -112,12 +117,19 @@ class _TableEventsState extends State<CalendarPage> {
 				_dataProvider[ visibleRange ] = bookings;
 
 			} catch (error) {
+				if ( requestGeneration != _requestGeneration || ! mounted ) {
+					return;
+				}
 
 				ScaffoldMessenger.of(context).clearSnackBars();
 				ScaffoldMessenger.of(context).showSnackBar(
 					SnackBar(content: Text(error.toString()))
 				);
 			}
+		}
+
+		if ( requestGeneration != _requestGeneration || ! mounted ) {
+			return;
 		}
 
 		Map<DateTime, List<Booking>> kEventSource = {};
@@ -142,9 +154,18 @@ class _TableEventsState extends State<CalendarPage> {
 			hashCode: getHashCode,
 		)..addAll(kEventSource);
 
+		if (_selectedDay != null) {
+			_selectedEvents.value = _getEventsForDay(_selectedDay!);
+		}
+
 		setState(() {
 			_loading = false;
 		});
+	}
+
+	void _cancelPageChangeDebounce() {
+		_pageChangeDebounce?.cancel();
+		_pageChangeDebounce = null;
 	}
 
 	List<Booking> _getEventsForDay(DateTime day) {
@@ -173,6 +194,7 @@ class _TableEventsState extends State<CalendarPage> {
 
 	void _onFormatChanged( CalendarFormat format ) {
 		if (_calendarFormat != format) {
+			_cancelPageChangeDebounce();
 			setState(() {
 				_calendarFormat = format;
 			});
@@ -185,19 +207,37 @@ class _TableEventsState extends State<CalendarPage> {
 		// No need to call `setState()` here
 		_focusedDay = focusedDay;
 
-		_getData();
-	}
-
-	void _onHeaderTapped( DateTime focusedDay ) {
-		setState(() {
-			_focusedDay = DateTime.now();
-			_selectedDay = null;
-			_selectedEvents.value = [];
+		_cancelPageChangeDebounce();
+		_pageChangeDebounce = Timer(const Duration(milliseconds: 300), () {
+			_pageChangeDebounce = null;
+			_getData();
 		});
 	}
 
+	Future<void> _onHeaderTapped( DateTime focusedDay ) async {
+		final DateTime? selectedDate = await showDatePicker(
+			context: context,
+			initialDate: focusedDay,
+			firstDate: _firstDay,
+			lastDate: _lastDay,
+		);
+
+		if ( selectedDate == null || ! mounted ) {
+			return;
+		}
+
+		setState(() {
+			_focusedDay = selectedDate;
+			_selectedDay = null;
+			_selectedEvents.value = [];
+		});
+
+		_getData();
+	}
+
 	void createBookingCallback( Booking booking ) {
-		//TODO
+		_cancelPageChangeDebounce();
+		_getData( forceUpdate: true );
 	}
 
 	void deleteBookingCallback( int index ) {
@@ -230,7 +270,7 @@ class _TableEventsState extends State<CalendarPage> {
 
 		return Scaffold(
 			appBar: AppBar(
-				title: Text(AppLocalizations.of(context).calendarLabelText),
+				title: Text(AppLocalizations.of(context)!.calendarLabelText),
 				shape: Border(
 					bottom: BorderSide(
 						color: const Color(0xFFF4F5F8),
@@ -256,7 +296,7 @@ class _TableEventsState extends State<CalendarPage> {
 					// endif
 					IconButton(
 						icon: const Icon(Icons.add_circle_outline),
-						tooltip: AppLocalizations.of(context).newBookingTooltipText,
+						tooltip: AppLocalizations.of(context)!.newBookingTooltipText,
 						onPressed: () async {
 							await Navigator.push(context, MaterialPageRoute (
 								builder: (BuildContext context) {
@@ -270,7 +310,7 @@ class _TableEventsState extends State<CalendarPage> {
 					),
 					IconButton(
 						icon: const Icon(Icons.sync),
-						tooltip: AppLocalizations.of(context).refreshTootlipText,
+						tooltip: AppLocalizations.of(context)!.refreshTootlipText,
 						onPressed: () {
 							setState(() {
 								_selectedDay = null;
@@ -284,7 +324,7 @@ class _TableEventsState extends State<CalendarPage> {
 						children: <Widget>[
 							IconButton(
 								icon: const Icon(Icons.filter_list),
-								tooltip: AppLocalizations.of(context).filterTootlipText,
+								tooltip: AppLocalizations.of(context)!.filterTootlipText,
 								onPressed: () async {
 									await Navigator.push(context, MaterialPageRoute (
 										builder: (BuildContext context) {
@@ -294,7 +334,8 @@ class _TableEventsState extends State<CalendarPage> {
 										},
 									)).then((calendar_filters) {
 
-										if ( ! calendar_filters.equals(_calendar_filters) ) {
+										if ( calendar_filters != null &&
+											! calendar_filters.equals(_calendar_filters) ) {
 											setState(() {
 												_calendar_filters = calendar_filters;
 												_selectedDay = null;
@@ -409,9 +450,9 @@ class _TableEventsState extends State<CalendarPage> {
 										},
 									),
 									availableCalendarFormats: {
-										CalendarFormat.month: AppLocalizations.of(context).calendarFormatMonth,
-										CalendarFormat.twoWeeks: AppLocalizations.of(context).calendarFormatTwoWeeks,
-										CalendarFormat.week: AppLocalizations.of(context).calendarFormatWeek,
+										CalendarFormat.month: AppLocalizations.of(context)!.calendarFormatMonth,
+										CalendarFormat.twoWeeks: AppLocalizations.of(context)!.calendarFormatTwoWeeks,
+										CalendarFormat.week: AppLocalizations.of(context)!.calendarFormatWeek,
 									},
 								),
 							),
@@ -532,6 +573,8 @@ class _TableEventsState extends State<CalendarPage> {
 	@override
 	void dispose() {
 
+		_cancelPageChangeDebounce();
+		_requestGeneration++;
 		_selectedEvents.dispose();
 		super.dispose();
 	}

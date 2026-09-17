@@ -2,19 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mphb_app/screens/form.dart';
 import 'package:mphb_app/screens/home.dart';
 import 'package:mphb_app/local_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 void main() async {
 	// Required for async calls in `main`
 	WidgetsFlutterBinding.ensureInitialized();
 
-	// Quick fix to initialize SharedPreferences
-	final prefs = await SharedPreferences.getInstance();
-
-	// Initialize SharedPrefs instance.
-	await LocalStorage();
+	await LocalStorage().init();
 
 	runApp(MyApp());
 }
@@ -37,6 +32,7 @@ class MyApp extends StatelessWidget {
 				Locale('es'), // Spanish
 				Locale('it'), // Italian
 				Locale('uk'), // Ukrainian
+				Locale('pl'), // Polish
 			],
 			theme: ThemeData(
 				primarySwatch: Colors.indigo,
@@ -49,8 +45,19 @@ class MyApp extends StatelessWidget {
 				),
 				elevatedButtonTheme: ElevatedButtonThemeData(
 						style: ElevatedButton.styleFrom(
-					primary: Colors.indigo.shade600,
+					backgroundColor: Colors.indigo.shade600,
+					foregroundColor: Colors.white,
+					shape: RoundedRectangleBorder(
+						borderRadius: BorderRadius.circular(4),
+					),
 				)),
+				outlinedButtonTheme: OutlinedButtonThemeData(
+					style: OutlinedButton.styleFrom(
+						shape: RoundedRectangleBorder(
+							borderRadius: BorderRadius.circular(4),
+						),
+					),
+				),
 				chipTheme: ChipTheme.of(context).copyWith(
 					backgroundColor: Colors.white,
 					selectedColor: Colors.indigo.shade100,

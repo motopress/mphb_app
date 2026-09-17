@@ -1,7 +1,6 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
-import 'dart:async';
+import 'package:mphb_app/controller/api_exception.dart';
 import 'package:mphb_app/controller/basic_controller.dart';
 import 'package:mphb_app/models/booking.dart';
 
@@ -14,31 +13,21 @@ class BookingController extends BasicController{
 	 */
 	Future<Booking> wpGetBooking( int bookingID ) async {
 
-		final headers = super.getHeaders();
-
 		final queryParameters = <String, String> {
 			'_embed' : 'accommodation,accommodation_type,services,rate'
 		};
 
 		var queryEndpoint = '$_queryEndpoint/${bookingID.toString()}';
 
-		final uri = super.getUriHttps( queryEndpoint, queryParameters);
+		final response = await getRequest( queryEndpoint, queryParameters );
 
-		//print( Uri.decodeFull(uri.toString()) );
-		final response = await http.get(
-			uri,
-			headers: headers,
-		);
-
-		//await Future.delayed(const Duration(milliseconds: 5000));
-
-		if ( response.statusCode == HttpStatus.OK ) {
+		if ( response.statusCode == HttpStatus.ok ) {
 
 			return Booking.fromJson(jsonDecode(response.body));
 
 		} else {
 
-			throw Exception('Request failed with status: ${response.statusCode}.');
+			throw ApiException.fromStatusCode(response.statusCode, response.body);
 		}
 
 	}
@@ -47,17 +36,11 @@ class BookingController extends BasicController{
 
 		var bookingID = booking.id;
 
-		final headers = super.getHeaders();
-
 		final queryEndpoint = '$_queryEndpoint/${bookingID.toString()}';
 
-		final uri = super.getUriHttps( queryEndpoint );
-
-		//print( Uri.decodeFull(uri.toString()) );
-		final response = await http.post(
-			uri,
-			headers: headers,
-			body: jsonEncode(<String, String>{
+		final response = await postRequest(
+			queryEndpoint,
+			jsonEncode(<String, String>{
 				'status': newStatus,
 			}),
 		);
@@ -74,14 +57,12 @@ class BookingController extends BasicController{
 
 		} else {
 
-			throw Exception('Request failed with status: ${response.statusCode}.');
+			throw ApiException.fromStatusCode(response.statusCode, response.body);
 		}
 
 	}
 
 	Future<Booking> wpDeleteBooking( int bookingID ) async {
-
-		final headers = super.getHeaders();
 
 		final queryParameters = <String, String> {
 			'_embed' : 'accommodation,accommodation_type,services,rate'
@@ -89,24 +70,21 @@ class BookingController extends BasicController{
 
 		var queryEndpoint = '$_queryEndpoint/${bookingID.toString()}';
 
-		final uri = super.getUriHttps( queryEndpoint, queryParameters);
-
-		//print( Uri.decodeFull(uri.toString()) );
-		final response = await http.delete(
-			uri,
-			headers: headers,
-			body: jsonEncode(<String, bool>{
+		final response = await deleteRequest(
+			queryEndpoint,
+			jsonEncode(<String, bool>{
 				'force': true,
 			}),
+			queryParameters,
 		);
 
-		if ( response.statusCode == HttpStatus.OK ) {
+		if ( response.statusCode == HttpStatus.ok ) {
 
 			return Booking.fromJson(jsonDecode(response.body));
 
 		} else {
 
-			throw Exception('Request failed with status: ${response.statusCode}.');
+			throw ApiException.fromStatusCode(response.statusCode, response.body);
 		}
 
 	}

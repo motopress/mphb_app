@@ -1,8 +1,6 @@
-import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:async';
+import 'package:mphb_app/controller/api_exception.dart';
 import 'package:mphb_app/controller/basic_controller.dart';
 import 'package:mphb_app/models/accommodation_type.dart';
 
@@ -15,29 +13,21 @@ class AccommodationTypeController extends BasicController{
 	 */
 	Future<Accommodation_Type> wpGetAccommodationType( int accommodationTypeID ) async {
 
-		final headers = super.getHeaders();
-
 		final queryParameters = <String, String> {
 			'_embed' : 'services,rate'
 		};
 
 		var queryEndpoint = '$_queryEndpoint/${accommodationTypeID.toString()}';
 
-		final uri = super.getUriHttps( queryEndpoint, queryParameters);
+		final response = await getRequest( queryEndpoint, queryParameters );
 
-		//print( Uri.decodeFull(uri.toString()) );
-		final response = await http.get(
-			uri,
-			headers: headers,
-		);
-
-		if ( response.statusCode == HttpStatus.OK ) {
+		if ( response.statusCode == HttpStatus.ok ) {
 
 			return Accommodation_Type.fromJson(jsonDecode(response.body));
 
 		} else {
 
-			throw Exception('Request failed with status: ${response.statusCode}.');
+			throw ApiException.fromStatusCode(response.statusCode, response.body);
 		}
 
 	}

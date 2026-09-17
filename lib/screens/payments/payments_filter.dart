@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mphb_app/models/payments_filters.dart';
 import 'package:mphb_app/models/enum/date_range.dart';
 import 'package:mphb_app/models/enum/payment_status.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class PaymentsFilter extends StatefulWidget {
 
@@ -29,21 +29,21 @@ class _PaymentsFilterState extends State<PaymentsFilter> {
 
 	static List _paymentStatusesOptions(BuildContext context) {
 		return [
-			{'label': AppLocalizations.of(context).paymentCompletedOptionText, 'value': PaymentStatusEnum.COMPLETED},
-			{'label': AppLocalizations.of(context).paymentCanceledOptionText, 'value': PaymentStatusEnum.CANCELLED},
-			{'label': AppLocalizations.of(context).paymentAbandonedOptionText, 'value': PaymentStatusEnum.ABANDONED},
-			{'label': AppLocalizations.of(context).paymentPendingOptionText, 'value': PaymentStatusEnum.PENDING},
-			{'label': AppLocalizations.of(context).paymentFailedOptionText, 'value': PaymentStatusEnum.FAILED},
-			{'label': AppLocalizations.of(context).paymentRefundedOptionText, 'value': PaymentStatusEnum.REFUNDED},
-			{'label': AppLocalizations.of(context).paymentOnHoldOptionText, 'value': PaymentStatusEnum.ON_HOLD},
+			{'label': AppLocalizations.of(context)!.paymentCompletedOptionText, 'value': PaymentStatusEnum.COMPLETED},
+			{'label': AppLocalizations.of(context)!.paymentCanceledOptionText, 'value': PaymentStatusEnum.CANCELLED},
+			{'label': AppLocalizations.of(context)!.paymentAbandonedOptionText, 'value': PaymentStatusEnum.ABANDONED},
+			{'label': AppLocalizations.of(context)!.paymentPendingOptionText, 'value': PaymentStatusEnum.PENDING},
+			{'label': AppLocalizations.of(context)!.paymentFailedOptionText, 'value': PaymentStatusEnum.FAILED},
+			{'label': AppLocalizations.of(context)!.paymentRefundedOptionText, 'value': PaymentStatusEnum.REFUNDED},
+			{'label': AppLocalizations.of(context)!.paymentOnHoldOptionText, 'value': PaymentStatusEnum.ON_HOLD},
 		];
 	}
 
  static List _paymentDateRangeOptions(BuildContext context) {
     return [
-      {'label': AppLocalizations.of(context).todayOptionText, 'value': DateRangeEnum.TODAY},
-      {'label': AppLocalizations.of(context).thisWeekOptionText, 'value': DateRangeEnum.THIS_WEEK},
-      {'label': AppLocalizations.of(context).thisMonthOptionText, 'value': DateRangeEnum.THIS_MONTH},
+      {'label': AppLocalizations.of(context)!.todayOptionText, 'value': DateRangeEnum.TODAY},
+      {'label': AppLocalizations.of(context)!.thisWeekOptionText, 'value': DateRangeEnum.THIS_WEEK},
+      {'label': AppLocalizations.of(context)!.thisMonthOptionText, 'value': DateRangeEnum.THIS_MONTH},
     ];
   }
 
@@ -106,15 +106,15 @@ class _PaymentsFilterState extends State<PaymentsFilter> {
 			child: Scaffold(
 				backgroundColor: const Color(0xFFF4F5F8),
 				appBar: AppBar(
-					title: Text(AppLocalizations.of(context).filtersTitleText),
+					title: Text(AppLocalizations.of(context)!.filtersTitleText),
 					actions: <Widget>[
 						Padding(
 							padding: EdgeInsets.all(10.0),
 							child: TextButton(
 								onPressed: reset,
-								child: Text(AppLocalizations.of(context).resetButtonText),
+								child: Text(AppLocalizations.of(context)!.resetButtonText),
 								style: TextButton.styleFrom(
-									primary: Colors.black,
+									foregroundColor: Colors.black,
 								),
 							),
 						),
@@ -135,7 +135,7 @@ class _PaymentsFilterState extends State<PaymentsFilter> {
 										children: [
 											Padding(
 												padding: const EdgeInsets.only(bottom: 10.0),
-												child: Text(AppLocalizations.of(context).paymentStatusLabelText + ':'),
+												child: Text(AppLocalizations.of(context)!.paymentStatusLabelText + ':'),
 											),
 											Wrap(
 												children: paymentStatusesFilter.toList(),
@@ -151,7 +151,7 @@ class _PaymentsFilterState extends State<PaymentsFilter> {
 										children: [
 											Padding(
 												padding: const EdgeInsets.only(bottom: 10.0),
-												child: Text(AppLocalizations.of(context).dateCreatedLabelText + ':')
+												child: Text(AppLocalizations.of(context)!.dateCreatedLabelText + ':')
 											),
 											Wrap(
 												children: paymentDateRangeFilter.toList(),

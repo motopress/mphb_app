@@ -6,160 +6,123 @@ import 'package:mphb_app/models/reserved_accommodation.dart';
 import 'package:mphb_app/models/booking.dart';
 import 'package:mphb_app/screens/bookings/create/single_accommodation.dart';
 import 'package:sprintf/sprintf.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class CreateBookingCompletePage extends StatefulWidget {
+  const CreateBookingCompletePage({
+    Key? key,
+    required this.booking,
+    required this.createBookingCallback,
+  }) : super(key: key);
 
-	const CreateBookingCompletePage({
-		Key? key,
-		required this.booking,
-		required this.createBookingCallback,
-	}) : super(key: key);
+  final Create_Booking booking;
 
-	final Create_Booking booking;
+  final Function(Booking) createBookingCallback;
 
-	final Function(Booking) createBookingCallback;
-
-	@override
-	_CreateBookingCompletePageState createState() =>
-		_CreateBookingCompletePageState( booking: booking );
-
+  @override
+  _CreateBookingCompletePageState createState() =>
+      _CreateBookingCompletePageState(booking: booking);
 }
 
 class _CreateBookingCompletePageState extends State<CreateBookingCompletePage> {
+  _CreateBookingCompletePageState({required this.booking});
 
-	_CreateBookingCompletePageState({
-		required this.booking,
-	});
+  late Create_Booking booking;
 
-	late Create_Booking booking;
+  String _state = 'waiting';
 
-	String _state = 'waiting';
+  late final BookingsController _bookingsController;
 
-	late final BookingsController _bookingsController;
+  @override
+  void initState() {
+    super.initState();
+    _bookingsController = new BookingsController();
 
-	@override
-	void initState() {
+    bookNow();
+  }
 
-		super.initState();
-		_bookingsController = new BookingsController();
+  void bookNow() async {
+    setState(() {
+      _state = 'waiting';
+    });
 
-		bookNow();
+    try {
+      final bookingObj = await _bookingsController.wpCreateBooking(
+        booking.toApiParams(),
+      );
 
-	}
+      setState(() {
+        _state = 'complete';
+      });
 
-	void bookNow() async {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            sprintf(AppLocalizations.of(context)!.bookingCreatedMessage, [
+              bookingObj.id,
+            ]),
+          ),
+        ),
+      );
 
-		setState(() {_state = 'waiting';});
+      widget.createBookingCallback(bookingObj);
+    } catch (error) {
+      setState(() {
+        _state = '';
+      });
 
-		List<Map> reserved_accommodations = [];
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.toString())));
+    }
+  }
 
-		Map params = {
-			'reserved_accommodations': reserved_accommodations,
-			'customer': {}
-		};
+  Widget getChild() {
+    switch (_state) {
+      case 'complete':
+        return Icon(Icons.check_circle, size: 64, color: Colors.green);
+        break;
 
-		params['status'] = 'confirmed';
-		params['check_in_date'] = booking.check_in_date;
-		params['check_out_date'] = booking.check_out_date;
+      case 'waiting':
+        return CircularProgressIndicator();
+        break;
 
-		booking.reserved_accommodations.forEach((reserved_accommodation) {
-			reserved_accommodations.add({
-				'accommodation': reserved_accommodation.accommodation,
-				'adults': reserved_accommodation.adults,
-				'children': reserved_accommodation.children
-			});
-		});
+      default:
+        return Text('');
+        break;
+    }
+  }
 
-		params['customer']['first_name'] = booking.customer.first_name;
-		params['customer']['last_name'] = booking.customer.last_name;
-		params['customer']['email'] = booking.customer.email;
-		params['customer']['phone'] = booking.customer.phone;
-
-		/*print(params);
-
-		await Future.delayed(const Duration(milliseconds: 5000));
-		setState(() {_state = 'complete';});*/
-
-		try {
-
-			final bookingObj = await _bookingsController.wpCreateBooking( params );
-
-			setState(() {_state = 'complete';});
-
-			ScaffoldMessenger.of(context).showSnackBar(
-				SnackBar(content: Text(sprintf(AppLocalizations.of(context).bookingCreatedMessage, [bookingObj.id])))
-			);
-
-			widget.createBookingCallback( bookingObj );
-
-		} catch (error) {
-
-			setState(() {
-				_state = '';
-			});
-
-			ScaffoldMessenger.of(context).clearSnackBars();
-			ScaffoldMessenger.of(context).showSnackBar(
-				SnackBar(content: Text(error.toString()))
-			);
-		}
-	}
-
-	Widget getChild() {
-
-		switch (_state) {
-			case 'complete':
-				return Icon(
-					Icons.check_circle,
-					size: 64,
-					color: Colors.green,
-				);
-				break;
-
-			case 'waiting':
-				return CircularProgressIndicator();
-				break;
-
-			default:
-				return Text('');
-				break;
-		}
-	}
-
-	@override
-	Widget build(BuildContext context) {
-
-		return Row(
-			mainAxisAlignment: MainAxisAlignment.center,
-    		crossAxisAlignment: CrossAxisAlignment.stretch,
-			children: [
-				Column(
-					mainAxisAlignment: MainAxisAlignment.center,
-					crossAxisAlignment: CrossAxisAlignment.center,
-					children: [
-						Container(
-							padding: EdgeInsets.all(10.00),
-							child: getChild(),
-							decoration: BoxDecoration(
-								color: Colors.white,
-								borderRadius: BorderRadius.all(
-									Radius.circular(100)
-								),
-								boxShadow: [
-									BoxShadow(
-										color: Colors.grey.withOpacity(0.1),
-										spreadRadius: 0,
-										blurRadius: 2,
-										offset: Offset(0, 4),
-									),
-								],
-							),
-						),
-					],
-				),
-			],
-		);
-	}
-
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.all(10.00),
+              child: getChild(),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(100)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    spreadRadius: 0,
+                    blurRadius: 2,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 }

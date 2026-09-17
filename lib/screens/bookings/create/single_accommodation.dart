@@ -4,7 +4,7 @@ import 'package:mphb_app/models/create_booking.dart';
 import 'package:mphb_app/models/accommodation.dart';
 import 'package:mphb_app/models/reserved_accommodation.dart';
 import 'package:mphb_app/models/accommodation_type.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class SingleAccommodation extends StatefulWidget {
 
@@ -114,7 +114,7 @@ class _SingleAccommodationState extends State<SingleAccommodation> {
 							Row(
 								mainAxisAlignment: MainAxisAlignment.spaceBetween,
 								children: [
-									Text(AppLocalizations.of(context).adultsLabelText),
+									Text(AppLocalizations.of(context)!.adultsLabelText),
 									DropdownButton<String>(
 										value: _reserved_accommodation.adults.toString(),
 
@@ -144,7 +144,7 @@ class _SingleAccommodationState extends State<SingleAccommodation> {
 							Row(
 								mainAxisAlignment: MainAxisAlignment.spaceBetween,
 								children: [
-									Text(AppLocalizations.of(context).childrenLabelText),
+									Text(AppLocalizations.of(context)!.childrenLabelText),
 									DropdownButton<String>(
 										value: _reserved_accommodation.children.toString(),
 										items: List<String>.generate(

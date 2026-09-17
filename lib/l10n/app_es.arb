@@ -99,5 +99,18 @@
   "paymentText": "Pago",
   "calendarFormatMonth": "Mes",
   "calendarFormatTwoWeeks": "2 semanas",
-  "calendarFormatWeek": "Semana"
+  "calendarFormatWeek": "Semana",
+  "optionalFieldLabel": "{label} (opcional)",
+  "bookingEmailHelpText": "Introduce una dirección de correo electrónico si el huésped debe recibir los correos de la reserva.",
+  "invalidCustomerEmailText": "Introduce una dirección de correo electrónico válida.",
+  "@optionalFieldLabel": {
+    "description": "Label for an optional customer field when creating a booking.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingStatusConfirmedText": "Confirmado",
+  "bookingStatusPendingText": "Pendiente"
 }

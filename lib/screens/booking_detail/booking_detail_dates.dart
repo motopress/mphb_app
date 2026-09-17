@@ -22,61 +22,72 @@ class BookingDetailDates extends StatelessWidget {
 			),
 			child: Row(
 				children: [
-					
-					Container(
-						decoration: BoxDecoration(
-							border: Border.all(
-								width: 2.0,
-								color: Colors.indigo.shade100
-							),
-							borderRadius: BorderRadius.all(
-								Radius.circular(6.0)
-							),
-							color: Colors.white,
-						),
-						padding: EdgeInsets.only(
-							left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
-						margin: EdgeInsets.only(right: 10.0),
-						child: Row(
-							children: [
-								Padding(
-									padding: EdgeInsets.all(5),
-									child: Icon(
-										Icons.flight_land,
-										size: 12,
-										color: Colors.indigo.shade100
-									)
+					Expanded(
+						child: Container(
+							decoration: BoxDecoration(
+								border: Border.all(
+									width: 2.0,
+									color: Colors.indigo.shade100
 								),
-								BookingDate( booking.check_in_date ),
-							]
+								borderRadius: BorderRadius.all(
+									Radius.circular(6.0)
+								),
+								color: Colors.white,
+							),
+							padding: EdgeInsets.only(
+								left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
+							margin: EdgeInsets.only(right: 10.0),
+							child: Row(
+								mainAxisAlignment: MainAxisAlignment.center,
+								children: [
+									Padding(
+										padding: EdgeInsets.all(10),
+										child: Icon(
+											Icons.flight_land,
+											size: 12,
+											color: Colors.indigo.shade100
+										)
+									),
+									BookingDate(
+										booking.check_in_date,
+										fontSize: 28
+									),
+								]
+							),
 						),
 					),
-					Container(
-						decoration: BoxDecoration(
-							border: Border.all(
-								width: 2.0,
-								color: Colors.indigo.shade100
-							),
-							borderRadius: BorderRadius.all(
-								Radius.circular(6.0)
-							),
-							color: Colors.white,
-						),
-						padding: EdgeInsets.only(
-							left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
-						margin: EdgeInsets.only(left: 10.0),
-						child: Row(
-							children: [
-								Padding(
-									padding: EdgeInsets.all(5),
-									child: Icon(
-										Icons.flight_takeoff,
-										size: 12,
-										color: Colors.indigo.shade100
-									)
+					Expanded(
+						child: Container(
+							decoration: BoxDecoration(
+								border: Border.all(
+									width: 2.0,
+									color: Colors.indigo.shade100
 								),
-								BookingDate( booking.check_out_date ),
-							]
+								borderRadius: BorderRadius.all(
+									Radius.circular(6.0)
+								),
+								color: Colors.white,
+							),
+							padding: EdgeInsets.only(
+								left: 5.0, right: 10.0, top: 10.0, bottom: 10.0),
+							margin: EdgeInsets.only(left: 10.0),
+							child: Row(
+								mainAxisAlignment: MainAxisAlignment.center,
+								children: [
+									Padding(
+										padding: EdgeInsets.all(5),
+										child: Icon(
+											Icons.flight_takeoff,
+											size: 12,
+											color: Colors.indigo.shade100
+										)
+									),
+									BookingDate(
+										booking.check_out_date,
+										fontSize: 28
+									),
+								]
+							),
 						),
 					),
 				]

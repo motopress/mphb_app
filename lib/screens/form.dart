@@ -3,10 +3,11 @@ import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:mphb_app/controller/basic_controller.dart';
 import 'package:mphb_app/models/form_model.dart';
 import 'package:mphb_app/screens/scanner.dart';
 import 'package:mphb_app/local_storage.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class LoginForm extends StatefulWidget {
 	const LoginForm({Key? key}) : super(key: key);
@@ -23,6 +24,8 @@ class _LoginFormState extends State<LoginForm> {
 	final domainController = TextEditingController();
 	final keyController = TextEditingController();
 	final secretController = TextEditingController();
+
+	bool _loggingIn = false;
 
 	PackageInfo _packageInfo = PackageInfo(
 		appName: 'Unknown',
@@ -45,6 +48,14 @@ class _LoginFormState extends State<LoginForm> {
 		});
 	}
 
+	@override
+	void dispose() {
+		domainController.dispose();
+		keyController.dispose();
+		secretController.dispose();
+		super.dispose();
+	}
+
 	void qr_code_scanner() async {
 		/*
 		 * Web issue
@@ -59,7 +70,7 @@ class _LoginFormState extends State<LoginForm> {
 				ScaffoldMessenger.of(context).clearSnackBars();
 				ScaffoldMessenger.of(context).showSnackBar(SnackBar(
 					backgroundColor: Colors.red,
-					content: Text(AppLocalizations.of(context).invalidQRCodeMessage),
+					content: Text(AppLocalizations.of(context)!.invalidQRCodeMessage),
 				));
 			}
 
@@ -69,38 +80,54 @@ class _LoginFormState extends State<LoginForm> {
 		});
 	}
 
-	void login() {
+	void login() async {
+		if (_loggingIn) {
+			return;
+		}
+
 		// Validate returns true if the form is valid, or false otherwise.
 		if (_formKey.currentState!.validate()) {
 			_formKey.currentState!.save();
 
-			// trim slash
-			if (model.domain.endsWith('/')) {
-				model.domain = model.domain.substring(0, model.domain.length - 1);
+			setState(() {
+				_loggingIn = true;
+			});
+
+			try {
+				await BasicController.validateCredentials(
+					domain: model.domain,
+					consumerKey: model.consumer_key,
+					consumerSecret: model.consumer_secret,
+				);
+
+				if (!mounted) {
+					return;
+				}
+
+				LocalStorage().domain = BasicController.normalizeDomain(model.domain);
+				LocalStorage().consumer_key = model.consumer_key.trim();
+				LocalStorage().consumer_secret = model.consumer_secret.trim();
+
+				Navigator.pushReplacementNamed(context, '/home');
+			} catch (error) {
+				if (!mounted) {
+					return;
+				}
+
+				ScaffoldMessenger.of(context).clearSnackBars();
+				ScaffoldMessenger.of(context).showSnackBar(
+					SnackBar(
+						backgroundColor: Colors.red,
+						content: Text(error.toString()),
+					)
+				);
+			} finally {
+				if (mounted) {
+					setState(() {
+						_loggingIn = false;
+					});
+				}
 			}
-
-			/*
-			 * https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/
-			 *
-			 * 1. All routes should be built onto this route, the wp-json portion can be changed,
-			 *    but in general, it is advised to keep it the same.
-			 * 2. On sites without pretty permalinks, the route is instead added to the URL as the
-			 *    rest_route parameter. For the above example, the full URL would then be
-			 *    http://example.com/?rest_route=/wp/v2/posts/123
-			 */
-
-			//TODO: make it better
-			if (model.domain.endsWith('/wp-json/mphb/v1')) {
-				LocalStorage().domain = model.domain;
-			} else {
-				LocalStorage().domain = model.domain + '/wp-json/mphb/v1';
-			}
-
-			//TODO: use secure storage
-			LocalStorage().consumer_key = model.consumer_key;
-			LocalStorage().consumer_secret = model.consumer_secret;
-
-			Navigator.pushReplacementNamed(context, '/home');
 		}
 	}
 
@@ -108,7 +135,7 @@ class _LoginFormState extends State<LoginForm> {
 	Widget build(BuildContext context) {
 		final ColorScheme colorScheme = Theme.of(context).colorScheme;
 		final TextTheme textTheme = Theme.of(context).textTheme;
-		final bodyTextStyle = textTheme.bodyText2!.apply(
+		final bodyTextStyle = textTheme.bodyMedium!.apply(
 			fontSizeFactor: 0.8
 		);
 
@@ -123,6 +150,7 @@ class _LoginFormState extends State<LoginForm> {
 								mainAxisAlignment: MainAxisAlignment.center,
 								children: <Widget>[
 									Container(
+										constraints: const BoxConstraints(maxWidth: 600),
 										padding: EdgeInsets.only(
 												left: 20.0, right: 20.0, top: 30.0, bottom: 30.0),
 										decoration: BoxDecoration(
@@ -142,7 +170,7 @@ class _LoginFormState extends State<LoginForm> {
 												onPressed: () => qr_code_scanner(),
 												icon: Icon(Icons.qr_code_scanner),
 												label: Text(
-													AppLocalizations.of(context).scanQRCodeButtonText,
+													AppLocalizations.of(context)!.scanQRCodeButtonText,
 													style: const TextStyle(fontSize: 16),
 												),
 												style: ElevatedButton.styleFrom(
@@ -154,7 +182,7 @@ class _LoginFormState extends State<LoginForm> {
 											SizedBox(height: 20.0),
 											Text(
 												// _textInstructions,
-												AppLocalizations.of(context).textInstructions,
+												AppLocalizations.of(context)!.textInstructions,
 												style: const TextStyle(fontSize: 12),
 												textAlign: TextAlign.center,
 											),
@@ -167,17 +195,21 @@ class _LoginFormState extends State<LoginForm> {
 															controller: domainController,
 															decoration: InputDecoration(
 																hintText: 'https://mywebsite.com',
-																labelText: AppLocalizations.of(context).domainLabelText,
+																labelText: AppLocalizations.of(context)!.domainLabelText,
 																border: OutlineInputBorder(),
 															),
 															validator: (value) {
 																if (value == null || value.isEmpty) {
-																	return AppLocalizations.of(context).domainValidatorMessage;
+																	return AppLocalizations.of(context)!.domainValidatorMessage;
+																}
+																final uri = Uri.tryParse(value);
+																if (uri == null || uri.scheme != 'https' || uri.host.isEmpty) {
+																	return 'Enter a valid HTTPS domain';
 																}
 																return null;
 															},
 															onSaved: (value) {
-																model.domain = value ?? '';
+																model.domain = (value ?? '').trim();
 															},
 														),
 														SizedBox(height: 10),
@@ -185,17 +217,17 @@ class _LoginFormState extends State<LoginForm> {
 															controller: keyController,
 															decoration: InputDecoration(
 																hintText: 'ck_xxxxxxxxxx',
-																labelText: AppLocalizations.of(context).keyLabelText,
+																labelText: AppLocalizations.of(context)!.keyLabelText,
 																border: OutlineInputBorder(),
 															),
 															validator: (value) {
 																if (value == null || value.isEmpty) {
-																	return AppLocalizations.of(context).keyValidatorMessage;
+																	return AppLocalizations.of(context)!.keyValidatorMessage;
 																}
 																return null;
 															},
 															onSaved: (value) {
-																model.consumer_key = value ?? '';
+																model.consumer_key = (value ?? '').trim();
 															},
 														),
 														SizedBox(height: 10),
@@ -203,18 +235,18 @@ class _LoginFormState extends State<LoginForm> {
 															controller: secretController,
 															decoration: InputDecoration(
 																hintText: 'cs_xxxxxxxxxx',
-																labelText: AppLocalizations.of(context).secretLabelText,
+																labelText: AppLocalizations.of(context)!.secretLabelText,
 																border: OutlineInputBorder(),
 															),
 															obscureText: true,
 															validator: (value) {
 																if (value == null || value.isEmpty) {
-																	return AppLocalizations.of(context).secretValidatorMessage;
+																	return AppLocalizations.of(context)!.secretValidatorMessage;
 																}
 																return null;
 															},
 															onSaved: (value) {
-																model.consumer_secret = value ?? '';
+																model.consumer_secret = (value ?? '').trim();
 															},
 														),
 														SizedBox(height: 25),
@@ -223,10 +255,16 @@ class _LoginFormState extends State<LoginForm> {
 																minimumSize: Size(double.infinity, 0),
 																padding: EdgeInsets.all(15),
 															),
-															onPressed: login,
-															child: Text(
-																AppLocalizations.of(context).submitButtonText,
-															),
+															onPressed: _loggingIn ? null : login,
+															child: _loggingIn
+																? SizedBox(
+																	height: 18,
+																	width: 18,
+																	child: CircularProgressIndicator(strokeWidth: 2),
+																)
+																: Text(
+																	AppLocalizations.of(context)!.submitButtonText,
+																),
 														),
 													],
 												),

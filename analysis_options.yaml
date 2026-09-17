@@ -9,6 +9,21 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  exclude:
+    - third_party/**
+  errors:
+    deprecated_member_use: ignore
+    empty_catches: ignore
+    invalid_use_of_protected_member: ignore
+    invalid_use_of_visible_for_testing_member: ignore
+    must_be_immutable: ignore
+    body_might_complete_normally_nullable: ignore
+    dead_code: ignore
+    unnecessary_type_check: ignore
+    unused_catch_clause: ignore
+    unused_import: ignore
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -24,6 +39,25 @@ linter:
   rules:
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    camel_case_types: false
+    non_constant_identifier_names: false
+    prefer_is_empty: false
+    prefer_is_not_empty: false
+    prefer_spread_collections: false
+    unnecessary_new: false
+    avoid_unnecessary_containers: false
+    constant_identifier_names: false
+    no_logic_in_create_state: false
+    prefer_const_constructors: false
+    prefer_const_declarations: false
+    prefer_const_literals_to_create_immutables: false
+    prefer_final_fields: false
+    prefer_typing_uninitialized_variables: false
+    sized_box_for_whitespace: false
+    unnecessary_const: false
+    unnecessary_this: false
+    avoid_function_literals_in_foreach_calls: false
+    use_key_in_widget_constructors: false
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

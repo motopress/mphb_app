@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mphb_app/models/bookings_filters.dart';
 import 'package:mphb_app/models/enum/date_range.dart';
 import 'package:mphb_app/models/enum/booking_status.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mphb_app/l10n/app_localizations.dart';
 
 class BookingsFilter extends StatefulWidget {
   final Bookings_Filters bookings_filters;
@@ -22,20 +22,20 @@ class _BookingsFilterState extends State<BookingsFilter> {
 
   static List _bookingStatusesOptions(BuildContext context) {
     return [
-      {'label': AppLocalizations.of(context).bookingConfirmedOptionText, 'value': BookingStatusEnum.CONFIRMED},
-      {'label': AppLocalizations.of(context).bookingCanceledOptionText, 'value': BookingStatusEnum.CANCELLED},
-      {'label': AppLocalizations.of(context).bookingAbandonedOptionText, 'value': BookingStatusEnum.ABANDONED},
-      {'label': AppLocalizations.of(context).bookingPendingAdminOptionText, 'value': BookingStatusEnum.PENDING},
-      {'label': AppLocalizations.of(context).bookingPendingUserOptionText, 'value': BookingStatusEnum.PENDING_USER},
-      {'label': AppLocalizations.of(context).bookingPendingPaymentOptionText, 'value': BookingStatusEnum.PENDING_PAYMENT},
+      {'label': AppLocalizations.of(context)!.bookingConfirmedOptionText, 'value': BookingStatusEnum.CONFIRMED},
+      {'label': AppLocalizations.of(context)!.bookingCanceledOptionText, 'value': BookingStatusEnum.CANCELLED},
+      {'label': AppLocalizations.of(context)!.bookingAbandonedOptionText, 'value': BookingStatusEnum.ABANDONED},
+      {'label': AppLocalizations.of(context)!.bookingPendingAdminOptionText, 'value': BookingStatusEnum.PENDING},
+      {'label': AppLocalizations.of(context)!.bookingPendingUserOptionText, 'value': BookingStatusEnum.PENDING_USER},
+      {'label': AppLocalizations.of(context)!.bookingPendingPaymentOptionText, 'value': BookingStatusEnum.PENDING_PAYMENT},
     ];
   }
 
   static List _bookingDateRangeOptions(BuildContext context) {
     return [
-      {'label': AppLocalizations.of(context).todayOptionText, 'value': DateRangeEnum.TODAY},
-      {'label': AppLocalizations.of(context).thisWeekOptionText, 'value': DateRangeEnum.THIS_WEEK},
-      {'label': AppLocalizations.of(context).thisMonthOptionText, 'value': DateRangeEnum.THIS_MONTH},
+      {'label': AppLocalizations.of(context)!.todayOptionText, 'value': DateRangeEnum.TODAY},
+      {'label': AppLocalizations.of(context)!.thisWeekOptionText, 'value': DateRangeEnum.THIS_WEEK},
+      {'label': AppLocalizations.of(context)!.thisMonthOptionText, 'value': DateRangeEnum.THIS_MONTH},
     ];
   }
 
@@ -95,15 +95,15 @@ class _BookingsFilterState extends State<BookingsFilter> {
         child: Scaffold(
           backgroundColor: const Color(0xFFF4F5F8),
           appBar: AppBar(
-            title: Text(AppLocalizations.of(context).filtersTitleText),
+            title: Text(AppLocalizations.of(context)!.filtersTitleText),
             actions: <Widget>[
               Padding(
                 padding: EdgeInsets.all(10.0),
                 child: TextButton(
                   onPressed: reset,
-                  child: Text(AppLocalizations.of(context).resetButtonText),
+                  child: Text(AppLocalizations.of(context)!.resetButtonText),
                   style: TextButton.styleFrom(
-                    primary: Colors.black,
+                    foregroundColor: Colors.black,
                   ),
                 ),
               ),
@@ -123,7 +123,7 @@ class _BookingsFilterState extends State<BookingsFilter> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Text(AppLocalizations.of(context).bookingStatusLabelText + ':'),
+                          child: Text(AppLocalizations.of(context)!.bookingStatusLabelText + ':'),
                         ),
                         Wrap(
                           children: bookingStatusesFilter.toList(),
@@ -139,7 +139,7 @@ class _BookingsFilterState extends State<BookingsFilter> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Text(AppLocalizations.of(context).dateCreatedLabelText + ':'),
+                          child: Text(AppLocalizations.of(context)!.dateCreatedLabelText + ':'),
                         ),
                         Wrap(
                           children: bookingDateRangeFilter.toList(),
