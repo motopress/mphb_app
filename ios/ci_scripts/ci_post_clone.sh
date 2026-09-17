@@ -13,6 +13,10 @@ flutter precache --ios
 # Generate Flutter's iOS build settings and install Dart dependencies.
 flutter pub get
 
+# Regenerate the iOS plugin registrant and Flutter iOS configuration before
+# CocoaPods resolves the native plugin targets.
+flutter build ios --release --no-codesign --config-only
+
 # Resolve the Flutter iOS plugin dependencies.
 cd ios
 HOMEBREW_NO_AUTO_UPDATE=1 brew install cocoapods
